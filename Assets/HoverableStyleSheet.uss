@@ -1,0 +1,6 @@
+.hoverableScreen{
+	
+	font-size: 64;
+	justify-content: center;
+	align-items: center;
+}

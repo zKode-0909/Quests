@@ -1,0 +1,78 @@
+.backPanel{
+	height: 80%;
+	width: 80%;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: yellow;
+	display: flex;
+	
+}
+
+.questHandoutDisplay{
+	height: 100%;
+	width: 100%;
+	align-items:center;	
+	justify-content:center;
+}
+
+.questGiverText{
+	display: flex;
+	align-items: flex-start;
+	height: 50%;
+	width: 100%;
+}
+
+.questList{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content:center;
+	height: 35%;
+	width: 100%;
+}
+
+.questGiverDisplayButtons{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 10%;
+	width: 100%;
+}
+
+.titleHolder{
+	display: flex;
+	align-items:center;	
+	justify-content:center;	
+	height: 15%;
+	width: 100%;
+}
+
+.descriptionHolder{
+	display: flex;	
+	align-items:flex-start;
+	justify-content: center;
+	height: 70%;
+	width: 100%;
+}
+
+.buttonsHolder{
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	height: 10%;
+	width: 100%
+}
+
+.quest{
+	height: 5%;
+	width: 98%;	
+	background-color: blue;
+	display: flex;
+}
+
+.questGiverView{
+	height: 80%;
+	width: 55%;
+}
+

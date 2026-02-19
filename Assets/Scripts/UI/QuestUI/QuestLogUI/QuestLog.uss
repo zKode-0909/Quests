@@ -1,0 +1,46 @@
+.questLogDisplay{
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+}
+
+
+.questLogHolder{
+	background-color: green;
+	align-items:center;
+	justify-content: center;	
+	height: 70%;
+	width: 30%;
+	display: flex;
+	flex-direction:column;
+}
+
+.questLogBody{
+	display: flex;
+	background-color: blue;
+	height: 80%;
+	width: 90%;
+	justify-content: flex-start;
+}
+
+.quest{
+	margin-top: 2%;
+	height: 7.5%;
+	width: 100%;
+	background-color:yellow;
+	display: flex;	
+	align-items: flex-start;
+	justify-content: center;
+	/*
+	margin-right: 2%;
+	margin-left:2%;
+	*/
+}
+
+.questLabel{
+	flex-grow: 1;
+	display: flex;
+	width: 100%;
+}
+
+
