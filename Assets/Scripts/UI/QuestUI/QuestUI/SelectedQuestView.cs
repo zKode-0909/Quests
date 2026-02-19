@@ -13,7 +13,7 @@ public class SelectedQuestView : VisualElement
     Label descriptionText;
     Label titleText;
     VisualElement backPanel;
-    QuestSettings selectedQuest;
+    //QuestSettings selectedQuest;
 
 
 
@@ -65,10 +65,10 @@ public class SelectedQuestView : VisualElement
     public void HandleCloseView() { 
         DeclinedQuest.Invoke();
     }
-
-    public void ShowSelectedQuest(QuestSettings quest) {
-        titleText.text = quest.name;
-        descriptionText.text = quest.QuestDescription;
+    
+    public void ShowSelectedQuest(QuestUIItem quest) {
+        titleText.text = quest.title;
+        descriptionText.text = quest.description;
 
         this.style.display = DisplayStyle.Flex;
     }

@@ -43,7 +43,7 @@ public class QuestLogView : MonoBehaviour
         root.style.display = DisplayStyle.None;
 
     }
-
+    /*
     public void OpenQuestLog(Dictionary<string,Quest> quests) {
         root.style.display = DisplayStyle.Flex;
         foreach (KeyValuePair<string,Quest> pair in quests) {
@@ -51,7 +51,7 @@ public class QuestLogView : MonoBehaviour
             bodyHolder.Add(questVE);
         }
     }
-
+    */
     public void CloseQuestLog() { 
         bodyHolder.Clear();
         root.style.display = DisplayStyle.None;

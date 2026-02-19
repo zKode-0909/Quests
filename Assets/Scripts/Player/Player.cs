@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour,IEntity
+public class Player : MonoBehaviour,IEntity, IInteractor,IQuester
 {
     public PlayerController controller;
     public PlayerMotor motor;
@@ -26,6 +26,12 @@ public class Player : MonoBehaviour,IEntity
     public GameObject GameObject => this.gameObject;
 
     public int EntityRuntimeID => entityRuntimeID;
+
+    public QuestLog QuestLog => ((IQuester)playerQuests).QuestLog;
+
+    public HashSet<string> CompletedQuests => ((IQuester)playerQuests).CompletedQuests;
+
+    public int QuesterLevel => ((IQuester)playerQuests).QuesterLevel;
 
     int entityRuntimeID = 1;
 
@@ -103,5 +109,10 @@ public class Player : MonoBehaviour,IEntity
     private void FixedUpdate()
     {
         stateMachine.FixedUpdate();
+    }
+
+    public bool TryAddQuest(Quest quest)
+    {
+        return ((IQuester)playerQuests).TryAddQuest(quest);
     }
 }

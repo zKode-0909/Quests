@@ -13,7 +13,7 @@ public class QuestGiverView : VisualElement
     VisualElement displayButtonsHolder;
     QuestHandoutView parent;
     Button closeButton;
-    public event Action<QuestSettings> QuestSelected;
+    public event Action<QuestUIItem> QuestSelected;
     public event Action CloseView;
 
     public QuestGiverView(QuestHandoutView parent)
@@ -38,8 +38,8 @@ public class QuestGiverView : VisualElement
         displayButtonsHolder = new VisualElement();
         displayButtonsHolder.style.display = DisplayStyle.Flex;
         displayButtonsHolder.style.flexDirection = FlexDirection.Row;
-        closeButton = new Button(() => { OnClose(); });
-        displayButtonsHolder.Add(closeButton);
+       // closeButton = new Button(() => { OnClose(); });
+       // displayButtonsHolder.Add(closeButton);
         displayButtonsHolder.AddToClassList("questGiverDisplayButtons");
 
         backPanel.Add(questGiverTextHolder);
@@ -53,14 +53,14 @@ public class QuestGiverView : VisualElement
         this.style.display = DisplayStyle.None;
         this.AddToClassList("questGiverView");
     }
-
-    public void ShowQuestGiverView(IReadOnlyList<QuestSettings> quests, QuestGiver questGiver,IQuester quester) {
+    
+    public void ShowQuestGiverView(IReadOnlyList<QuestUIItem> quests, string questerName,string questGiverName) {
         this.style.display = DisplayStyle.Flex;
         backPanel.style.display = DisplayStyle.Flex;
-        questGiverBodyText.text = questGiver.questGiverText;
+        questGiverBodyText.text = "I forgot text: TEST TEXT";//questGiver.questGiverText;
         Debug.Log($"questcount is {quests.Count}");
         foreach (var quest in quests) {
-            var status = QuestUtils.DetermineQuestStatus(quest, quester);
+           //QuestUtils.DetermineQuestStatus(quest, quester);
 
             var questHolder = new VisualElement();
             
@@ -68,11 +68,11 @@ public class QuestGiverView : VisualElement
 
             questHolder.Add(questText);
 
-            Debug.Log($"status is: {status}");
+            Debug.Log($"status is: {quest.status}");
 
-            switch (status) { 
-                case QuestStatus.NotStarted: AddQuestButton(status, quest); break;
-                case QuestStatus.InProgress: AddQuestButton(status, quest); break;
+            switch (quest.status) { 
+                case QuestStatus.NotStarted: AddQuestButton(quest.status, quest); break;
+                case QuestStatus.InProgress: AddQuestButton(quest.status, quest); break;
                 default: ; break;
             }
 
@@ -85,21 +85,21 @@ public class QuestGiverView : VisualElement
 
     }
 
-    void AddQuestButton(QuestStatus questStatus,QuestSettings quest) {
+    void AddQuestButton(QuestStatus questStatus,QuestUIItem quest) {
         var questButton = new Button(() => { OnQuestSelected(quest); })
         {
-            text = $"{quest.QuestName}: {questStatus}"
+            text = $"{quest.title}: {questStatus}"
         };
         questButton.AddToClassList("quest");
         questButtonsHolder.Add(questButton);
     }
-
+    /*
     public void OnClose() {
         CloseView.Invoke();
     }
-
-
-    void OnQuestSelected(QuestSettings quest) {
+    */
+    
+    void OnQuestSelected(QuestUIItem quest) {
         QuestSelected.Invoke(quest);
     }
 
@@ -109,7 +109,7 @@ public class QuestGiverView : VisualElement
         questButtonsHolder.Clear();
     }
 
-
+    
 
 
 }

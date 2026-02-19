@@ -35,7 +35,7 @@ public class InteractionManager : MonoBehaviour
 
 
         // Does the ray intersect any objects excluding the player layer
-        Vector3 fwd = interactor.Transform.TransformDirection(Vector3.forward);
+        Vector3 fwd = interactor.GameObject.transform.TransformDirection(Vector3.forward);
         
         if (Physics.Raycast(rayOrigin, fwd, out RaycastHit hit, 10, interactableLayerMask)) {
             Debug.Log("hit layer!");
@@ -52,7 +52,7 @@ public class InteractionManager : MonoBehaviour
 
     private void Update()
     {
-        rayOrigin = new Vector3(interactor.Transform.position.x, interactor.Transform.position.y + 1.5f, interactor.Transform.position.z);
+        rayOrigin = new Vector3(interactor.GameObject.transform.position.x, interactor.GameObject.transform.position.y + 1.5f, interactor.GameObject.transform.position.z);
     }
 
 

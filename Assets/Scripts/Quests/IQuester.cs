@@ -7,5 +7,7 @@ public interface IQuester
     public HashSet<string> CompletedQuests { get; }
     public int QuesterLevel { get; }
     public bool TryAddQuest(Quest quest);
+
+    public int EntityRuntimeID { get; }
     //public void HandleAcceptQuest(IQuester quester,Quest quest);
 }

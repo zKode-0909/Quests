@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestGiver : MonoBehaviour,IInteractable,IEntity
+public class QuestGiver : MonoBehaviour,IInteractable,IEntity,IQuestGiver
 {
     //[SerializeField] QuestHandoutView view;
     [SerializeField] List<QuestSettings> quests = new();
@@ -12,6 +12,11 @@ public class QuestGiver : MonoBehaviour,IInteractable,IEntity
 
     public int EntityRuntimeID => entityRuntimeId;
 
+    
+
+
+
+  
     int entityRuntimeId = 2;
 
     [SerializeField] QuestMarkerMB questMarker;
@@ -23,8 +28,8 @@ public class QuestGiver : MonoBehaviour,IInteractable,IEntity
     public void HandleInteract(IInteractor interactor)
     {
         Debug.Log("Interacted with QuestGiver");
-
-        view.ShowQuestGiverDisplay(Quests,interactor,this);
+        EventBus<RequestOpenQuestGiverUI>.Raise(new RequestOpenQuestGiverUI(interactor.EntityRuntimeID,entityRuntimeId));
+        //view.ShowQuestGiverDisplay(Quests,interactor,this);
 
 
         
@@ -40,6 +45,7 @@ public class QuestGiver : MonoBehaviour,IInteractable,IEntity
     {
         questGiverText = "Yo nigga, you tryna get some quests? Take a look, tell me what ya think....";
         questGiverID = new StringID("questGiver", "testName", "testZone", ".001").id;
+        EntityRegistry.Register(this);
         //currentQuest = quests[0].CreateQuest(this);
     }
 

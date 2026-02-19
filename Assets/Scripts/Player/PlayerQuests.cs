@@ -4,7 +4,7 @@ using System.Linq;
 
 public class PlayerQuests : MonoBehaviour,IQuester
 {
-    [SerializeField] private QuestLogView view;
+   // [SerializeField] private QuestLogView view;
     [SerializeField] private int capacity = 25;
     [SerializeField] public Player player;
     public Dictionary<string,QuestDisplayIcon> registeredQuestGivers = new Dictionary<string,QuestDisplayIcon>();
@@ -15,6 +15,8 @@ public class PlayerQuests : MonoBehaviour,IQuester
     public HashSet<string> CompletedQuests => questLog.completedQuests;
 
     public int QuesterLevel => player.playerLevelling.playerLevel;
+
+    public int EntityRuntimeID => player.EntityRuntimeID;
 
     [SerializeField] float questGiverDetectionRadius = 500f;
     [SerializeField] LayerMask layerMask;
@@ -41,11 +43,11 @@ public class PlayerQuests : MonoBehaviour,IQuester
                 Debug.Log($"Quest: {pair.Value.questName}");
             }
             Debug.Log("DONE READING QUESTS.....");
-            view.OpenQuestLog(quests);   // or questLog.Quests as IReadOnlyList
+            //view.OpenQuestLog(quests);   // or questLog.Quests as IReadOnlyList
         }
             
-        else
-            view.CloseQuestLog();
+        //else
+          //  view.CloseQuestLog();
     }
 
     public bool TryAddQuest(Quest quest) {
@@ -62,6 +64,7 @@ public class PlayerQuests : MonoBehaviour,IQuester
         if (registeredQuestGivers.TryAdd(questGiver.questGiverID, icon)) { 
             return true;
         }
+      
         return false;
     }
 
