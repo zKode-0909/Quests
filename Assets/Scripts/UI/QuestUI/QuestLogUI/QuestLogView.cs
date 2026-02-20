@@ -11,9 +11,18 @@ public class QuestLogView : MonoBehaviour
     Label titleLabel;
     VisualElement bodyHolder;
     VisualElement questLogHolder;
+
+    EventBinding<DisplayQuestLogEvent> displayQuestLog;
+    EventBinding<CloseQuestLogEvent> closeQuestLog; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        displayQuestLog = new EventBinding<DisplayQuestLogEvent>(OpenQuestLog);
+        EventBus<DisplayQuestLogEvent>.Register(displayQuestLog);
+
+        closeQuestLog = new EventBinding<CloseQuestLogEvent>(CloseQuestLog);
+        EventBus<CloseQuestLogEvent>.Register(closeQuestLog);
+
         root = document.rootVisualElement;
         root.Clear();
 
@@ -43,15 +52,18 @@ public class QuestLogView : MonoBehaviour
         root.style.display = DisplayStyle.None;
 
     }
-    /*
-    public void OpenQuestLog(Dictionary<string,Quest> quests) {
+    
+    public void OpenQuestLog(DisplayQuestLogEvent evt) {
         root.style.display = DisplayStyle.Flex;
-        foreach (KeyValuePair<string,Quest> pair in quests) {
-            var questVE = new QuestVE(pair.Value.questName);
+        var quests = evt.Quests;
+
+        foreach (var quest in quests) {
+            var questVE = new QuestVE(quest.title);
             bodyHolder.Add(questVE);
         }
     }
-    */
+
+    
     public void CloseQuestLog() { 
         bodyHolder.Clear();
         root.style.display = DisplayStyle.None;

@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour,IEntity, IInteractor,IQuester
+public class Player : MonoBehaviour,IInteractor,ILeveller
 {
     public PlayerController controller;
     public PlayerMotor motor;
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour,IEntity, IInteractor,IQuester
     //public PlayerCombat playerCombatHandler;
     Rigidbody rb;
 
-    
+    public int questLogSize = 25;
     
     List<Timer> timers;
     CountdownTimer attackCooldownTimer;
@@ -26,14 +26,11 @@ public class Player : MonoBehaviour,IEntity, IInteractor,IQuester
     public GameObject GameObject => this.gameObject;
 
     public int EntityRuntimeID => entityRuntimeID;
+    public int EntityLevel => playerLevelling.playerLevel;
 
-    public QuestLog QuestLog => ((IQuester)playerQuests).QuestLog;
+    public int Level => playerLevelling.playerLevel;
 
-    public HashSet<string> CompletedQuests => ((IQuester)playerQuests).CompletedQuests;
-
-    public int QuesterLevel => ((IQuester)playerQuests).QuesterLevel;
-
-    int entityRuntimeID = 1;
+    public int entityRuntimeID;
 
     // public QuestLog questLog;
 
@@ -53,15 +50,18 @@ public class Player : MonoBehaviour,IEntity, IInteractor,IQuester
         }
     }
 
-    
-
-
-
-
-
     private void Awake()
     {
-        EntityRegistry.Register(this);
+        entityRuntimeID = GetEntityId();
+    }
+
+
+
+
+
+    private void Start()
+    {
+  
         playerLevelling = new PlayerLevelling();
         
         rb = controller.GetComponent<Rigidbody>();
@@ -82,12 +82,14 @@ public class Player : MonoBehaviour,IEntity, IInteractor,IQuester
         At(attackState, locomotionState, new FuncPredicate(() => !attackCooldownTimer.IsRunning));
 
         stateMachine.SetState(locomotionState);
-    }
 
-    private void Start()
-    {
         playerQuests.ForceRescanNearby();
     }
+    /*
+    private void Start()
+    {
+        
+    }*/
 
     void Any(IState to, IPredicate condition) => stateMachine.AddAnyTransition(to, condition);
 

@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     EventBinding<TestEvent> testEventBinding;
     EventBinding<PlayerEvent> playerEventBinding;
 
+    EventBinding<EntityAcceptQuest> acceptQuestBinding;
+
     public Transform Transform => this.transform;
 
     public GameObject GameObject => this.gameObject;
@@ -32,6 +34,9 @@ public class PlayerController : MonoBehaviour
 
         playerEventBinding = new EventBinding<PlayerEvent>(HandlePlayerEvent);
         EventBus<PlayerEvent>.Register(playerEventBinding);
+
+        acceptQuestBinding = new EventBinding<EntityAcceptQuest>(HandlePlayerQuestAccept);
+        EventBus<EntityAcceptQuest>.Register(acceptQuestBinding);
     }
 
     private void OnDisable()
@@ -45,6 +50,7 @@ public class PlayerController : MonoBehaviour
 
         EventBus<TestEvent>.Deregister(testEventBinding);
         EventBus<PlayerEvent>.Deregister(playerEventBinding);
+        EventBus<EntityAcceptQuest>.Deregister(acceptQuestBinding);
     }
 
 
@@ -91,6 +97,13 @@ public class PlayerController : MonoBehaviour
 
     void HandleTPress() {
         EventBus<TestEvent>.Raise(new TestEvent());
+    }
+
+    void HandlePlayerQuestAccept(EntityAcceptQuest evt) {
+        Debug.Log($"Trying to accept quest for player {evt.EntityRuntimeID}, quest is: {evt.QuestID}");
+        player.playerQuests.ForceRescanNearby();
+        Debug.Log("YO NIGGA, I JUST ACCEPTED A QUEST");
+       // player.QuestLog.TryAddQuest(evt.QuestID);
     }
 
     

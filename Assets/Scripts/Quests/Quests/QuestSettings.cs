@@ -10,13 +10,14 @@ public class QuestSettings : ScriptableObject
     public int RequiredLevel;
     public List<QuestSettings> preReqQuests;
 
+    /*
     public Quest CreateQuest(QuestGiver questGiver) {
-        return new Quest(QuestName,questGiver.questGiverID,ID);
+        return new Quest(QuestName,questGiver.questGiverID,ID,5,);
     }
     public Quest CreateQuest(string questGiverID)
     {
 
         return new Quest(QuestName, questGiverID,ID);
-    }
+    }*/
 
 }

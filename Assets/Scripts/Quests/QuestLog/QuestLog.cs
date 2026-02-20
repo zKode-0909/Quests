@@ -18,12 +18,15 @@ public class QuestLog
     }
 
     public Dictionary<string,Quest> GetQuests() { 
+        
         return quests;
     }
 
+
+
     public bool TryAddQuest(Quest quest) {
         Debug.Log($"quest: {quest}");
-        if (quests.Count >= capacity) {
+        if (quests.Count >= capacity-1) {
             Debug.Log("log full");
             return false;
         }
@@ -44,7 +47,7 @@ public class QuestLog
         }
 
         
-            
+        
 
         return true;
     }

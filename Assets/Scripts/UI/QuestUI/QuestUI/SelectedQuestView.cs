@@ -63,7 +63,7 @@ public class SelectedQuestView : VisualElement
     }
 
     public void HandleCloseView() { 
-        DeclinedQuest.Invoke();
+        DeclinedQuest?.Invoke();
     }
     
     public void ShowSelectedQuest(QuestUIItem quest) {
@@ -81,6 +81,6 @@ public class SelectedQuestView : VisualElement
     }
 
     public void OnAcceptQuest() { 
-        AcceptedQuest.Invoke();
+        AcceptedQuest?.Invoke();
     }
 }

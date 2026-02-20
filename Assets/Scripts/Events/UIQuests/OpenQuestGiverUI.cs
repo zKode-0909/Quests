@@ -8,12 +8,14 @@ public struct OpenQuestGiverUI : IEvent
     public string questerName;
     public int questGiverID;
     public int questerID;
+    public int questerLevel;
 
-    public OpenQuestGiverUI(IReadOnlyList<QuestUIItem> questsToShow,string giverName,string questerName,int questGiverID,int questerID) {
+    public OpenQuestGiverUI(IReadOnlyList<QuestUIItem> questsToShow,string giverName,string questerName,int questGiverID,int questerID,int level) {
         this.questsToShow = questsToShow;
         this.questGiverName = giverName;
         this.questerName = questerName;
         this.questGiverID = questGiverID;
         this.questerID = questerID;
+        this.questerLevel = level;
     }
 }

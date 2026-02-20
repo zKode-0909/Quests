@@ -8,26 +8,24 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] LayerMask interactableLayerMask;
     [SerializeField] MonoBehaviour target;
 
-    IInteractor interactor;
-    IInputSource input;
-    
+    private IInteractor interactor;
+    private IInputSource input;
 
-    Vector3 rayOrigin = Vector3.zero;
+
+    Vector3 origin = Vector3.zero;
     private void Awake()
     {
-        interactor = (IInteractor)target;
-        input = (IInputSource)inputReader;
-        if (interactor == null) {
-            Debug.Log("failed getting target");
-        }
+        interactor = target as IInteractor;
+        input = inputReader as IInputSource;
 
-        if (input == null)
-        {
-            Debug.Log("failed getting input");
-        }
-        //target = this.gameObject.transform;
-        input.InteractEvent += OnInteract;
+        if (interactor == null) Debug.LogError("Target must implement IInteractor", this);
+        if (input == null) Debug.LogError("InputReader must implement IInputSource", this);
+
+        
     }
+
+    void OnEnable() => input.InteractEvent += OnInteract;
+    void OnDisable() { if (input != null) input.InteractEvent -= OnInteract; }
 
 
     void OnInteract() {
@@ -36,8 +34,8 @@ public class InteractionManager : MonoBehaviour
 
         // Does the ray intersect any objects excluding the player layer
         Vector3 fwd = interactor.GameObject.transform.TransformDirection(Vector3.forward);
-        
-        if (Physics.Raycast(rayOrigin, fwd, out RaycastHit hit, 10, interactableLayerMask)) {
+        origin = interactor.GameObject.transform.position + Vector3.up * 1.5f;
+        if (Physics.Raycast(origin, fwd, out RaycastHit hit, 10, interactableLayerMask)) {
             Debug.Log("hit layer!");
             var interactable = hit.collider.GetComponentInParent<IInteractable>();
             if (interactable != null)
@@ -50,10 +48,8 @@ public class InteractionManager : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        rayOrigin = new Vector3(interactor.GameObject.transform.position.x, interactor.GameObject.transform.position.y + 1.5f, interactor.GameObject.transform.position.z);
-    }
+  
+
 
 
 }

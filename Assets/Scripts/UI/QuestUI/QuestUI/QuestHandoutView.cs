@@ -18,7 +18,7 @@ public class QuestHandoutView : MonoBehaviour
    // IReadOnlyList<QuestSettings> allQuests;
     QuestUIItem currentQuest;
      string questGiverName;
-
+    int questerLevel;
     int questerID;
     int giverID;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,7 +40,7 @@ public class QuestHandoutView : MonoBehaviour
         questGiverView.QuestSelected += ShowQuestDisplay;
         questGiverView.CloseView += CloseDisplay;
         selectedQuestView.DeclinedQuest += BackToQuestGiver;
-    //    selectedQuestView.AcceptedQuest += HandleAcceptQuest;
+        selectedQuestView.AcceptedQuest += HandleAcceptQuest;
         
         CloseDisplay();
         //CloseQuestDisplay();
@@ -57,7 +57,7 @@ public class QuestHandoutView : MonoBehaviour
 
     void HandleOpenUI(OpenQuestGiverUI evt) {
         Debug.Log($"We opening UI for {evt.questGiverName} and quester: {evt.questerName}. There are {evt.questsToShow.Count} quests");
-        ShowQuestGiverDisplay(evt.questsToShow,evt.questerName,evt.questGiverName,evt.questerID,evt.questGiverID);
+        ShowQuestGiverDisplay(evt.questsToShow,evt.questerName,evt.questGiverName,evt.questerID,evt.questGiverID,evt.questerLevel);
     }
 
 
@@ -84,11 +84,11 @@ public class QuestHandoutView : MonoBehaviour
     }
     
     public void BackToQuestGiver() {
-        EventBus<RequestOpenQuestGiverUI>.Raise(new RequestOpenQuestGiverUI(questerID,giverID));
+        EventBus<RequestOpenQuestGiverUI>.Raise(new RequestOpenQuestGiverUI(questerID,giverID,questerLevel));
         //ShowQuestGiverDisplay(allQuests, currentInteractor, questGiver);
     }
     
-    public void ShowQuestGiverDisplay(IReadOnlyList<QuestUIItem> quests,string questerName,string giverName,int questerID,int giverID) {
+    public void ShowQuestGiverDisplay(IReadOnlyList<QuestUIItem> quests,string questerName,string giverName,int questerID,int giverID,int questerLevel) {
         root.style.display= DisplayStyle.Flex;
         currentQuester = questerName;
         //allQuests.Clear();
@@ -97,7 +97,7 @@ public class QuestHandoutView : MonoBehaviour
         this.questerID = questerID;
         this.giverID = giverID;
         selectedQuestView.HideSelectedQuest();
-
+        this.questerLevel = questerLevel;
         questGiverView.ShowQuestGiverView(questsToDisplay, currentQuester, questGiverName);
         
        
@@ -119,14 +119,6 @@ public class QuestHandoutView : MonoBehaviour
     
     public void HandleAcceptQuest() {
         EventBus<RequestAcceptQuest>.Raise(new RequestAcceptQuest(questerID,giverID,currentQuest.questID));
-        /*
-        if (currentInteractor.GameObject.TryGetComponent<IQuester>(out var quester)) {
-            Debug.Log($"accepted quest from questGiver, quester is {quester}, currentQuest is {currentQuest}");
-            var newQuest = currentQuest.CreateQuest(currentQuest.ID);
-            Debug.Log($"new quest ID: {currentQuest.ID}   newQuest: {newQuest}");
-            qService.TryAcceptQuest(quester, newQuest);
-        }*/
-
         BackToQuestGiver();
         
     }

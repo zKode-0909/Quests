@@ -10,7 +10,7 @@ public static class EventBus<T> where T : IEvent
     public static void Deregister(IEventBinding<T> binding) => bindings.Remove(binding);
 
     public static void Raise(T evt) {
-        Debug.Log("Raising event");
+
         foreach (var binding in bindings.ToArray())
         {
             binding.OnEvent?.Invoke(evt);

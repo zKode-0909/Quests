@@ -2,11 +2,13 @@ using UnityEngine;
 
 public struct RequestOpenQuestGiverUI : IEvent
 {
-    public readonly int InteractorEntityId;
+    public readonly int QuesterEntityId;
     public readonly int QuestGiverEntityId;
-    public RequestOpenQuestGiverUI(int interactorEntityId, int questGiverEntityId)
+    public readonly int QuesterLevel;
+    public RequestOpenQuestGiverUI(int questerEntityId, int questGiverEntityId,int questerLevel)
     {
-        InteractorEntityId = interactorEntityId;
+        QuesterEntityId = questerEntityId;
         QuestGiverEntityId = questGiverEntityId;
+        QuesterLevel = questerLevel;
     }
 }

@@ -38,8 +38,8 @@ public class QuestGiverView : VisualElement
         displayButtonsHolder = new VisualElement();
         displayButtonsHolder.style.display = DisplayStyle.Flex;
         displayButtonsHolder.style.flexDirection = FlexDirection.Row;
-       // closeButton = new Button(() => { OnClose(); });
-       // displayButtonsHolder.Add(closeButton);
+        closeButton = new Button(() => { OnClose(); });
+        displayButtonsHolder.Add(closeButton);
         displayButtonsHolder.AddToClassList("questGiverDisplayButtons");
 
         backPanel.Add(questGiverTextHolder);
@@ -58,7 +58,7 @@ public class QuestGiverView : VisualElement
         this.style.display = DisplayStyle.Flex;
         backPanel.style.display = DisplayStyle.Flex;
         questGiverBodyText.text = "I forgot text: TEST TEXT";//questGiver.questGiverText;
-        Debug.Log($"questcount is {quests.Count}");
+      
         foreach (var quest in quests) {
            //QuestUtils.DetermineQuestStatus(quest, quester);
 
@@ -69,7 +69,6 @@ public class QuestGiverView : VisualElement
             questHolder.Add(questText);
 
             Debug.Log($"status is: {quest.status}");
-
             switch (quest.status) { 
                 case QuestStatus.NotStarted: AddQuestButton(quest.status, quest); break;
                 case QuestStatus.InProgress: AddQuestButton(quest.status, quest); break;
@@ -93,11 +92,11 @@ public class QuestGiverView : VisualElement
         questButton.AddToClassList("quest");
         questButtonsHolder.Add(questButton);
     }
-    /*
+    
     public void OnClose() {
         CloseView.Invoke();
     }
-    */
+    
     
     void OnQuestSelected(QuestUIItem quest) {
         QuestSelected.Invoke(quest);

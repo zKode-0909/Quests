@@ -2,15 +2,41 @@ using UnityEngine;
 
 public class QuestBootstrapper : MonoBehaviour
 {
+    [SerializeField] QuestDB dB;
+    public QuestGiverService questGiverService;
+    QuestLogRegistry questLogRegistry;
+    QuestFactory questFactory;
+    public QuestGiverRegistry questGiverRegistry;
+    QuestService questService;
+    QuestLogController questLogController;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+
+
+
+    private void OnDestroy()
     {
-        QuestGiverService.InitiateService();
+        questGiverService.Dispose();
+        questService.Dispose();
+        questLogController.Dispose();
+       
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void BootStrap(QuestLogRegistry logRegistry) {
+        questGiverRegistry = new QuestGiverRegistry();
+
+        questFactory = new QuestFactory();
+        questFactory.InitializeFactory(dB);
+
+        questLogRegistry = logRegistry;
+
+        questGiverService = new QuestGiverService();
+        questGiverService.InitiateService(questLogRegistry, questGiverRegistry);
+
+        questService = new QuestService();
+        questService.Initialize(questFactory, questLogRegistry);
+
+        questLogController = new QuestLogController();
+        questLogController.InitiateService(questFactory, questLogRegistry);
     }
+
 }
