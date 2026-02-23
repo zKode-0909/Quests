@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestGiver : MonoBehaviour,IInteractable,IQuestGiver
+public class QuestGiver : MonoBehaviour,IInteractable
 {
     //[SerializeField] QuestHandoutView view;
     [SerializeField] QuestBootstrapper bootstrapper;
@@ -44,12 +44,13 @@ public class QuestGiver : MonoBehaviour,IInteractable,IQuestGiver
     private void Awake()
     {
         entityRuntimeId = GetEntityId();
-        Debug.Log(bootstrapper.questGiverRegistry.TryRegister(this));//.questGiverRegistry//.TryRegister(this);
+        //Debug.Log(bootstrapper.questGiverRegistry);
+        bootstrapper.questGiverRegistry.TryRegister(this);//.questGiverRegistry//.TryRegister(this); 
     }
     private void Start()
     {
-        
 
+        
         questGiverText = "Yo nigga, you tryna get some quests? Take a look, tell me what ya think....";
         questGiverID = new StringID("questGiver", "testName", "testZone", ".001").id;
         

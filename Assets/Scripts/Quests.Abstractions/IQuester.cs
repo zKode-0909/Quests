@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public interface IQuester
 {
     public QuestLog QuestLog { get; }
@@ -10,4 +10,4 @@ public interface IQuester
 
     public int EntityRuntimeID { get; }
     //public void HandleAcceptQuest(IQuester quester,Quest quest);
-}
+}*/

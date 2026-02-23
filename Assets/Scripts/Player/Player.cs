@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Transactions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,13 +14,16 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
     public PlayerLevelling playerLevelling;
     //public PlayerEquipment equipment;
    // public PlayerStats statSnapshot;
-    //public PlayerCombat playerCombatHandler;
     Rigidbody rb;
-
+    [SerializeField] LayerMask questGiverSearchLayerMask;
+    [SerializeField] WeaponController weaponController;
+    [SerializeField] Animator animator;
     public int questLogSize = 25;
     
     List<Timer> timers;
-    CountdownTimer attackCooldownTimer;
+    
+
+    CountdownTimer scanCooldownTimer;
     [SerializeField] float attackCooldown = 0.5f;
     public string ID = "testID";
 
@@ -43,20 +47,26 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
 
     public void RequestAttack()
     {
-        //statSnapshot = new PlayerStats();
-        if (!attackCooldownTimer.IsRunning)
-        {
-            attackCooldownTimer.Start();
-        }
+        weaponController.TryAttack();
     }
 
     private void Awake()
     {
+        scanCooldownTimer = new CountdownTimer(10f);
+
+        scanCooldownTimer.OnTimerStart = HandleTimerStart;
+        scanCooldownTimer.OnTimerStop = HandleTimerFinish;
         entityRuntimeID = GetEntityId();
     }
 
 
+    void HandleTimerStart() {
+        Debug.Log("Timer started");
+    }
 
+    void HandleTimerFinish() {
+        Debug.Log("Timer Finsihed");
+    }
 
 
     private void Start()
@@ -69,27 +79,71 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
         motor = new PlayerMotor(rb, transform, 7f, Camera.main);
         stateMachine = new StateMachine();
 
-        attackCooldownTimer = new CountdownTimer(attackCooldown);
-        timers = new List<Timer>(1) { attackCooldownTimer };
-
+        
+        timers = new List<Timer>(1) { scanCooldownTimer };
        // playerQuests = new PlayerQuests();
         //playerQuests.SetPlayerQuestLog(QuestCapacity);
 
-        var locomotionState = new LocomotionState(this);
-        var attackState = new AttackState(this);
+        var locomotionState = new LocomotionState(this,animator);
+        var attackState = new AttackState(this,animator);
 
-        At(locomotionState, attackState, new FuncPredicate(() => attackCooldownTimer.IsRunning));
-        At(attackState, locomotionState, new FuncPredicate(() => !attackCooldownTimer.IsRunning));
+        At(locomotionState, attackState, new FuncPredicate(() => weaponController.attackCooldownTimer.IsRunning));
+        At(attackState, locomotionState, new FuncPredicate(() => !weaponController.attackCooldownTimer.IsRunning));
 
         stateMachine.SetState(locomotionState);
 
         playerQuests.ForceRescanNearby();
+    }
+
+    void UpdateAnimator()
+    {
+       // Debug.Log(Mathf.Lerp(0,600f,currentSpeed));
+        animator.SetFloat("Speed", Mathf.InverseLerp(0,7f,motor.GetVelocityMagnitude()));
     }
     /*
     private void Start()
     {
         
     }*/
+
+    public void ForceRescanNearby()
+    {
+        //List<int> idList = new List<int>();
+        
+        var hits = Physics.OverlapSphere(
+            this.gameObject.transform.position,
+            500f,
+            questGiverSearchLayerMask
+        );
+
+            foreach (var col in hits)
+            {
+                var giver = col.GetComponentInParent<QuestGiver>();
+                if (giver != null)
+                {
+                    //idList.Add(giver.entityRuntimeId);
+                    EventBus<RequestQuestGiverIconDisplay>.Raise(new RequestQuestGiverIconDisplay(giver.EntityRuntimeID,entityRuntimeID, EntityLevel));
+                }
+
+            }
+
+
+        }
+
+
+
+
+
+
+
+    void HandleTimers()
+    {
+        foreach (var timer in timers)
+        {
+            timer.Tick(Time.deltaTime);
+        }
+    }
+
 
     void Any(IState to, IPredicate condition) => stateMachine.AddAnyTransition(to, condition);
 
@@ -102,9 +156,13 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
 
     private void Update()
     {
+        HandleTimers();
+        if (scanCooldownTimer.IsFinished) { 
+            scanCooldownTimer.Start();
+        }
         stateMachine.Update();
-        
-
+       
+        UpdateAnimator();
 
     }
 
@@ -113,8 +171,4 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
         stateMachine.FixedUpdate();
     }
 
-    public bool TryAddQuest(Quest quest)
-    {
-        return ((IQuester)playerQuests).TryAddQuest(quest);
-    }
 }

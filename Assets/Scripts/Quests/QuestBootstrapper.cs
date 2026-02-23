@@ -30,7 +30,7 @@ public class QuestBootstrapper : MonoBehaviour
         questLogRegistry = logRegistry;
 
         questGiverService = new QuestGiverService();
-        questGiverService.InitiateService(questLogRegistry, questGiverRegistry);
+        questGiverService.InitiateService(questLogRegistry, questGiverRegistry,questFactory);
 
         questService = new QuestService();
         questService.Initialize(questFactory, questLogRegistry);

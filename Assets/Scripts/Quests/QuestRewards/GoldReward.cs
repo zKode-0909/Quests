@@ -9,5 +9,5 @@ public class GoldReward : QuestReward
     public GoldReward(int amount) { this.amount = amount; }
     public GoldReward() { } // optional, mainly for Unity/serialization comfort
 
-    public override void GrantReward(IQuester quester) => Debug.Log("granting Gold reward");//quester.AddXP(amount);
+    //public override void GrantReward(IQuester quester) => Debug.Log("granting Gold reward");//quester.AddXP(amount);
 }

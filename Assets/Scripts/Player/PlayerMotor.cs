@@ -1,4 +1,6 @@
+using UnityEditor.U2D;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMotor 
 {
@@ -7,7 +9,7 @@ public class PlayerMotor
     Transform transform;
     Camera camera;
     float speed;
-    float currentSpeed = 0;
+    float moveSpeed = 0;
     float rotationSpeed = 360f;
     float smoothTime = 0.2f;
     float velocity;
@@ -17,6 +19,14 @@ public class PlayerMotor
         transform = trns;
         speed = speed_;
         camera = cam;
+    }
+
+    public float GetCurrentSpeed() { 
+        return rb.linearVelocity.sqrMagnitude;
+    }
+
+    public float GetBaseSpeed() { 
+        return speed;
     }
 
     public void Move()
@@ -39,12 +49,18 @@ public class PlayerMotor
         dir.Normalize();
 
         // Speed is already units/sec (no dt factor!)
-        float moveSpeed = speed;
-        rb.linearVelocity = new Vector3(dir.x * moveSpeed, rb.linearVelocity.y, dir.z * moveSpeed);
+        //moveSpeed = speed;
+        rb.linearVelocity = new Vector3(dir.x * speed, rb.linearVelocity.y, dir.z * speed);
 
         // Rotate via rigidbody
         Quaternion targetRot = Quaternion.LookRotation(dir);
         rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, targetRot, rotationSpeed * Time.fixedDeltaTime));
+    }
+
+    public float GetVelocityMagnitude()
+    {
+        Debug.Log($"MAGNITUDE IT: {rb.linearVelocity.magnitude}");
+        return rb.linearVelocity.magnitude; // (or rb.linearVelocity.magnitude if you're on a Unity version where that's correct)
     }
 
 
@@ -54,14 +70,14 @@ public class PlayerMotor
 
     void SmoothSpeed(float value)
     {
-        currentSpeed = Mathf.SmoothDamp(currentSpeed, value, ref velocity, smoothTime);
+        moveSpeed = Mathf.SmoothDamp(moveSpeed, value, ref velocity, smoothTime);
     }
 
     void HandleHorizontalMovement(Vector3 dir)
     {
-        var velocity = dir * (currentSpeed * UnityEngine.Time.fixedDeltaTime);
+        var velocity = dir * (moveSpeed * UnityEngine.Time.fixedDeltaTime);
         rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
-        Debug.Log($"moving horizontally with speed {currentSpeed}");
+        Debug.Log($"moving horizontally with speed {moveSpeed}");
     }
 
 }

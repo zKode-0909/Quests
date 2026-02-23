@@ -1,19 +1,22 @@
 using UnityEngine;
 using System;
 
-public class AttackState : BaseState
+public class AttackState : BasePlayerState
 {
-
-    public AttackState(Player player) : base(player)
+    Animator animator;
+    Player player;
+    public AttackState(Player player,Animator animator) : base(player,animator)
     {
-
+        this.animator = animator;
+        this.player = player;
     }
 
     public override void OnEnter()
     {
-        Debug.Log("entering attack");
-       // player.playerCombatHandler.TryAttack(player.statSnapshot,player.equipment.weapon);
-        //animator.CrossFade(LocomotionHash, crossFadeDuration);
+        Debug.Log("ENTERING ATTACK");
+        // player.playerCombatHandler.TryAttack(player.statSnapshot,player.equipment.weapon);
+        Debug.Log($"crossfade is {crossFadeDuration}");
+        animator.CrossFade(AttackHash, crossFadeDuration);
     }
 
     public override void FixedUpdate()
@@ -25,6 +28,7 @@ public class AttackState : BaseState
     public override void OnExit()
     {
         Debug.Log("leaving attackstate");
+       
     }
 }
 

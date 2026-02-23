@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
+[DefaultExecutionOrder(-10000)]
 public class GameBootstrapper : MonoBehaviour
 {
     [SerializeField] QuestBootstrapper questBootstrapper;
