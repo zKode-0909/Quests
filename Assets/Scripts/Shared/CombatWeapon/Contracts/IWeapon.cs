@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IWeapon
 {
-    public bool TryAttack(AttackContext attCtx, out HitContext hitCtx);
+    public List<HitContext> ExecuteAttack(AttackContext attCtx);
 }

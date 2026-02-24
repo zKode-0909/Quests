@@ -3,25 +3,26 @@ using UnityEngine;
 public class CombatController : MonoBehaviour
 {
     public CountdownTimer attackCooldownTimer;
-    IWeapon weapon;
+    
 
     private void Awake()
     {
         attackCooldownTimer = new CountdownTimer(1f);
     }
     public bool TryAttack(IWeapon w) {
-        weapon = w;
+        
         attackCooldownTimer.Start();
-        var aCtx = BuildAttackContext();
-        if (w.TryAttack(aCtx,out var hit))
-        {
-            hit.target.TakeDamage(5f);
+        var aCtx = BuildAttackContext(w);
+        var hitCtx = w.ExecuteAttack(aCtx);
+        for (int i = 0; i < hitCtx.Count; i++) {
+            Debug.Log($"hit: {i+1} - {hitCtx[i].target}");
         }
+    
         Debug.Log("IM FUCKING KILLING THIS NIGGA!");
         return true;
     }
 
-    AttackContext BuildAttackContext() {
+    AttackContext BuildAttackContext(IWeapon weapon) {
         return new AttackContext(this.gameObject);
     }
 

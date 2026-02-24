@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour,IInteractor,ILeveller
+public class Player : MonoBehaviour,IInteractor,ILeveller,IDamageable
 {
     public PlayerController controller;
     public PlayerMotor motor;
@@ -18,6 +18,10 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
     [SerializeField] LayerMask questGiverSearchLayerMask;
     [SerializeField] CombatController combatController;
     [SerializeField] Animator animator;
+    [SerializeField] WeaponSettings weapon;
+    [SerializeField] Transform holdingHand;
+    Weapon runtimeWeapon;
+    WeaponFactory weaponFactory; 
     public int questLogSize = 25;
     
     List<Timer> timers;
@@ -47,11 +51,16 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
 
     public void RequestAttack()
     {
-        combatController.TryAttack();
+        if (runtimeWeapon != null) {
+            Debug.Log($"attack result: {combatController.TryAttack(runtimeWeapon)}");
+        }
+        
     }
 
     private void Awake()
     {
+        weaponFactory = new WeaponFactory();
+        runtimeWeapon = weaponFactory.CreateWeapon(weapon,holdingHand);
         scanCooldownTimer = new CountdownTimer(10f);
 
         scanCooldownTimer.OnTimerStart = HandleTimerStart;
@@ -171,4 +180,8 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
         stateMachine.FixedUpdate();
     }
 
+    public void TakeDamage(float damage)
+    {
+        Debug.Log("I have been hit");
+    }
 }

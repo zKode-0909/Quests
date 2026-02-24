@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88f3ee36ba126b4692b29e03e53d916, type: 3}
+  m_Name: TestWeapon
+  m_EditorClassIdentifier: Game.Weapons::WeaponSettings
+  strategy: {fileID: 11400000, guid: 076bdcb6adc9d6a47a0e51209e9cddfc, type: 2}
+  weaponName: Test We
+  weaponDamage: 8
+  prefab: {fileID: 7418973723414755161, guid: 9327a44db05a77c4697ea8bb028825f9, type: 3}

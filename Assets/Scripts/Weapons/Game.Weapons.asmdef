@@ -2,7 +2,8 @@
     "name": "Game.Weapons",
     "rootNamespace": "",
     "references": [
-        "GUID:2f7c286fd8b0fb74d9f46b32c5cb095e"
+        "GUID:2f7c286fd8b0fb74d9f46b32c5cb095e",
+        "GUID:7cfca189da9c2b3458671fc3082a8d77"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

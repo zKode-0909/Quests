@@ -5,6 +5,8 @@ using UnityEngine.UIElements;
 public class GameBootstrapper : MonoBehaviour
 {
     [SerializeField] QuestBootstrapper questBootstrapper;
+
+  
     QuestLogRegistry logRegistry;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
