@@ -69,9 +69,10 @@ public class QuestGiverView : VisualElement
             questHolder.Add(questText);
 
             Debug.Log($"status is: {quest.status}");
+            
             switch (quest.status) { 
-                case QuestStatus.NotStarted: AddQuestButton(quest.status, quest); break;
-                case QuestStatus.InProgress: AddQuestButton(quest.status, quest); break;
+                case "NotStarted": AddQuestButton(quest.status, quest); break;
+                case "InProgress": AddQuestButton(quest.status, quest); break;
                 default: ; break;
             }
 
@@ -84,7 +85,7 @@ public class QuestGiverView : VisualElement
 
     }
 
-    void AddQuestButton(QuestStatus questStatus,QuestUIItem quest) {
+    void AddQuestButton(string questStatus,QuestUIItem quest) {
         var questButton = new Button(() => { OnQuestSelected(quest); })
         {
             text = $"{quest.title}: {questStatus}"

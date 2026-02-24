@@ -16,7 +16,7 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
    // public PlayerStats statSnapshot;
     Rigidbody rb;
     [SerializeField] LayerMask questGiverSearchLayerMask;
-    [SerializeField] WeaponController weaponController;
+    [SerializeField] CombatController combatController;
     [SerializeField] Animator animator;
     public int questLogSize = 25;
     
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
 
     public void RequestAttack()
     {
-        weaponController.TryAttack();
+        combatController.TryAttack();
     }
 
     private void Awake()
@@ -87,8 +87,8 @@ public class Player : MonoBehaviour,IInteractor,ILeveller
         var locomotionState = new LocomotionState(this,animator);
         var attackState = new AttackState(this,animator);
 
-        At(locomotionState, attackState, new FuncPredicate(() => weaponController.attackCooldownTimer.IsRunning));
-        At(attackState, locomotionState, new FuncPredicate(() => !weaponController.attackCooldownTimer.IsRunning));
+        At(locomotionState, attackState, new FuncPredicate(() =>  combatController.attackCooldownTimer.IsRunning));
+        At(attackState, locomotionState, new FuncPredicate(() => !combatController.attackCooldownTimer.IsRunning));
 
         stateMachine.SetState(locomotionState);
 

@@ -127,7 +127,7 @@ public class QuestGiverService
         foreach (var quest in questGiver.Quests) {
             var status = QuestUtils.DetermineQuestStatus(quest, questLog,level);
             if (status != QuestStatus.None) {
-                items.Add(new QuestUIItem(quest.QuestName, quest.QuestDescription, questGiver.EntityRuntimeID, quest.ID, status));
+                items.Add(new QuestUIItem(quest.QuestName, quest.QuestDescription, questGiver.EntityRuntimeID, quest.ID, $"{status}"));
             }
         }
 

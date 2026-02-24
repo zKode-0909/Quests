@@ -632,8 +632,8 @@ MonoBehaviour:
   playerQuests: {fileID: 529750986}
   questGiverSearchLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  weaponController: {fileID: 529750988}
+    m_Bits: 64
+  combatController: {fileID: 529750988}
   animator: {fileID: 529750989}
   questLogSize: 25
   attackCooldown: 0.5
@@ -747,6 +747,32 @@ Transform:
   - {fileID: 963346350}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &568769390 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1178882832859914, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
+  m_PrefabInstance: {fileID: 2031337115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &568769394
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568769390}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15.5640135, y: 227.7897, z: 16.709358}
+  m_Center: {x: 0.06347557, y: -11.817639, z: -0.42942566}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1350,6 +1376,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1990947038607044, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 529750988}
+    - targetCorrespondingSourceObject: {fileID: 1178882832859914, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 568769394}
   m_SourcePrefab: {fileID: 100100000, guid: 4dcb2cf86daec2f49a5b6d63d254161a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

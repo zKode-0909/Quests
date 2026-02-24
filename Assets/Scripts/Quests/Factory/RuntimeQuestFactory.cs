@@ -30,7 +30,7 @@ public class QuestFactory
 
     public QuestUIItem CreateQuestUIFromQuest(Quest runtimeQuest) { 
         var status = QuestUtils.DetermineQuestRuntimeStatus(runtimeQuest);
-        return new QuestUIItem(runtimeQuest.questName,"Sorry forgot",2,runtimeQuest.questID,status);
+        return new QuestUIItem(runtimeQuest.questName, "Sorry forgot", 2, runtimeQuest.questID,$"{status}");
 
         
     }
@@ -41,7 +41,7 @@ public class QuestFactory
         foreach (KeyValuePair<string, Quest> quest in log.GetQuests())
         {
             var status = QuestUtils.DetermineQuestRuntimeStatus(quest.Value);
-            var item = new QuestUIItem(quest.Value.questName, "FAKE DESCRIPTION", 2, quest.Value.questGiverID, status);
+            var item = new QuestUIItem(quest.Value.questName, "FAKE DESCRIPTION", 2, quest.Value.questGiverID, $"{status}");
 
             uiQuests.Add(item);
         }
