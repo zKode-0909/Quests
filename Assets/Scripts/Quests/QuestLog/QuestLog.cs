@@ -14,8 +14,12 @@ public class QuestLog
         this.capacity = capacity;
         quests = new Dictionary<string, Quest>();
         completedQuests = new HashSet<string>();
-        Debug.Log($"Questlog create with {capacity} elements");
+        
     }
+    /*
+    public Quest GetQuestByObjective() { 
+        return 
+    }*/
 
     public Dictionary<string,Quest> GetQuests() { 
         

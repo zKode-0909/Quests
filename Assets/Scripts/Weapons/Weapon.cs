@@ -7,26 +7,37 @@ public class Weapon : IWeapon
     string weaponName;
     int damage;
     GameObject weapon;
+    float attackRange;
     List<HitContext> hits = new List<HitContext>();
 
-    public Weapon(BaseWeaponStrategy strat,string name,int dmg) { 
+    public Weapon(BaseWeaponStrategy strat,string name,int dmg,float range) { 
         strategy = strat;
         weaponName = name;
-        damage = dmg;   
-      
+        damage = dmg; 
+        attackRange = range;
 
     }
 
     
-    public List<HitContext> ExecuteAttack(AttackContext attCtx)
+
+
+    public bool TryAttack(GameObject attacker,int runtimeID)
     {
+        var attCtx = new AttackContext(attacker,damage,attackRange);
         hits.Clear();
         Debug.Log($"about to execute weapon strat for: {attCtx.attacker.name}");
-        strategy.CollectHits(attCtx, this, hits);
+        strategy.CollectHits(attCtx, hits);
 
-        Debug.Log($"just hit {hits} damagables");
+        Debug.Log($"just hit {hits.Count} damagables");
 
-        return hits;
+        foreach (var hit in hits) {
+            //Debug.Log($"didnt hit: {hit.target}");
+            hit.target.TakeDamage(-damage,runtimeID);
+        }
+
+        return true;
+
+        //return hits;
         /*
         Debug.Log($"attack context during attack: attacker = {attCtx.attacker}");
 

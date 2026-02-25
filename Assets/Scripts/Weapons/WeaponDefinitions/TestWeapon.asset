@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: TestWeapon
   m_EditorClassIdentifier: Game.Weapons::WeaponSettings
   strategy: {fileID: 11400000, guid: 076bdcb6adc9d6a47a0e51209e9cddfc, type: 2}
-  weaponName: Test We
-  weaponDamage: 8
+  weaponName: Test Weapon
+  weaponDamage: 10
   prefab: {fileID: 7418973723414755161, guid: 9327a44db05a77c4697ea8bb028825f9, type: 3}
+  cooldown: 0.5
+  range: 1

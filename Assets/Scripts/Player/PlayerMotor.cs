@@ -59,7 +59,6 @@ public class PlayerMotor
 
     public float GetVelocityMagnitude()
     {
-        Debug.Log($"MAGNITUDE IT: {rb.linearVelocity.magnitude}");
         return rb.linearVelocity.magnitude; // (or rb.linearVelocity.magnitude if you're on a Unity version where that's correct)
     }
 

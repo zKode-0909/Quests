@@ -33,7 +33,6 @@ public class PlayerQuests : MonoBehaviour
 
     public void ForceRescanNearby()
     {
-        Debug.Log("Doing scans");
         var hits = Physics.OverlapSphere(
             this.gameObject.transform.position,
             questGiverDetectionRadius,
@@ -44,7 +43,6 @@ public class PlayerQuests : MonoBehaviour
         {
             var giver = col.GetComponentInParent<QuestGiver>();
             if (giver != null) {
-                Debug.Log("Found QuestGiver");
                 EventBus<RequestQuestGiverIconDisplay>.Raise(new RequestQuestGiverIconDisplay(giver.EntityRuntimeID, player.EntityRuntimeID,player.playerLevelling.playerLevel));  
             }
                 

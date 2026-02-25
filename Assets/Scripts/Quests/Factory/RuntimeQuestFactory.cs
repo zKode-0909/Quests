@@ -9,7 +9,7 @@ public class QuestFactory
 
     public void InitializeFactory(QuestDB db) {
         dataBase = db;
-   
+        
 
     }
 
@@ -17,7 +17,7 @@ public class QuestFactory
         if (dataBase.TryGetQuestDef(questID, out var q))
         {
             var QuestSettings = q;
-            quest = new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel);
+            quest = new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel,BuildRuntimeObjectiveList(QuestSettings.objectives));
             return true;
         }
         else {
@@ -26,6 +26,15 @@ public class QuestFactory
         }
 
         
+    }
+
+    public List<QuestObjective> BuildRuntimeObjectiveList(List<QuestObjectiveSettings> questObjectiveSettings) {
+        List<QuestObjective> objectives = new List<QuestObjective>();
+        foreach (var objective in questObjectiveSettings) {
+            objectives.Add(objective.CreateRuntimeQuestObjective());
+        }
+
+        return objectives;
     }
 
     public QuestUIItem CreateQuestUIFromQuest(Quest runtimeQuest) { 

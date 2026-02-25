@@ -16,10 +16,11 @@ public class Player : MonoBehaviour,IInteractor,ILeveller,IDamageable
    // public PlayerStats statSnapshot;
     Rigidbody rb;
     [SerializeField] LayerMask questGiverSearchLayerMask;
-    [SerializeField] CombatController combatController;
+
     [SerializeField] Animator animator;
     [SerializeField] WeaponSettings weapon;
     [SerializeField] Transform holdingHand;
+    public CountdownTimer attackCooldownTimer;
     Weapon runtimeWeapon;
     WeaponFactory weaponFactory; 
     public int questLogSize = 25;
@@ -42,23 +43,34 @@ public class Player : MonoBehaviour,IInteractor,ILeveller,IDamageable
 
     // public QuestLog questLog;
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.transform.position, weapon.range);
+    }
 
-
-    public void TakeDamage()
+    public void TakeDamage(float damage,int damagerID)
     {
         Debug.Log("Took Damage");
     }
 
     public void RequestAttack()
     {
-        if (runtimeWeapon != null) {
-            Debug.Log($"attack result: {combatController.TryAttack(runtimeWeapon)}");
+        if (runtimeWeapon != null)
+        {
+            //var ctx = new AttackContext(this.gameObject);
+            attackCooldownTimer.Start();
+            Debug.Log($"attack result: {runtimeWeapon.TryAttack(this.gameObject,this.entityRuntimeID)}");
+        }
+        else {
+            Debug.Log("No weapon");
         }
         
     }
 
     private void Awake()
     {
+        attackCooldownTimer = new CountdownTimer(weapon.cooldown);
         weaponFactory = new WeaponFactory();
         runtimeWeapon = weaponFactory.CreateWeapon(weapon,holdingHand);
         scanCooldownTimer = new CountdownTimer(10f);
@@ -70,11 +82,9 @@ public class Player : MonoBehaviour,IInteractor,ILeveller,IDamageable
 
 
     void HandleTimerStart() {
-        Debug.Log("Timer started");
     }
 
     void HandleTimerFinish() {
-        Debug.Log("Timer Finsihed");
     }
 
 
@@ -89,15 +99,15 @@ public class Player : MonoBehaviour,IInteractor,ILeveller,IDamageable
         stateMachine = new StateMachine();
 
         
-        timers = new List<Timer>(1) { scanCooldownTimer };
+        timers = new List<Timer>(1) { scanCooldownTimer,attackCooldownTimer };
        // playerQuests = new PlayerQuests();
         //playerQuests.SetPlayerQuestLog(QuestCapacity);
 
         var locomotionState = new LocomotionState(this,animator);
         var attackState = new AttackState(this,animator);
 
-        At(locomotionState, attackState, new FuncPredicate(() =>  combatController.attackCooldownTimer.IsRunning));
-        At(attackState, locomotionState, new FuncPredicate(() => !combatController.attackCooldownTimer.IsRunning));
+        At(locomotionState, attackState, new FuncPredicate(() =>  attackCooldownTimer.IsRunning));
+        At(attackState, locomotionState, new FuncPredicate(() => !attackCooldownTimer.IsRunning));
 
         stateMachine.SetState(locomotionState);
 

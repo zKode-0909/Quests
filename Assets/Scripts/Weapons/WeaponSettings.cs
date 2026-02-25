@@ -7,6 +7,7 @@ public class WeaponSettings : ScriptableObject
     public string weaponName;
     public int weaponDamage;
     public GameObject prefab;
-
+    public float cooldown;
+    public float range;
     
 }

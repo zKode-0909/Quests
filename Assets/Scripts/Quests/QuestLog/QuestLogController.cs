@@ -6,6 +6,7 @@ public class QuestLogController
     private QuestLogRegistry logRegistry;
     private EventBinding<RequestDisplayQuestLogEvent> displayLogReqBinding;
     private EventBinding<RequestCloseQuestLogEvent> closeLogReqBinding;
+    EventBinding<RequestAcceptQuest> acceptReqBinding;
 
     public void InitiateService(QuestFactory factory,QuestLogRegistry registry) {
         displayLogReqBinding = new EventBinding<RequestDisplayQuestLogEvent>(OnOpenQuestLogRequested);
@@ -14,7 +15,9 @@ public class QuestLogController
 
         logRegistry = registry;
         questFactory = factory;
+        acceptReqBinding = new EventBinding<RequestAcceptQuest>(OnAcceptRequested);
 
+        EventBus<RequestAcceptQuest>.Register(acceptReqBinding);
         EventBus<RequestDisplayQuestLogEvent>.Register(displayLogReqBinding);
         EventBus<RequestCloseQuestLogEvent>.Register(closeLogReqBinding);
     }
@@ -22,6 +25,26 @@ public class QuestLogController
     public void Dispose() {
         EventBus<RequestDisplayQuestLogEvent>.Deregister(displayLogReqBinding);
         EventBus<RequestCloseQuestLogEvent>.Deregister(closeLogReqBinding);
+        EventBus<RequestAcceptQuest>.Deregister(acceptReqBinding);
+
+    }
+
+    void OnAcceptRequested(RequestAcceptQuest evt)
+    {
+
+
+        Debug.Log($"player {evt.AccepterEntityRuntimeID} has succesfully accepted the quest");
+        if (logRegistry.TryGet(evt.AccepterEntityRuntimeID, out var log))
+        {
+            if (questFactory.TryCreateQuestFromID(evt.QuestID, out var quest))
+            {
+                if (log.TryAddQuest(quest))
+                {
+                    EventBus<EntityAcceptQuest>.Raise(new EntityAcceptQuest(evt.AccepterEntityRuntimeID, evt.QuestID));
+                }
+            }
+        }
+
 
     }
 

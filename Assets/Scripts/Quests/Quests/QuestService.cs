@@ -2,41 +2,36 @@ using UnityEngine;
 
 public class QuestService
 {
+    
     private QuestLogRegistry logRegistry;
     QuestFactory questFactory;
-    EventBinding<RequestAcceptQuest> acceptReqBinding;
+    EventBinding<KilledEvent> killedEventBinding;
 
     public void Initialize(QuestFactory factory, QuestLogRegistry registry)
     {
         logRegistry = registry;
         questFactory = factory;
-        acceptReqBinding = new EventBinding<RequestAcceptQuest>(OnAcceptRequested);
 
-        EventBus<RequestAcceptQuest>.Register(acceptReqBinding);
+        killedEventBinding = new EventBinding<KilledEvent>(HandleKilledEvent);
+
+        EventBus<KilledEvent>.Register(killedEventBinding);
     }
 
-    public void Dispose() { 
-        EventBus<RequestAcceptQuest>.Deregister(acceptReqBinding);
+    public void Dispose() {
+        EventBus<KilledEvent>.Deregister(killedEventBinding);
     }
 
 
-    void OnAcceptRequested(RequestAcceptQuest evt)
-    {
-
-
-        Debug.Log($"player {evt.AccepterEntityRuntimeID} has succesfully accepted the quest");
-        if (logRegistry.TryGet(evt.AccepterEntityRuntimeID, out var log))
+    void HandleKilledEvent(KilledEvent evt) {
+        Debug.Log($"the quest log that will need to be updated is...");
+        if (logRegistry.TryGet(evt.killedByRuntimeID, out var log))
         {
-            if (questFactory.TryCreateQuestFromID(evt.QuestID, out var quest))
-            {
-                if (log.TryAddQuest(quest))
-                {
-                    EventBus<EntityAcceptQuest>.Raise(new EntityAcceptQuest(evt.AccepterEntityRuntimeID, evt.QuestID));
-                }
-            }
+            Debug.Log(log.GetQuests());
         }
-
-
+           // Debug.Log($"shit man... I was just killed. {killedEvent.killedByRuntimeID} did it, I am {killedEvent.killedCreatureStableID}");
     }
+
+
+ 
 
 }

@@ -27,7 +27,7 @@ public class QuestGiverService
         displayIconReqBinding = new EventBinding<RequestQuestGiverIconDisplay>(OnQuestGiverIconDisplayRequested);
         //scanGiversReqBinding = new EventBinding<RequestScanQuestGivers>();
         
-        Debug.Log("service intiated");
+
 
         logRegistry = logs;
         giverRegistry = givers;
@@ -78,9 +78,7 @@ public class QuestGiverService
 
     void OnQuestGiverIconDisplayRequested(RequestQuestGiverIconDisplay evt) {
 
-        Debug.Log("about to try and display icon");
         if (giverRegistry.TryGet(evt.QuestGiverEntityRuntimeID,out var giver)) {
-            Debug.Log("trying to display icon");
             var questGiver = giver;
             var questLog = logRegistry.GetOrCreate(evt.QuesterEntityRuntimeID);
 

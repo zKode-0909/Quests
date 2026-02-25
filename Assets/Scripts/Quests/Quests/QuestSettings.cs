@@ -9,6 +9,7 @@ public class QuestSettings : ScriptableObject
     public string QuestDescription;
     public int RequiredLevel;
     public List<QuestSettings> preReqQuests;
+    public List<QuestObjectiveSettings> objectives;
 
     /*
     public Quest CreateQuest(QuestGiver questGiver) {

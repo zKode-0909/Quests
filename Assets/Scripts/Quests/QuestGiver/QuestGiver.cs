@@ -38,7 +38,6 @@ public class QuestGiver : MonoBehaviour,IInteractable
     }
 
     public void SetQuestIcon(QuestDisplayIcon icon) {
-        Debug.Log("I am setting my quest icon");
         questMarker.SetMarker(icon);
     }
     private void Awake()

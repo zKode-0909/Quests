@@ -13,9 +13,7 @@ public class AttackState : BasePlayerState
 
     public override void OnEnter()
     {
-        Debug.Log("ENTERING ATTACK");
         // player.playerCombatHandler.TryAttack(player.statSnapshot,player.equipment.weapon);
-        Debug.Log($"crossfade is {crossFadeDuration}");
         animator.CrossFade(AttackHash, crossFadeDuration);
     }
 

@@ -34,7 +34,6 @@ public abstract class Timer
     {
         if (IsRunning)
         {
-            Debug.Log("Timer stopped");
             IsRunning = false;
             OnTimerStop.Invoke();
         }

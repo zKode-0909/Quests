@@ -3,5 +3,5 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    public List<HitContext> ExecuteAttack(AttackContext attCtx);
+    public bool TryAttack(GameObject attacker,int attackerID);
 }

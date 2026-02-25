@@ -51,7 +51,6 @@ public class QuestMarkerMB : MonoBehaviour
         availableInstance.SetActive(false);
         completedInstance.SetActive(false);
         inProgressInstance.SetActive(false);
-        Debug.Log($"about to show the icon: {iconToShow}");
 
         switch (iconToShow) { 
             
