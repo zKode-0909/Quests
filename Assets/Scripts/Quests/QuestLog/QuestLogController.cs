@@ -29,10 +29,12 @@ public class QuestLogController
 
     }
 
+    public void RequestIncrementQuestObjective(QuestLog log,string objectiveTriggerID) {
+        log.TryIncrementQuestObjective(objectiveTriggerID);
+    }
+
     void OnAcceptRequested(RequestAcceptQuest evt)
     {
-
-
         Debug.Log($"player {evt.AccepterEntityRuntimeID} has succesfully accepted the quest");
         if (logRegistry.TryGet(evt.AccepterEntityRuntimeID, out var log))
         {

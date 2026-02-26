@@ -32,11 +32,13 @@ public class QuestBootstrapper : MonoBehaviour
         questGiverService = new QuestGiverService();
         questGiverService.InitiateService(questLogRegistry, questGiverRegistry,questFactory);
 
-        questService = new QuestService();
-        questService.Initialize(questFactory, questLogRegistry);
+        
 
         questLogController = new QuestLogController();
         questLogController.InitiateService(questFactory, questLogRegistry);
+
+        questService = new QuestService();
+        questService.Initialize(questFactory, questLogRegistry,questLogController);
     }
 
 }

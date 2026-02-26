@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -13,7 +14,9 @@ public class QuestLogView : MonoBehaviour
     VisualElement questLogHolder;
 
     EventBinding<DisplayQuestLogEvent> displayQuestLog;
-    EventBinding<CloseQuestLogEvent> closeQuestLog; 
+    EventBinding<CloseQuestLogEvent> closeQuestLog;
+
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -58,7 +61,7 @@ public class QuestLogView : MonoBehaviour
         var quests = evt.Quests;
 
         foreach (var quest in quests) {
-            var questVE = new QuestVE(quest.title);
+            var questVE = new QuestVE(quest.title,quest.questID);
             bodyHolder.Add(questVE);
         }
     }

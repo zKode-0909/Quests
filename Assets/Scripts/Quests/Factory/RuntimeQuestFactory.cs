@@ -17,7 +17,7 @@ public class QuestFactory
         if (dataBase.TryGetQuestDef(questID, out var q))
         {
             var QuestSettings = q;
-            quest = new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel,BuildRuntimeObjectiveList(QuestSettings.objectives));
+            quest = new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel,QuestSettings.objectives.CreateRuntimeQuestObjective());
             return true;
         }
         else {

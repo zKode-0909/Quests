@@ -10,9 +10,9 @@ public class Quest
     public string questID;
     public int questRuntimeID;
     public int questLevel;
-    public List<QuestObjective> questObjectives;
+    public QuestObjective questObjectives;
 
-    public Quest(string name,string questGiverID,string questID,int runtimeID,int questLevel,List<QuestObjective> objectives)
+    public Quest(string name,string questGiverID,string questID,int runtimeID,int questLevel,QuestObjective objectives)
     {
         this.questName = name;
         this.questGiverID = questGiverID;
