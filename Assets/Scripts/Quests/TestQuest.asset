@@ -17,3 +17,4 @@ MonoBehaviour:
   QuestDescription: We test the best
   RequiredLevel: 4
   preReqQuests: []
+  objectives: {fileID: 11400000, guid: 8078543aa6098194da57d7c8314bc4f1, type: 2}

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2b7c32f1f3e614db6f7002da5ba581, type: 3}
   m_Name: YellowDude
   m_EditorClassIdentifier: Game.NPC::NPCSettings
-  NPCName: 
-  startingHealth: 0
-  StableID: 
+  NPCName: Yellow NIgga
+  startingHealth: 30
+  StableID: YellowDude

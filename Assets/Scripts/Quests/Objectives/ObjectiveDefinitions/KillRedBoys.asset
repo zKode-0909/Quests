@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6230dabdaceb204fa986a960f995c69, type: 3}
   m_Name: KillRedBoys
   m_EditorClassIdentifier: Game.Quests::QuestObjectiveSettings
-  questObjectives: []
+  questObjectives:
+  - objectiveItemStableID: RedBoy
+    maxObjectiveProgress: 2

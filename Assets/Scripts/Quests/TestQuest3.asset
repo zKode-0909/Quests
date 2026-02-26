@@ -17,3 +17,4 @@ MonoBehaviour:
   QuestDescription: I am still meant for testing, ignore me.
   RequiredLevel: 5
   preReqQuests: []
+  objectives: {fileID: 11400000, guid: 50d900bfd5a046542a0c73ee3baaa5bf, type: 2}

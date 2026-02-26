@@ -18,3 +18,4 @@ MonoBehaviour:
   RequiredLevel: 6
   preReqQuests:
   - {fileID: 11400000, guid: d97389f232049ca4ba211b1238568001, type: 2}
+  objectives: {fileID: 11400000, guid: 2365c38cc33519f4889ebaf96b86fe94, type: 2}
