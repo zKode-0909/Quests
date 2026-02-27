@@ -24,11 +24,15 @@ public class QuestService
 
 
     void HandleKilledEvent(KilledEvent evt) {
+
+        questLogController.RequestIncrementQuestObjective(evt.killedByRuntimeID, evt.killedCreatureStableID);
+
+        /*
         Debug.Log($"the quest log that will need to be updated is...");
         if (logRegistry.TryGet(evt.killedByRuntimeID, out var log))
         {
             questLogController.RequestIncrementQuestObjective(log,evt.killedCreatureStableID);
-        }
+        }*/
            // Debug.Log($"shit man... I was just killed. {killedEvent.killedByRuntimeID} did it, I am {killedEvent.killedCreatureStableID}");
     }
 

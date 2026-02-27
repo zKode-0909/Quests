@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     EventBinding<TestEvent> testEventBinding;
     EventBinding<PlayerEvent> playerEventBinding;
 
-    EventBinding<EntityAcceptQuest> acceptQuestBinding;
+    EventBinding<EntityWorldQuestStateChangedEvent> worldQuestStateChangeBinding;
 
     public Transform Transform => this.transform;
 
@@ -35,8 +35,8 @@ public class PlayerController : MonoBehaviour
         playerEventBinding = new EventBinding<PlayerEvent>(HandlePlayerEvent);
         EventBus<PlayerEvent>.Register(playerEventBinding);
 
-        acceptQuestBinding = new EventBinding<EntityAcceptQuest>(HandlePlayerQuestAccept);
-        EventBus<EntityAcceptQuest>.Register(acceptQuestBinding);
+        worldQuestStateChangeBinding = new EventBinding<EntityWorldQuestStateChangedEvent>(HandlePlayerQuestAccept);
+        EventBus<EntityWorldQuestStateChangedEvent>.Register(worldQuestStateChangeBinding);
     }
 
     private void OnDisable()
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
         EventBus<TestEvent>.Deregister(testEventBinding);
         EventBus<PlayerEvent>.Deregister(playerEventBinding);
-        EventBus<EntityAcceptQuest>.Deregister(acceptQuestBinding);
+        EventBus<EntityWorldQuestStateChangedEvent>.Deregister(worldQuestStateChangeBinding);
     }
 
 
@@ -99,10 +99,9 @@ public class PlayerController : MonoBehaviour
         EventBus<TestEvent>.Raise(new TestEvent());
     }
 
-    void HandlePlayerQuestAccept(EntityAcceptQuest evt) {
-        Debug.Log($"Trying to accept quest for player {evt.EntityRuntimeID}, quest is: {evt.QuestID}");
+    void HandlePlayerQuestAccept(EntityWorldQuestStateChangedEvent evt) {
+        Debug.Log("Scannign nearby");
         player.playerQuests.ForceRescanNearby();
-        Debug.Log("YO NIGGA, I JUST ACCEPTED A QUEST");
        // player.QuestLog.TryAddQuest(evt.QuestID);
     }
 

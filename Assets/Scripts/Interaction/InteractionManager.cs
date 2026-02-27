@@ -29,18 +29,17 @@ public class InteractionManager : MonoBehaviour
 
 
     void OnInteract() {
-        Debug.Log("Interacting");
+
 
 
         // Does the ray intersect any objects excluding the player layer
         Vector3 fwd = interactor.GameObject.transform.TransformDirection(Vector3.forward);
         origin = interactor.GameObject.transform.position + Vector3.up * 1.5f;
         if (Physics.Raycast(origin, fwd, out RaycastHit hit, 10, interactableLayerMask)) {
-            Debug.Log("hit layer!");
+
             var interactable = hit.collider.GetComponentInParent<IInteractable>();
             if (interactable != null)
             {
-                Debug.Log("This object implements IInteractable!");
                 interactable.HandleInteract(interactor);
             }
         }

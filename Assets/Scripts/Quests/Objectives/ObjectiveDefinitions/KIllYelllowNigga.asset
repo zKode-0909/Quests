@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: KIllYelllowNigga
   m_EditorClassIdentifier: Game.Quests::QuestObjectiveSettings
   questObjectives:
-  - objectiveItemStableID: YellowDude
-    maxObjectiveProgress: 1
+  - requirements:
+    - requirement:
+        maxProgessCount: 1
+        questObjectiveStableID: YellowDude
+      action: {fileID: 0}

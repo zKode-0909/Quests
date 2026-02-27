@@ -1,10 +1,21 @@
 using UnityEngine;
 
-public class NPC : MonoBehaviour,IDamageable
+public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
 {
 
     EntityHealth health;
     [SerializeField] NPCSettings settings;
+    [SerializeField] NPCBootStrapper bootstrapper; 
+
+    public GameObject GameObject => this.gameObject;
+
+    public int EntityRuntimeID => runTimeID;
+
+    public int EntityLevel => currentLevel;
+
+    int runTimeID;
+    int currentLevel;
+
 
 
     public void TakeDamage(float damage,int changerRuntimeID)
@@ -26,7 +37,15 @@ public class NPC : MonoBehaviour,IDamageable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        runTimeID = this.GetEntityId();
+        currentLevel  = settings.startingLevel;
         health = new EntityHealth(settings.startingHealth);
+        bootstrapper.characterRegistry.Register(this);
+        if (bootstrapper.characterRegistry.TryGet(runTimeID, out var ent))
+        {
+            Debug.Log($"{ent} has been succesfully registered");
+        }
     }
 
     // Update is called once per frame

@@ -30,7 +30,6 @@ public class HoverManager : MonoBehaviour
            // Debug.Log("hit layer!");
             if (hoverable != null)
             {
-                Debug.Log("Hovering IInteractable");
                 hoverableUI.ShowHoverableUI();
                 return;
                 //interactable.HandleInteract();

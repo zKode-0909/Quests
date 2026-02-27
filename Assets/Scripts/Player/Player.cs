@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour,IInteractor,ILeveller,IDamageable
+public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
 {
     public PlayerController controller;
     public PlayerMotor motor;
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour,IInteractor,ILeveller,IDamageable
    // public PlayerStats statSnapshot;
     Rigidbody rb;
     [SerializeField] LayerMask questGiverSearchLayerMask;
-
+    [SerializeField] PlayerBootStrapper bootstrapper;
     [SerializeField] Animator animator;
     [SerializeField] WeaponSettings weapon;
     [SerializeField] Transform holdingHand;
@@ -78,6 +78,8 @@ public class Player : MonoBehaviour,IInteractor,ILeveller,IDamageable
         scanCooldownTimer.OnTimerStart = HandleTimerStart;
         scanCooldownTimer.OnTimerStop = HandleTimerFinish;
         entityRuntimeID = GetEntityId();
+
+
     }
 
 
@@ -90,7 +92,10 @@ public class Player : MonoBehaviour,IInteractor,ILeveller,IDamageable
 
     private void Start()
     {
-  
+        bootstrapper.playerRegistry.Register(this);
+        if (bootstrapper.playerRegistry.TryGet(entityRuntimeID, out var ent)) {
+            Debug.Log($"{ent} has been succesfully registered");
+        }
         playerLevelling = new PlayerLevelling();
         
         rb = controller.GetComponent<Rigidbody>();

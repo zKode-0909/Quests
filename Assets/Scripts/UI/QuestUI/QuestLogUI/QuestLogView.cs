@@ -61,7 +61,7 @@ public class QuestLogView : MonoBehaviour
         var quests = evt.Quests;
 
         foreach (var quest in quests) {
-            var questVE = new QuestVE(quest.title,quest.questID);
+            var questVE = new QuestVE(quest.title,quest.questID,quest.status);
             bodyHolder.Add(questVE);
         }
     }

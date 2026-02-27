@@ -13,11 +13,11 @@ public class QuestFactory
 
     }
 
-    public bool TryCreateQuestFromID(string questID,out Quest quest) {
+    public bool TryCreateQuestFromID(string questID,int receiverRuntimeID, out Quest quest) {
         if (dataBase.TryGetQuestDef(questID, out var q))
         {
             var QuestSettings = q;
-            quest = new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel,QuestSettings.objectives.CreateRuntimeQuestObjective());
+            quest = new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel,QuestSettings.objectives.CreateRuntimeQuestObjective(),receiverRuntimeID);
             return true;
         }
         else {
@@ -28,17 +28,10 @@ public class QuestFactory
         
     }
 
-    public List<QuestObjective> BuildRuntimeObjectiveList(List<QuestObjectiveSettings> questObjectiveSettings) {
-        List<QuestObjective> objectives = new List<QuestObjective>();
-        foreach (var objective in questObjectiveSettings) {
-            objectives.Add(objective.CreateRuntimeQuestObjective());
-        }
 
-        return objectives;
-    }
 
     public QuestUIItem CreateQuestUIFromQuest(Quest runtimeQuest) { 
-        var status = QuestUtils.DetermineQuestRuntimeStatus(runtimeQuest);
+        var status = QuestUtils.DetermineQuestStatus(runtimeQuest);
         return new QuestUIItem(runtimeQuest.questName, "Sorry forgot", 2, runtimeQuest.questID,$"{status}");
 
         
@@ -49,7 +42,7 @@ public class QuestFactory
 
         foreach (KeyValuePair<string, Quest> quest in log.GetQuests())
         {
-            var status = QuestUtils.DetermineQuestRuntimeStatus(quest.Value);
+            var status = QuestUtils.DetermineQuestStatus(quest.Value);
             var item = new QuestUIItem(quest.Value.questName, "FAKE DESCRIPTION", 2, quest.Value.questGiverID, $"{status}");
 
             uiQuests.Add(item);

@@ -151,7 +151,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::NPC
   settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &85461180
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -313,7 +312,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::NPC
   settings: {fileID: 11400000, guid: 0f68dd4b04fa9d343bb22dfa0bdde7af, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!136 &304093588
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -862,7 +860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 482803958}
   - component: {fileID: 482803959}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1036,7 +1034,7 @@ GameObject:
   m_Component:
   - component: {fileID: 697259619}
   - component: {fileID: 697259620}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1113,7 +1111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::NPC
   settings: {fileID: 11400000, guid: 734dc886aaefe26448f51f63a59d4fc7, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &724961734
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1570,7 +1567,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::NPC
   settings: {fileID: 11400000, guid: 734dc886aaefe26448f51f63a59d4fc7, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1066200026
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1654,7 +1650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1083579541}
   - component: {fileID: 1083579542}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1729,7 +1725,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::NPC
   settings: {fileID: 11400000, guid: 734dc886aaefe26448f51f63a59d4fc7, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1163343746
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1923,7 +1918,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::NPC
   settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1227492748
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2029,7 +2023,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::NPC
   settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1328050998
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2158,50 +2151,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1441181087
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1441181088}
-  - component: {fileID: 1441181089}
-  m_Layer: 0
-  m_Name: NPCBootStrapper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1441181088
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441181087}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.69668, y: 2.09277, z: 0.72377}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1441181089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441181087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf1366ccd81d744291be40c92aa4bc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.NPC::NPCBootStrapper
 --- !u!1 &1565920645
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,7 +2161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1565920646}
   - component: {fileID: 1565920647}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2332,7 +2281,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::NPC
   settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1693612121
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2416,7 +2364,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1750013882}
   - component: {fileID: 1750013883}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2459,50 +2407,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1780283542
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1780283544}
-  - component: {fileID: 1780283543}
-  m_Layer: 0
-  m_Name: PlayerBootStrapper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1780283543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780283542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bb6fb90d9022f44d90c2120e093c4b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Player::PlayerBootStrapper
---- !u!4 &1780283544
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780283542}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.69668, y: 2.09277, z: 0.72377}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1904805932
 GameObject:
   m_ObjectHideFlags: 0
@@ -2533,8 +2437,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Game::GameBootstrapper
   questBootstrapper: {fileID: 1612694882}
-  NPCBootstrapper: {fileID: 1441181089}
-  PlayerBootStrapper: {fileID: 1780283543}
 --- !u!4 &1904805934
 Transform:
   m_ObjectHideFlags: 0
@@ -2651,10 +2553,6 @@ PrefabInstance:
       propertyPath: holdingHand
       value: 
       objectReference: {fileID: 2026622568}
-    - target: {fileID: 8573948290193986500, guid: 2676ec6a00893454e9b025f4bcf72bf8, type: 3}
-      propertyPath: bootstrapper
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3912550500291632906, guid: 2676ec6a00893454e9b025f4bcf72bf8, type: 3}
@@ -2688,5 +2586,3 @@ SceneRoots:
   - {fileID: 1328051000}
   - {fileID: 1227492750}
   - {fileID: 304093591}
-  - {fileID: 1780283544}
-  - {fileID: 1441181088}

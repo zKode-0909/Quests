@@ -59,7 +59,7 @@ public class QuestLog
 
     public void TryIncrementQuestObjective(string objectiveID) {
         foreach (KeyValuePair<string, Quest> quest in quests) {
-            quest.Value.questObjectives.TryIncrementProgress(objectiveID);
+            quest.Value.OnObjectiveEvent(objectiveID);
         }
     }
 

@@ -95,7 +95,6 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
     {
         Vector2 input = context.ReadValue<Vector2>();
         // noop
-        Debug.Log("Looking");
         LookEvent?.Invoke(input);
     }
 

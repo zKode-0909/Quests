@@ -56,7 +56,6 @@ public class QuestHandoutView : MonoBehaviour
     }
 
     void HandleOpenUI(OpenQuestGiverUI evt) {
-        Debug.Log($"We opening UI for {evt.questGiverName} and quester: {evt.questerName}. There are {evt.questsToShow.Count} quests");
         ShowQuestGiverDisplay(evt.questsToShow,evt.questerName,evt.questGiverName,evt.questerID,evt.questGiverID,evt.questerLevel);
     }
 

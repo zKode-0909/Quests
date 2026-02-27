@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: KillRedBoys
   m_EditorClassIdentifier: Game.Quests::QuestObjectiveSettings
   questObjectives:
-  - objectiveItemStableID: RedBoy
-    maxObjectiveProgress: 2
+  - requirements:
+    - requirement:
+        maxProgessCount: 3
+        questObjectiveStableID: RedBoy
+      action: {fileID: 0}

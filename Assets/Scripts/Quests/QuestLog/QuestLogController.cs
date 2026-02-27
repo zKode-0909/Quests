@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class QuestLogController
@@ -29,25 +30,36 @@ public class QuestLogController
 
     }
 
-    public void RequestIncrementQuestObjective(QuestLog log,string objectiveTriggerID) {
-        log.TryIncrementQuestObjective(objectiveTriggerID);
+
+
+    public void RequestIncrementQuestObjective(int questerRuntimeID,string objectiveTriggerID) {
+        if (logRegistry.TryGet(questerRuntimeID, out var log)) {
+            log.TryIncrementQuestObjective(objectiveTriggerID);
+        }
     }
 
     void OnAcceptRequested(RequestAcceptQuest evt)
     {
-        Debug.Log($"player {evt.AccepterEntityRuntimeID} has succesfully accepted the quest");
         if (logRegistry.TryGet(evt.AccepterEntityRuntimeID, out var log))
         {
-            if (questFactory.TryCreateQuestFromID(evt.QuestID, out var quest))
+            if (questFactory.TryCreateQuestFromID(evt.QuestID,evt.AccepterEntityRuntimeID, out var quest))
             {
                 if (log.TryAddQuest(quest))
                 {
-                    EventBus<EntityAcceptQuest>.Raise(new EntityAcceptQuest(evt.AccepterEntityRuntimeID, evt.QuestID));
+                    quest.allObjectiveCompleteEvent += HandleObjectivesComplete; 
+                    EventBus<EntityWorldQuestStateChangedEvent>.Raise(new EntityWorldQuestStateChangedEvent(evt.AccepterEntityRuntimeID, evt.QuestID));
+                    foreach (KeyValuePair<string,Quest> pair in log.GetQuests()) {
+                    }
                 }
             }
         }
 
 
+    }
+
+    void HandleObjectivesComplete(int runtimeID,string questID) {
+        Debug.Log($"OBJECTIVES COMPLETE FOR {runtimeID} on questID: {questID}");
+        EventBus<EntityWorldQuestStateChangedEvent>.Raise(new EntityWorldQuestStateChangedEvent(runtimeID, questID));
     }
 
     void OnOpenQuestLogRequested(RequestDisplayQuestLogEvent evt)
@@ -56,7 +68,6 @@ public class QuestLogController
 
         if (logRegistry.TryGet(evt.EntityRuntimeID, out var log))
         {
-            Debug.Log("Opening Quest Log");
             EventBus<DisplayQuestLogEvent>.Raise(new DisplayQuestLogEvent(questFactory.CreateQuestUIListFromQuestLog(log)));
         }
         else

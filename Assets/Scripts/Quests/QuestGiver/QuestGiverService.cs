@@ -6,7 +6,7 @@ public class QuestGiverService
     private EventBinding<RequestOpenQuestGiverUI> openReqBinding;
     //private EventBinding<RequestAcceptQuest> acceptReqBinding;
     private EventBinding<RequestQuestGiverIconDisplay> displayIconReqBinding;
-    EventBinding<RequestAcceptQuest> acceptReqBinding;
+    
     private EventBinding<RequestScanQuestGivers> scanGiversReqBinding;
     private QuestLogRegistry logRegistry;
     QuestFactory questFactory;
@@ -22,10 +22,8 @@ public class QuestGiverService
 
     public void InitiateService(QuestLogRegistry logs,QuestGiverRegistry givers, QuestFactory factory)
     {
-        acceptReqBinding = new EventBinding<RequestAcceptQuest>(OnAcceptRequested);
         openReqBinding = new EventBinding<RequestOpenQuestGiverUI>(OnOpenRequested);
         displayIconReqBinding = new EventBinding<RequestQuestGiverIconDisplay>(OnQuestGiverIconDisplayRequested);
-        //scanGiversReqBinding = new EventBinding<RequestScanQuestGivers>();
         
 
 
@@ -33,9 +31,7 @@ public class QuestGiverService
         giverRegistry = givers;
         questFactory = factory;
 
-        EventBus<RequestAcceptQuest>.Register(acceptReqBinding);
         EventBus<RequestOpenQuestGiverUI>.Register(openReqBinding);
-        //EventBus<RequestAcceptQuest>.Register(acceptReqBinding);
         EventBus<RequestQuestGiverIconDisplay>.Register(displayIconReqBinding);
 
 
@@ -49,30 +45,13 @@ public class QuestGiverService
         EventBus<RequestOpenQuestGiverUI>.Deregister(openReqBinding);
        // EventBus<RequestAcceptQuest>.Deregister(acceptReqBinding);
         EventBus<RequestQuestGiverIconDisplay>.Deregister(displayIconReqBinding);
-        EventBus<RequestAcceptQuest>.Deregister(acceptReqBinding);
 
 
 
         logRegistry = null;
     }
 
-    void OnAcceptRequested(RequestAcceptQuest evt)
-    {
-        Debug.Log($"player {evt.AccepterEntityRuntimeID} has succesfully accepted the quest");
-        if (logRegistry.TryGet(evt.AccepterEntityRuntimeID, out var log))
-        {
-            if (questFactory.TryCreateQuestFromID(evt.QuestID, out var quest))
-            {
-                if (log.TryAddQuest(quest))
-                {
-
-                    EventBus<EntityAcceptQuest>.Raise(new EntityAcceptQuest(evt.AccepterEntityRuntimeID, evt.QuestID));
-                }
-            }
-        }
-
-
-    }
+   
 
 
 
@@ -105,7 +84,7 @@ public class QuestGiverService
     }
 
     void OnOpenRequested(RequestOpenQuestGiverUI evt) {
-        Debug.Log("Requested open");
+
         if (giverRegistry.TryGet(evt.QuestGiverEntityId, out var giver)) {
             var questLog = logRegistry.GetOrCreate(evt.QuesterEntityId);
             var questItems = BuildQuestItems(giver, questLog, evt.QuesterLevel);

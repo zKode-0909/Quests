@@ -9,15 +9,23 @@ public class QuestVE : Button
     string QuestName;
     Label QuestLabel;
     public event Action<string> QuestClicked;
-    public QuestVE(string name, string questStableID)
+    public QuestVE(string name, string questStableID,string status)
     {
         QuestName = name;
-        QuestLabel = new Label(QuestName);
+        QuestLabel = new Label();
         QuestLabel.AddToClassList("questLabel");
         this.Add(QuestLabel);
 
         this.AddToClassList("quest");
         QuestStableID = questStableID;
+
+        if (status == "Complete")
+        {
+            QuestLabel.text = ($"{name} (Complete)");
+        }
+        else {
+            QuestLabel.text = name;
+        }
 
 
         clicked += () => QuestClicked?.Invoke(QuestStableID);

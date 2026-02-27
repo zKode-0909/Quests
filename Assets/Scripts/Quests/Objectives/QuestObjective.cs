@@ -1,60 +1,87 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class QuestObjective
 {
    // public QuestObjectiveType currentObjectiveType;
-    public List<string> objectiveIncrementers;
     //public string currentObjectiveIncrementer;
-    public int maxProgress;
-    public int currentProgress;
-    public int questStage;
+   // public int maxProgress;
+    //public int currentProgress;
 
     //Dictionary<int, QuestObjectiveDetails> objectiveStageTargets;
 
-    readonly List<QuestObjectiveDetails> objectiveStageTargets;
 
-    
 
-    public QuestObjective(List<QuestObjectiveDetails> objectiveOrderedList) {
-        //BuildObjectives(objectiveOrderedList);
-        objectiveStageTargets = objectiveOrderedList;
-        //currentObjectiveIncrementer = objectiveOrderedList[0].objectiveItemStableID;
-        if (objectiveOrderedList.Count > 0) { maxProgress = objectiveOrderedList[0].maxObjectiveProgress; }
-        
-        
-        currentProgress = 0;
-        questStage = 1;
-       
-    }
+    public List<QuestStageDetails> Stages { get; }
 
-    public bool TryIncrementProgress(string objectiveThingID) {
-        if (currentProgress == maxProgress || objectiveStageTargets[questStage-1].objectiveItemStableID != objectiveThingID)
+    public QuestObjective(List<QuestStageDetails> stages) => Stages = stages;
+
+    public bool TryGetMatchingRequirementId(int stageIndex, string objectiveThingId, out string stableId)
+    {
+        foreach (var obj in Stages[stageIndex].requirements)
         {
-            Debug.Log($"not able to increment objective currentProg: {currentProgress}," +
-                $" maxProg: {maxProgress} ," +
-                $" currentStageTarget: {objectiveStageTargets[questStage-1].objectiveItemStableID}" +
-                $" objective passed in: {objectiveThingID}");
-            return false;
-        }
-        else {
-            currentProgress++;
-            
-            if (currentProgress >= maxProgress) {
-                IncrementStage();
+            if (CheckObjectiveValidity(objectiveThingId, obj.requirement))
+            {
+                stableId = obj.requirement.GetQuestObjectiveStableID();
+                return true;
             }
-            return true;
         }
-    
+        stableId = null;
+        return false;
     }
+
+    public bool IsStageComplete(int stageIndex, IReadOnlyDictionary<string, int> progress)
+    {
+        Debug.Log($"stage index is: {stageIndex}");
+        foreach (var obj in Stages[stageIndex].requirements)
+        {
+            var req = obj.requirement;
+            if (progress.TryGetValue(req.GetQuestObjectiveStableID(), out var p) == false) return false;
+            if (p < req.GetMaxProgressCount()) return false;
+        }
+        return true;
+    }
+
+    bool CheckObjectiveValidity(string objectiveID, ObjectiveStageRequirement requirement)
+    {
+        if (requirement.GetQuestObjectiveStableID() == objectiveID) return true;
+        return false;
+
+    }
+
+
+    /*
+    public void TryIncrementProgress(string objectiveThingID) {
+        var objectiveDetails = objectiveStageTargets[questStage - 1].requirements;
+
+        bool stageComplete = true;
+
+        foreach (var objective in objectiveDetails)
+        {
+            var requirement = objective.requirement;
+
+            if (CheckObjectiveValidity(objectiveThingID, requirement))
+                requirement.IncrementProgress(1);
+
+            if (requirement.GetProgress() < requirement.GetMaxProgressCount())
+                stageComplete = false;
+        }
+
+        if (stageComplete)
+            IncrementStage();
+
+
+    }
+
+   
 
     void IncrementStage() {
         if (questStage < objectiveStageTargets.Count)
         {
+            
             questStage++;
-            currentProgress = 0;
-            maxProgress = objectiveStageTargets[questStage-1].maxObjectiveProgress;
         }
         else
         {
@@ -63,7 +90,7 @@ public class QuestObjective
 
 
     }
-
+    */
     /*
     public void BuildObjectives(List<QuestObjectiveDetails> questDetails) {
         int idx = 0;
@@ -74,9 +101,9 @@ public class QuestObjective
         }
     }*/
 
-    
 
 
 
-    
+
+
 }

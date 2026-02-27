@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: KillGreenBoy
   m_EditorClassIdentifier: Game.Quests::QuestObjectiveSettings
   questObjectives:
-  - objectiveItemStableID: TestID
-    maxObjectiveProgress: 3
+  - requirements:
+    - requirement:
+        maxProgessCount: 3
+        questObjectiveStableID: TestID
+      action: {fileID: 0}

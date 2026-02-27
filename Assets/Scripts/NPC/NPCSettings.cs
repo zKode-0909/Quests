@@ -6,4 +6,5 @@ public class NPCSettings : ScriptableObject
     public string NPCName;
     public int startingHealth;
     public string StableID;
+    public int startingLevel;
 }

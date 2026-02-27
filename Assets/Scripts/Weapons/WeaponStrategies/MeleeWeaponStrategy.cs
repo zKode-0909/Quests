@@ -11,13 +11,11 @@ public class MeleeWeaponStrategy : BaseWeaponStrategy
         Vector3 attackPos = attackCtx.attacker.transform.position + attackCtx.attacker.transform.forward;
         Collider[] hitEnemies = Physics.OverlapSphere(attackPos,attackCtx.attackRange,damageableLayer);
 
-        Debug.Log("just collected some hits");
         
         foreach (Collider collider in hitEnemies) {
             var damaged = collider.GetComponentInParent<IDamageable>();
             if (damaged != null && (collider.gameObject != attackCtx.attacker))
             {
-                Debug.Log("HIT ENEMY");
                 results.Add(new HitContext(damaged));
 
             }

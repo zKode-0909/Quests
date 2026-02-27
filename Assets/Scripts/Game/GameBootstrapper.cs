@@ -5,6 +5,8 @@ using UnityEngine.UIElements;
 public class GameBootstrapper : MonoBehaviour
 {
     [SerializeField] QuestBootstrapper questBootstrapper;
+    [SerializeField] NPCBootStrapper NPCBootstrapper;
+    [SerializeField] PlayerBootStrapper PlayerBootStrapper;
 
   
     QuestLogRegistry logRegistry;
@@ -14,6 +16,8 @@ public class GameBootstrapper : MonoBehaviour
         logRegistry = new QuestLogRegistry();
         PreWarmLogRegistry();
         questBootstrapper.BootStrap(logRegistry);
+        NPCBootstrapper.BootStrap();
+        PlayerBootStrapper.BootStrap();
     }
 
     void PreWarmLogRegistry() {

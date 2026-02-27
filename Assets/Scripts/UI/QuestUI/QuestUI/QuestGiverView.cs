@@ -68,11 +68,11 @@ public class QuestGiverView : VisualElement
 
             questHolder.Add(questText);
 
-            Debug.Log($"status is: {quest.status}");
             
             switch (quest.status) { 
                 case "NotStarted": AddQuestButton(quest.status, quest); break;
                 case "InProgress": AddQuestButton(quest.status, quest); break;
+                case "Complete": AddQuestButton(quest.status, quest); break;
                 default: ; break;
             }
 

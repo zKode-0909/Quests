@@ -19,7 +19,7 @@ public class StateMachine
         }
 
         current.State?.Update();
-        Debug.Log($"My current state is {current.State}");
+
     }
 
     public void FixedUpdate()
