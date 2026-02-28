@@ -30,7 +30,7 @@ public class QuestGiver : MonoBehaviour,IInteractable
 
     public void HandleInteract(IInteractor interactor)
     {
-        var level = ((ILeveller)interactor).Level;
+        var level = ((IEntity)interactor).EntityLevel;
         
         Debug.Log("Interacted with QuestGiver");
         EventBus<RequestOpenQuestGiverUI>.Raise(new RequestOpenQuestGiverUI(interactor.EntityRuntimeID,entityRuntimeId,level));

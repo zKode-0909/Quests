@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 85461182}
   - component: {fileID: 85461181}
   - component: {fileID: 85461180}
-  - component: {fileID: 85461179}
+  - component: {fileID: 85461183}
   m_Layer: 0
   m_Name: Red Boy (1)
   m_TagString: Untagged
@@ -138,20 +138,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &85461179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 85461178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78050713290899e428e4b7dd9a945127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.NPC::NPC
-  settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &85461180
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -225,6 +211,19 @@ Transform:
   - {fileID: 1750013882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &85461183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85461178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.NPC::WorldNPC
+  settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
 --- !u!1 &108485691
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,8 +290,7 @@ GameObject:
   - component: {fileID: 304093591}
   - component: {fileID: 304093590}
   - component: {fileID: 304093589}
-  - component: {fileID: 304093588}
-  - component: {fileID: 304093587}
+  - component: {fileID: 304093592}
   m_Layer: 0
   m_Name: YellowBoy
   m_TagString: Untagged
@@ -300,43 +298,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &304093587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304093586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78050713290899e428e4b7dd9a945127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.NPC::NPC
-  settings: {fileID: 11400000, guid: 0f68dd4b04fa9d343bb22dfa0bdde7af, type: 2}
-  bootstrapper: {fileID: 0}
---- !u!136 &304093588
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 304093586}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &304093589
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -410,6 +371,19 @@ Transform:
   - {fileID: 697259619}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &304093592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304093586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.NPC::WorldNPC
+  settings: {fileID: 11400000, guid: 0f68dd4b04fa9d343bb22dfa0bdde7af, type: 2}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,7 +1066,7 @@ GameObject:
   - component: {fileID: 724961736}
   - component: {fileID: 724961735}
   - component: {fileID: 724961734}
-  - component: {fileID: 724961732}
+  - component: {fileID: 724961737}
   m_Layer: 0
   m_Name: Capsule (2)
   m_TagString: Untagged
@@ -1100,20 +1074,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &724961732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 724961731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78050713290899e428e4b7dd9a945127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.NPC::NPC
-  settings: {fileID: 11400000, guid: 734dc886aaefe26448f51f63a59d4fc7, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &724961734
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1187,6 +1147,19 @@ Transform:
   - {fileID: 108485692}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &724961737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724961731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.NPC::WorldNPC
+  settings: {fileID: 11400000, guid: 734dc886aaefe26448f51f63a59d4fc7, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,7 +1522,7 @@ GameObject:
   - component: {fileID: 1066200028}
   - component: {fileID: 1066200027}
   - component: {fileID: 1066200026}
-  - component: {fileID: 1066200024}
+  - component: {fileID: 1066200029}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -1557,20 +1530,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1066200024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1066200023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78050713290899e428e4b7dd9a945127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.NPC::NPC
-  settings: {fileID: 11400000, guid: 734dc886aaefe26448f51f63a59d4fc7, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1066200026
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1644,6 +1603,19 @@ Transform:
   - {fileID: 1365903773}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1066200029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066200023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.NPC::WorldNPC
+  settings: {fileID: 11400000, guid: 734dc886aaefe26448f51f63a59d4fc7, type: 2}
 --- !u!1 &1083579540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,7 +1680,7 @@ GameObject:
   - component: {fileID: 1163343748}
   - component: {fileID: 1163343747}
   - component: {fileID: 1163343746}
-  - component: {fileID: 1163343744}
+  - component: {fileID: 1163343749}
   m_Layer: 0
   m_Name: Capsule (1)
   m_TagString: Untagged
@@ -1716,20 +1688,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1163343744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163343743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78050713290899e428e4b7dd9a945127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.NPC::NPC
-  settings: {fileID: 11400000, guid: 734dc886aaefe26448f51f63a59d4fc7, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1163343746
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1803,6 +1761,19 @@ Transform:
   - {fileID: 493295693}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1163343749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163343743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.NPC::WorldNPC
+  settings: {fileID: 11400000, guid: 734dc886aaefe26448f51f63a59d4fc7, type: 2}
 --- !u!1 &1214872138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,7 +1873,7 @@ GameObject:
   - component: {fileID: 1227492750}
   - component: {fileID: 1227492749}
   - component: {fileID: 1227492748}
-  - component: {fileID: 1227492747}
+  - component: {fileID: 1227492751}
   m_Layer: 0
   m_Name: Red Boy (3)
   m_TagString: Untagged
@@ -1910,20 +1881,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1227492747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1227492746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78050713290899e428e4b7dd9a945127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.NPC::NPC
-  settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1227492748
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1997,6 +1954,19 @@ Transform:
   - {fileID: 1565920646}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1227492751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227492746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.NPC::WorldNPC
+  settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
 --- !u!1 &1328050996
 GameObject:
   m_ObjectHideFlags: 0
@@ -2008,7 +1978,7 @@ GameObject:
   - component: {fileID: 1328051000}
   - component: {fileID: 1328050999}
   - component: {fileID: 1328050998}
-  - component: {fileID: 1328050997}
+  - component: {fileID: 1328051001}
   m_Layer: 0
   m_Name: Red Boy (2)
   m_TagString: Untagged
@@ -2016,20 +1986,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1328050997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1328050996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78050713290899e428e4b7dd9a945127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.NPC::NPC
-  settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1328050998
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2103,6 +2059,19 @@ Transform:
   - {fileID: 482803958}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1328051001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328050996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.NPC::WorldNPC
+  settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
 --- !u!1 &1365903772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,7 +2280,7 @@ GameObject:
   - component: {fileID: 1693612123}
   - component: {fileID: 1693612122}
   - component: {fileID: 1693612121}
-  - component: {fileID: 1693612120}
+  - component: {fileID: 1693612124}
   m_Layer: 0
   m_Name: Red Boy
   m_TagString: Untagged
@@ -2319,20 +2288,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1693612120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693612119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78050713290899e428e4b7dd9a945127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.NPC::NPC
-  settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
-  bootstrapper: {fileID: 0}
 --- !u!23 &1693612121
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2406,6 +2361,19 @@ Transform:
   - {fileID: 1083579541}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1693612124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693612119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.NPC::WorldNPC
+  settings: {fileID: 11400000, guid: a5cd4c1af8f9e854a8b1f4b5ba71daf2, type: 2}
 --- !u!1 &1750013881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2654,7 +2622,7 @@ PrefabInstance:
     - target: {fileID: 8573948290193986500, guid: 2676ec6a00893454e9b025f4bcf72bf8, type: 3}
       propertyPath: bootstrapper
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1780283543}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3912550500291632906, guid: 2676ec6a00893454e9b025f4bcf72bf8, type: 3}
