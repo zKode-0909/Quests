@@ -12,8 +12,9 @@ public class Quest
     string questID;
     int questRuntimeID;
     int questLevel;
-    public event Action<int,string> allObjectiveCompleteEvent;
+    //public event Action<int,string> allObjectiveCompleteEvent;
     QuestStages questStages;
+    private Action<IReadOnlyList<QuestAction>> actionSink;
 
     public Quest(string name,string questGiverID,string questID,int runtimeID,int questLevel,QuestStages stages,int entityID)
     {
@@ -25,11 +26,25 @@ public class Quest
         this.entityOwnerRuntimeID = entityID;
         this.questStages = stages;
 
-        questStages.AllStagesCompleteEvent += HandleAllPhasesComplete;
+        questStages.QuestObjectiveEvent += HandleAction;
+       
     }
 
-    public void HandleAllPhasesComplete() {
-        allObjectiveCompleteEvent?.Invoke(entityOwnerRuntimeID, questID);
+    public void BindActions(QuestActionRunner runner)
+    {
+        actionSink += runner.HandleActions;
+    }
+
+    private void EmitActions(IReadOnlyList<QuestAction> actions)
+    {
+        actionSink?.Invoke(actions);
+    }
+
+
+
+    public void HandleAction(IReadOnlyList<QuestAction> actions) {
+        EmitActions(actions);
+        //allObjectiveCompleteEvent?.Invoke(entityOwnerRuntimeID, questID);
     }
 
     public bool GetQuestCompletionStatus() { 

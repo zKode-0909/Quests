@@ -1,13 +1,27 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public class QuestStageDetails { 
 
-    readonly List<ObjectiveStageRequirement> preRequisites;
-    readonly List<ObjectiveStageRequirement> requirements;
+    List<ObjectiveStageRequirement> preRequisites;
+    List<ObjectiveStageRequirement> requirements;
     public bool complete = false;
-    readonly List<QuestStageDetails> possibleNextStages;
+    List<QuestStageDetails> possibleNextStages;
+
+    public event Action<IReadOnlyList<QuestAction>> StageCompleteEvent;
+    public event Action<IReadOnlyList<QuestAction>> StageStartedEvent;
+    public event Action<IReadOnlyList<QuestAction>> RequirementCompleteEvent;
+    public event Action<IReadOnlyList<QuestAction>> RequirementIncrementedEvent;
+
+    IReadOnlyList<QuestAction> incrementActions;
+    IReadOnlyList<QuestAction> finishedRequirementActions;
+    IReadOnlyList<QuestAction> stageEndActions;
+    IReadOnlyList<QuestAction> stageStartActions;
+
+    List<QuestAction> actionSubsetHolder;
+    
 
     public bool TryTransition(out QuestStageDetails nextStage) 
     {
@@ -21,7 +35,7 @@ public class QuestStageDetails {
             {
                 if (stage.CheckPreReqs())
                 {
-                    // transition stage -- stage end event
+                    StageCompleteEvent?.Invoke(stageEndActions);
                     nextStage = stage;
                     return true;
                 }
@@ -32,9 +46,11 @@ public class QuestStageDetails {
         }
     }
 
+
+
     public void EnterStage() {
         Debug.Log("I have entered this stage");
-        // enter stage -- stage start event
+        StageStartedEvent?.Invoke(stageStartActions);
     }
 
     public void RequestIncrementProgress(string id,int count) {
@@ -43,10 +59,10 @@ public class QuestStageDetails {
             {
                 if (requirement.TryIncrementProgress(id, count))
                 {
-                    // succesfully incremented requirement -- increment requirement event
+                    RequirementIncrementedEvent?.Invoke(incrementActions);
                     if (requirement.CheckCompletion())
                     {
-                        // finished requirement -- finished requirement event
+                        RequirementCompleteEvent?.Invoke(finishedRequirementActions);
                     }
                 }
             }
@@ -73,5 +89,7 @@ public class QuestStageDetails {
         complete = true;
         return true;
     }
+
+
 
 }

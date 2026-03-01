@@ -6,12 +6,24 @@ public class QuestStages
 {
     bool stagesComplete = false;
     QuestStageDetails currentStage;
-    public event Action AllStagesCompleteEvent;
+    IReadOnlyList<QuestAction> allObjectivesFinishedActions;
+
+    public event Action<IReadOnlyList<QuestAction>> QuestObjectiveEvent;
+    
+    
 
     public QuestStages(QuestStageDetails initialStage) { 
         currentStage = initialStage;
+        currentStage.StageStartedEvent += SendActions;
+        currentStage.RequirementCompleteEvent += SendActions;
+        currentStage.StageCompleteEvent += SendActions;
+        currentStage.RequirementIncrementedEvent += SendActions;
     }
 
+
+    void SendActions(IReadOnlyList<QuestAction> actions) {
+        QuestObjectiveEvent?.Invoke(actions);
+    }
 
     bool TryTransition() {
         if (currentStage.CheckStageCompletion()) {
@@ -24,7 +36,7 @@ public class QuestStages
             else {
                 
                 stagesComplete = true;
-                AllStagesCompleteEvent?.Invoke();
+                SendActions(allObjectivesFinishedActions);
                 return false;
             }
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class QuestLogController
 {
     QuestFactory questFactory;
+    QuestActionRunner questActionRunner;
     private QuestLogRegistry logRegistry;
     private EventBinding<RequestDisplayQuestLogEvent> displayLogReqBinding;
     private EventBinding<RequestCloseQuestLogEvent> closeLogReqBinding;
@@ -46,7 +47,9 @@ public class QuestLogController
             {
                 if (log.TryAddQuest(quest))
                 {
-                    quest.allObjectiveCompleteEvent += HandleObjectivesComplete; 
+                    //quest.allObjectiveCompleteEvent += HandleObjectivesComplete;
+                    // quest.BindActionSink(actions => questActionRunner.HandleActions(actions));
+                    quest.BindActions(questActionRunner);
                     EventBus<EntityWorldQuestStateChangedEvent>.Raise(new EntityWorldQuestStateChangedEvent(evt.AccepterEntityRuntimeID, evt.QuestID));
                     foreach (KeyValuePair<string,Quest> pair in log.GetQuests()) {
                     }
