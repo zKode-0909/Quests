@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -26,8 +27,15 @@ public class ObjectiveStageRequirement
         return currentProgress;
     }
 
-    public bool CheckCompletion() {
-        return currentProgress >= maxProgessCount; 
+    public bool CheckCompletion(Dictionary<string,int> progressDict) {
+        if (progressDict.TryGetValue(questObjectiveStableID, out var progress))
+        {
+            return progress >= maxProgessCount;
+        }
+        else {
+            return false; 
+        }
+        
     }
 
     public bool TryIncrementProgress(string id,int count) {

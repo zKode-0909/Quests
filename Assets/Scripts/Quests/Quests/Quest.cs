@@ -6,15 +6,17 @@ using UnityEngine;
 
 public class Quest
 {
-    int entityOwnerRuntimeID;
-    string questName;
-    string questGiverID;
-    string questID;
-    int questRuntimeID;
-    int questLevel;
-    //public event Action<int,string> allObjectiveCompleteEvent;
+    public int entityOwnerRuntimeID { get; private set; }
+    public string questName { get; private set; }
+    public string questGiverID { get; private set; }
+    public string questID { get; private set; }
+    public int questRuntimeID { get; private set; }
+    public int questLevel { get; private set; }
+    public event Action<string,int> allObjectiveCompleteEvent;
     QuestStages questStages;
     private Action<IReadOnlyList<QuestAction>> actionSink;
+
+    Dictionary<string, int> progressByTargetId;
 
     public Quest(string name,string questGiverID,string questID,int runtimeID,int questLevel,QuestStages stages,int entityID)
     {
@@ -26,7 +28,11 @@ public class Quest
         this.entityOwnerRuntimeID = entityID;
         this.questStages = stages;
 
+        progressByTargetId = new Dictionary<string, int>();
+
         questStages.QuestObjectiveEvent += HandleAction;
+        questStages.ObjectivesFinishedEvent += HandleObjectivesComplete;
+        questStages.SetTargetIDDict(progressByTargetId);
        
     }
 
@@ -38,6 +44,10 @@ public class Quest
     private void EmitActions(IReadOnlyList<QuestAction> actions)
     {
         actionSink?.Invoke(actions);
+    }
+
+    void HandleObjectivesComplete() {
+        allObjectiveCompleteEvent?.Invoke(questID,entityOwnerRuntimeID);
     }
 
 
@@ -54,6 +64,9 @@ public class Quest
 
     public void OnObjectiveEvent(string objectiveThingId)
     {
+        if (!progressByTargetId.TryGetValue(objectiveThingId, out var progress)) {
+            progressByTargetId.Add(objectiveThingId, 0);
+        }
         questStages.RequestIncrementObjective(objectiveThingId,1);
     }
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec614895450548b4d80a846244a74598, type: 3}
+  m_Name: QuestOfTestStage1
+  m_EditorClassIdentifier: Game.Quests::QuestStageDetailsSettings
+  Prerequisites: []
+  StageRequirements:
+  - {fileID: 11400000, guid: 872f8c3e13ee8e74d95aaccd56f40170, type: 2}
+  - {fileID: 11400000, guid: 083c7cb200394074c8b902947a740c7c, type: 2}
+  PossibleNextStages:
+  - {fileID: 11400000, guid: 913e17a15df6e344493b43948a48935c, type: 2}
+  Conditions:
+  - requirements:
+    - {fileID: 11400000, guid: 872f8c3e13ee8e74d95aaccd56f40170, type: 2}
+    - {fileID: 11400000, guid: 083c7cb200394074c8b902947a740c7c, type: 2}
+  IncrementRequirementActions: []
+  FinishedRequirementActions: []
+  StageEndActions: []
+  StageStartActions: []

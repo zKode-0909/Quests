@@ -10,11 +10,11 @@ public class QuestLogController
     private EventBinding<RequestCloseQuestLogEvent> closeLogReqBinding;
     EventBinding<RequestAcceptQuest> acceptReqBinding;
 
-    public void InitiateService(QuestFactory factory,QuestLogRegistry registry) {
+    public void InitiateService(QuestFactory factory,QuestLogRegistry registry,QuestActionRunner actionRunner) {
         displayLogReqBinding = new EventBinding<RequestDisplayQuestLogEvent>(OnOpenQuestLogRequested);
         closeLogReqBinding = new EventBinding<RequestCloseQuestLogEvent>(OnCloseQuestLogRequested);
         
-
+        questActionRunner = actionRunner;
         logRegistry = registry;
         questFactory = factory;
         acceptReqBinding = new EventBinding<RequestAcceptQuest>(OnAcceptRequested);
@@ -47,7 +47,7 @@ public class QuestLogController
             {
                 if (log.TryAddQuest(quest))
                 {
-                    //quest.allObjectiveCompleteEvent += HandleObjectivesComplete;
+                    quest.allObjectiveCompleteEvent += HandleObjectivesComplete;
                     // quest.BindActionSink(actions => questActionRunner.HandleActions(actions));
                     quest.BindActions(questActionRunner);
                     EventBus<EntityWorldQuestStateChangedEvent>.Raise(new EntityWorldQuestStateChangedEvent(evt.AccepterEntityRuntimeID, evt.QuestID));
@@ -60,7 +60,7 @@ public class QuestLogController
 
     }
 
-    void HandleObjectivesComplete(int runtimeID,string questID) {
+    void HandleObjectivesComplete(string questID,int runtimeID) {
         Debug.Log($"OBJECTIVES COMPLETE FOR {runtimeID} on questID: {questID}");
         EventBus<EntityWorldQuestStateChangedEvent>.Raise(new EntityWorldQuestStateChangedEvent(runtimeID, questID));
     }

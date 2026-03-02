@@ -7,6 +7,6 @@ public class SayQuestAction : QuestAction
     Action<int, string> sayAction;
     public override void Execute()
     {
-        sayAction.Invoke();
+       // sayAction.Invoke();
     }
 }

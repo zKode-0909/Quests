@@ -15,3 +15,4 @@ MonoBehaviour:
   NPCName: TestDude
   startingHealth: 50
   StableID: TestID
+  startingLevel: 1

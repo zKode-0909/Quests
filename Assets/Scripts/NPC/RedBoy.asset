@@ -15,3 +15,4 @@ MonoBehaviour:
   NPCName: Red Boy
   startingHealth: 60
   StableID: RedBoy
+  startingLevel: 3

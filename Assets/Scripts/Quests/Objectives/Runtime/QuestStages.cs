@@ -8,9 +8,13 @@ public class QuestStages
     QuestStageDetails currentStage;
     IReadOnlyList<QuestAction> allObjectivesFinishedActions;
 
+    public event Action ObjectivesFinishedEvent;
+
     public event Action<IReadOnlyList<QuestAction>> QuestObjectiveEvent;
-    
-    
+
+    Dictionary<string, int> progressByTargetId;
+
+
 
     public QuestStages(QuestStageDetails initialStage) { 
         currentStage = initialStage;
@@ -26,8 +30,8 @@ public class QuestStages
     }
 
     bool TryTransition() {
-        if (currentStage.CheckStageCompletion()) {
-            if (currentStage.TryTransition(out var nextStage))
+        if (currentStage.CheckStageCompletion(progressByTargetId)) {
+            if (currentStage.TryTransition(progressByTargetId,out var nextStage))
             {
                 currentStage = nextStage;
                 nextStage.EnterStage();
@@ -36,6 +40,8 @@ public class QuestStages
             else {
                 
                 stagesComplete = true;
+                Debug.Log($"QUEST OBJECTIVE COMPLETE!");
+                ObjectivesFinishedEvent?.Invoke();
                 SendActions(allObjectivesFinishedActions);
                 return false;
             }
@@ -45,11 +51,15 @@ public class QuestStages
 
     public void RequestIncrementObjective(string id, int count) {
         if (stagesComplete == false) {
-            currentStage.RequestIncrementProgress(id, count);
+            currentStage.RequestIncrementProgress(id, count,progressByTargetId);
             TryTransition();
         }
         
-    } 
+    }
+
+    public void SetTargetIDDict(Dictionary<string, int> dict) { 
+        progressByTargetId = dict;
+    }
 
     public bool GetQuestCompletionStatus() => stagesComplete;
 

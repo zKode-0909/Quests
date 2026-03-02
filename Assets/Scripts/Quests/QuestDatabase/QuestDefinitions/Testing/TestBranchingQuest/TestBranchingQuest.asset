@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbfd756db28341843866490b1e87970c, type: 3}
-  m_Name: TestQuest3
-  m_EditorClassIdentifier: Assembly-CSharp::QuestSettings
-  ID: <quests>.<TestQuest>.<TestZone>.003
-  QuestName: Test Quest 3
-  QuestDescription: I am still meant for testing, ignore me.
-  RequiredLevel: 5
+  m_Name: TestBranchingQuest
+  m_EditorClassIdentifier: Game.Quests::QuestSettings
+  ID: <Quests>.<TestQuests>.<TestZone>.<TestBranchingQuest>.001
+  QuestName: Test Branching Quest
+  QuestDescription: Testing to make sure quests can branch
+  RequiredLevel: 2
   preReqQuests: []
-  objectives: {fileID: 11400000, guid: 50d900bfd5a046542a0c73ee3baaa5bf, type: 2}
+  objectives: {fileID: 0}
+  QuestAcceptedActions: []
+  QuestTurnedInActions: []

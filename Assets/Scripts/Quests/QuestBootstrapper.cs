@@ -9,6 +9,7 @@ public class QuestBootstrapper : MonoBehaviour
     public QuestGiverRegistry questGiverRegistry;
     QuestService questService;
     QuestLogController questLogController;
+    QuestActionRunner questActionRunner;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 
@@ -24,6 +25,8 @@ public class QuestBootstrapper : MonoBehaviour
     public void BootStrap(QuestLogRegistry logRegistry) {
         questGiverRegistry = new QuestGiverRegistry();
 
+        questActionRunner = new QuestActionRunner();
+
         questFactory = new QuestFactory();
         questFactory.InitializeFactory(dB);
 
@@ -35,7 +38,7 @@ public class QuestBootstrapper : MonoBehaviour
         
 
         questLogController = new QuestLogController();
-        questLogController.InitiateService(questFactory, questLogRegistry);
+        questLogController.InitiateService(questFactory, questLogRegistry,questActionRunner);
 
         questService = new QuestService();
         questService.Initialize(questFactory, questLogRegistry,questLogController);
