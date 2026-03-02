@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TestBranchingQuestStages
   m_EditorClassIdentifier: Game.Quests::QuestStageSettings
   AllStagesCompleteActions: []
-  InitialStage: {fileID: 0}
+  InitialStage: {fileID: 11400000, guid: 49aea1baa2cb91940ab9032e7b2dab7f, type: 2}

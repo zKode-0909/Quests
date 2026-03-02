@@ -17,6 +17,6 @@ MonoBehaviour:
   QuestDescription: Testing to make sure quests can branch
   RequiredLevel: 2
   preReqQuests: []
-  objectives: {fileID: 0}
+  objectives: {fileID: 11400000, guid: f8697e37807a25946bb76db00e5c2816, type: 2}
   QuestAcceptedActions: []
   QuestTurnedInActions: []

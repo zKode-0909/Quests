@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PurpleDude
   m_EditorClassIdentifier: Game.NPC::NPCSettings
   NPCName: Purple Dude
-  startingHealth: 1
+  startingHealth: 10
   StableID: PurpleDude
   startingLevel: 1

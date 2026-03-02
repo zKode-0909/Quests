@@ -10,20 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec614895450548b4d80a846244a74598, type: 3}
-  m_Name: TestBranchingQuestStage1
+  m_Name: TestBranchingQuestStage2.2
   m_EditorClassIdentifier: Game.Quests::QuestStageDetailsSettings
-  Prerequisites: []
-  StageRequirements:
-  - {fileID: 11400000, guid: c8d873de3b2f3914e97f8dccbd9099ec, type: 2}
+  Prerequisites:
   - {fileID: 11400000, guid: 850a6ea064e64844dae29738fb15ca32, type: 2}
-  PossibleNextStages:
-  - {fileID: 11400000, guid: f8ab46765fe14624f9d8d7552651807b, type: 2}
-  - {fileID: 11400000, guid: 72a35e2750cac5442a8979a8d6a7bf3f, type: 2}
+  StageRequirements:
+  - {fileID: 11400000, guid: 6a39b24c53321964ea1ec7d12807b139, type: 2}
+  PossibleNextStages: []
   Conditions:
   - requirements:
-    - {fileID: 11400000, guid: c8d873de3b2f3914e97f8dccbd9099ec, type: 2}
-  - requirements:
-    - {fileID: 11400000, guid: 850a6ea064e64844dae29738fb15ca32, type: 2}
+    - {fileID: 11400000, guid: 6a39b24c53321964ea1ec7d12807b139, type: 2}
   IncrementRequirementActions: []
   FinishedRequirementActions: []
   StageEndActions: []

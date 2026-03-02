@@ -289,7 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 195066908}
   - component: {fileID: 195066909}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -912,7 +912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::WorldNPC
-  settings: {fileID: 0}
+  settings: {fileID: 11400000, guid: 71a7127397fec254292e59a1b58f267c, type: 2}
 --- !u!23 &456944939
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1137,6 +1137,7 @@ MonoBehaviour:
   bootstrapper: {fileID: 1612694882}
   quests:
   - {fileID: 11400000, guid: e146a5af3f75c174383679e6f27d6b6f, type: 2}
+  - {fileID: 11400000, guid: f78535bb5e21e6c448248ef63beaa87d, type: 2}
   entityRuntimeId: 0
   questMarker: {fileID: 963346351}
   questGiverID: <questGiver>.<testQuestGiver>.<testZone>.001
@@ -1168,7 +1169,7 @@ GameObject:
   m_Component:
   - component: {fileID: 590909897}
   - component: {fileID: 590909898}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1244,7 +1245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::WorldNPC
-  settings: {fileID: 0}
+  settings: {fileID: 11400000, guid: e61df4993c9b9354c90adc6d3cbf7e59, type: 2}
 --- !u!23 &667720500
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1600,7 +1601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 791088466}
   - component: {fileID: 791088467}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2378,7 +2379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59c7b5fb8230bf94fa2c1c0ccdc8464e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.NPC::WorldNPC
-  settings: {fileID: 0}
+  settings: {fileID: 11400000, guid: dbc399f831dc63a47ba885a67a873ed7, type: 2}
 --- !u!23 &1224106840
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2929,7 +2930,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1598199528}
   - component: {fileID: 1598199529}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
