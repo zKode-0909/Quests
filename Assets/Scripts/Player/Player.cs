@@ -77,7 +77,7 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
 
         scanCooldownTimer.OnTimerStart = HandleTimerStart;
         scanCooldownTimer.OnTimerStop = HandleTimerFinish;
-        entityRuntimeID = GetEntityId();
+        entityRuntimeID = RuntimeIDGenerator.GetNext();
 
 
     }
@@ -89,12 +89,16 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
     void HandleTimerFinish() {
     }
 
+    public void ShowInventory() { 
+        
+    }
+
 
     private void Start()
     {
+        Debug.Log(bootstrapper.playerRegistry);
         bootstrapper.playerRegistry.Register(this);
         if (bootstrapper.playerRegistry.TryGet(entityRuntimeID, out var ent)) {
-            Debug.Log($"{ent} has been succesfully registered");
         }
         playerLevelling = new PlayerLevelling();
         

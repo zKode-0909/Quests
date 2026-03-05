@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
         input.PressTEvent += HandleTPress;
         input.PressYEvent += HandleYPress;
 
+        input.OpenInventoryEvent += HandleOpenInventory;
+
         testEventBinding = new EventBinding<TestEvent>(HandleTestEvent);
         EventBus<TestEvent>.Register(testEventBinding);
 
@@ -48,6 +50,8 @@ public class PlayerController : MonoBehaviour
         input.PressTEvent -= HandleTPress;
         input.PressYEvent -= HandleYPress;
 
+        input.OpenInventoryEvent -= HandleOpenInventory;
+
         EventBus<TestEvent>.Deregister(testEventBinding);
         EventBus<PlayerEvent>.Deregister(playerEventBinding);
         EventBus<EntityWorldQuestStateChangedEvent>.Deregister(worldQuestStateChangeBinding);
@@ -59,6 +63,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+    }
+
+    void HandleOpenInventory() {
+        player.ShowInventory();
     }
 
     void HandleMove(Vector2 dir)
@@ -100,7 +108,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandlePlayerQuestAccept(EntityWorldQuestStateChangedEvent evt) {
-        Debug.Log("Scannign nearby");
         player.playerQuests.ForceRescanNearby();
        // player.QuestLog.TryAddQuest(evt.QuestID);
     }

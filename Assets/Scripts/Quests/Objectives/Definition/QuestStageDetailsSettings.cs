@@ -78,7 +78,6 @@ public class QuestStageDetailsSettings : ScriptableObject
         foreach (var group in conditionSettings)
             groups.Add(BuildReqs(group.Requirements)); // BuildReqs already takes List<ObjectiveRequirementSettings>
 
-        Debug.Log($"built {groups.Count} condition requirements");
 
         return groups;
     }

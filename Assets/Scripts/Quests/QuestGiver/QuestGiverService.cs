@@ -56,8 +56,8 @@ public class QuestGiverService
 
 
     void OnQuestGiverIconDisplayRequested(RequestQuestGiverIconDisplay evt) {
-
         if (giverRegistry.TryGet(evt.QuestGiverEntityRuntimeID,out var giver)) {
+           
             var questGiver = giver;
             var questLog = logRegistry.GetOrCreate(evt.QuesterEntityRuntimeID);
 

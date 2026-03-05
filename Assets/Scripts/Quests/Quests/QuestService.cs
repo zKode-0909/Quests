@@ -6,6 +6,7 @@ public class QuestService
     private QuestLogRegistry logRegistry;
     QuestFactory questFactory;
     EventBinding<KilledEvent> killedEventBinding;
+    EventBinding<GatherItemEvent> gatheredEventBinding;
 
     public void Initialize(QuestFactory factory, QuestLogRegistry registry,QuestLogController logController)
     {
@@ -14,12 +15,19 @@ public class QuestService
         questLogController = logController;    
 
         killedEventBinding = new EventBinding<KilledEvent>(HandleKilledEvent);
+        gatheredEventBinding = new EventBinding<GatherItemEvent> (HandleGatheredEvent);
 
         EventBus<KilledEvent>.Register(killedEventBinding);
+        EventBus<GatherItemEvent>.Register(gatheredEventBinding);
     }
 
     public void Dispose() {
         EventBus<KilledEvent>.Deregister(killedEventBinding);
+        EventBus<GatherItemEvent>.Deregister(gatheredEventBinding);
+    }
+
+    void HandleGatheredEvent(GatherItemEvent evt) {
+        questLogController.RequestIncrementQuestObjective(evt.gatheredByRuntimeID, evt.itemStableID);
     }
 
 

@@ -37,7 +37,7 @@ public class WorldNPC : MonoBehaviour,IDamageable,IEntity
     void Start()
     {
 
-        runtimeID = this.GetEntityId();
+        runtimeID = RuntimeIDGenerator.GetNext();
         level = settings.startingLevel;
         health = new EntityHealth(settings.startingHealth);
     }

@@ -18,6 +18,7 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
     public event Action OpenQuestLogEvent;
     public event Action PressYEvent;
     public event Action PressTEvent;
+    public event Action OpenInventoryEvent;
 
 
 
@@ -143,7 +144,10 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
 
     public void OnShowInv(InputAction.CallbackContext context)
     {
-        Debug.Log("Not Implemented");
+        if (context.phase == InputActionPhase.Started)
+        {
+            OpenInventoryEvent?.Invoke();
+        }
     }
 
     public void OnSprint(InputAction.CallbackContext context)

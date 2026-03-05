@@ -13,6 +13,8 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
 
     public int EntityLevel => currentLevel;
 
+    public string StableID => settings.StableID;
+
     int runTimeID;
     int currentLevel;
 
@@ -30,21 +32,20 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
     }
 
     void Die(int killerID) {
-        EventBus<KilledEvent>.Raise(new KilledEvent(killerID,settings.StableID));
+        EventBus<KilledEvent>.Raise(new KilledEvent(killerID,StableID));
         Destroy(gameObject);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
 
-        runTimeID = this.GetEntityId();
+        runTimeID = RuntimeIDGenerator.GetNext();
         currentLevel  = settings.startingLevel;
         health = new EntityHealth(settings.startingHealth);
         bootstrapper.characterRegistry.Register(this);
-        if (bootstrapper.characterRegistry.TryGet(runTimeID, out var ent))
+        if (bootstrapper.characterRegistry.TryGet(StableID, out var ent))
         {
-            Debug.Log($"{ent} has been succesfully registered");
         }
     }
 
@@ -52,5 +53,9 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
     void Update()
     {
         
+    }
+
+    public void Say(string words) {
+        Debug.Log($"{words}");
     }
 }

@@ -1,27 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class QuestLogRegistry : IQuestLogRegistry
+public sealed class QuestLogRegistry
 {
     
 
-    private readonly Dictionary<EntityId, QuestLog> _logs = new();
+    private readonly Dictionary<int, QuestLog> _logs = new();
 
-    public IEnumerable<KeyValuePair<EntityId, QuestLog>> All => _logs;
+    public IEnumerable<KeyValuePair<int, QuestLog>> All => _logs;
 
-    public bool TryGet(EntityId id, out QuestLog log) => _logs.TryGetValue(id, out log);
+    public bool TryGet(int id, out QuestLog log) => _logs.TryGetValue(id, out log);
 
-    public QuestLog GetOrCreate(EntityId id)
+    public QuestLog GetOrCreate(int id)
     {
         if (_logs.TryGetValue(id, out var log)) return log;
-        log = new QuestLog(id);
+        log = new QuestLog(25);
         _logs.Add(id, log);
         return log;
     }
 
-    public bool Remove(EntityId id) => _logs.Remove(id);
+    public bool Remove(int id) => _logs.Remove(id);
 
-    public bool TryCreate(EntityId id) {
+    public bool TryCreate(int id) {
         if (_logs.TryGetValue(id, out var log)) { 
             return false;
         }

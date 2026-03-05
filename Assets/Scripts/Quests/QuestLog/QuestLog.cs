@@ -29,7 +29,6 @@ public class QuestLog
 
 
     public bool TryAddQuest(Quest quest) {
-        Debug.Log($"quest: {quest}");
         if (quests.Count >= capacity-1) {
             Debug.Log("log full");
             return false;
@@ -38,7 +37,6 @@ public class QuestLog
 
 
         if (quest == null || string.IsNullOrEmpty(quest.questID)) {
-            Debug.Log("Invalid quest");
             return false;
 
         }
@@ -46,7 +44,6 @@ public class QuestLog
         
         var added = quests.TryAdd(quest.questID, quest);
         if (!added) {
-            Debug.Log("already added");
             return false; // already exists
         }
 

@@ -2,5 +2,7 @@ using UnityEngine;
 
 public interface ICharacter
 {
-    public int EntityRuntimeID { get; }
+    public string StableID { get; }
+
+    public void Say(string words);
 }

@@ -6,5 +6,12 @@ public class NPCBootStrapper : MonoBehaviour
 
     public void BootStrap() { 
         characterRegistry = new CharacterRegistry();
+
+        NPCActionRunner.Initialize(characterRegistry);
+    }
+
+    private void OnDestroy()
+    {
+        NPCActionRunner.Shutdown();
     }
 }

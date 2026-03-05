@@ -42,7 +42,7 @@ public class QuestGiver : MonoBehaviour,IInteractable
     }
     private void Awake()
     {
-        entityRuntimeId = GetEntityId();
+        entityRuntimeId = GetComponentInParent<IEntity>().EntityRuntimeID;//GetEntityId();
         //Debug.Log(bootstrapper.questGiverRegistry);
         bootstrapper.questGiverRegistry.TryRegister(this);//.questGiverRegistry//.TryRegister(this); 
     }

@@ -55,6 +55,8 @@ public class QuestStageDetails {
     {
         if (possibleNextStages.Count == 0)
         {
+            Debug.Log($"stage has ended, I am going to fire {stageEndActions.Count}");
+            StageCompleteEvent?.Invoke(stageEndActions);
             nextStage = null;
             return false;
         }
@@ -63,6 +65,7 @@ public class QuestStageDetails {
             {
                 if (stage.CheckPreReqs(progressDict))
                 {
+                    Debug.Log($"stage has ended, I am going to fire {stageEndActions.Count}");
                     StageCompleteEvent?.Invoke(stageEndActions);
                     Debug.Log("transitioning stage");
                     nextStage = stage;

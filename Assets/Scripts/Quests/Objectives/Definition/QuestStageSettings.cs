@@ -14,6 +14,6 @@ public class QuestStageSettings : ScriptableObject
 
         // Optionally include all stages, not just root:
         // ctx.StageCache.Values has every stage built.
-        return new QuestStages(root);
+        return new QuestStages(root,AllStagesCompleteActions);
     }
 }

@@ -43,6 +43,10 @@ public class Quest
 
     private void EmitActions(IReadOnlyList<QuestAction> actions)
     {
+
+        foreach (QuestAction action in actions) {
+            Debug.Log($"emitting action {action}");
+        }
         actionSink?.Invoke(actions);
     }
 

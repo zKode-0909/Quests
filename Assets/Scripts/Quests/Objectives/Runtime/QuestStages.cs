@@ -16,8 +16,9 @@ public class QuestStages
 
 
 
-    public QuestStages(QuestStageDetails initialStage) { 
+    public QuestStages(QuestStageDetails initialStage,IReadOnlyList<QuestAction> objectivesFinishedActions) { 
         currentStage = initialStage;
+        allObjectivesFinishedActions = objectivesFinishedActions;
         currentStage.StageStartedEvent += SendActions;
         currentStage.RequirementCompleteEvent += SendActions;
         currentStage.StageCompleteEvent += SendActions;

@@ -10,9 +10,11 @@ public class GameBootstrapper : MonoBehaviour
 
   
     QuestLogRegistry logRegistry;
+    InventoryRegistry inventoryRegistry;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        inventoryRegistry = new InventoryRegistry();
         logRegistry = new QuestLogRegistry();
         PreWarmLogRegistry();
         questBootstrapper.BootStrap(logRegistry);
@@ -26,6 +28,7 @@ public class GameBootstrapper : MonoBehaviour
         foreach(var player in players)
         {
             logRegistry.TryCreate(player.EntityRuntimeID);
+            inventoryRegistry.TryCreate(player.EntityRuntimeID);
         }
     }
 

@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class CharacterRegistry
 {
-    private readonly Dictionary<int, ICharacter> registryByID = new();
+    private readonly Dictionary<string, ICharacter> registryByStableID = new();
 
-    public void Register(ICharacter c) => registryByID[c.EntityRuntimeID] = c;
+    public void Register(ICharacter c) => registryByStableID[c.StableID] = c;
     public void Unregister(ICharacter c)
     {
-        if (registryByID.TryGetValue(c.EntityRuntimeID, out var cur) && ReferenceEquals(cur, c))
-            registryByID.Remove(c.EntityRuntimeID);
+        if (registryByStableID.TryGetValue(c.StableID, out var cur) && ReferenceEquals(cur, c))
+            registryByStableID.Remove(c.StableID);
     }
 
-    public bool TryGet(int id, out ICharacter c) => registryByID.TryGetValue(id, out c);
+    public bool TryGet(string id, out ICharacter c) => registryByStableID.TryGetValue(id, out c);
 
-    public ICharacter GetRequired(int id) =>
-        registryByID.TryGetValue(id, out var c) ? c : throw new KeyNotFoundException($"No character {id}");
+    public ICharacter GetRequired(string id) =>
+        registryByStableID.TryGetValue(id, out var c) ? c : throw new KeyNotFoundException($"No character {id}");
 }
