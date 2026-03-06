@@ -7,6 +7,7 @@ public class GameBootstrapper : MonoBehaviour
     [SerializeField] QuestBootstrapper questBootstrapper;
     [SerializeField] NPCBootStrapper NPCBootstrapper;
     [SerializeField] PlayerBootStrapper PlayerBootStrapper;
+    [SerializeField] InventoryBootstrapper InventoryBootstrapper;
 
   
     QuestLogRegistry logRegistry;
@@ -15,13 +16,16 @@ public class GameBootstrapper : MonoBehaviour
     void Awake()
     {
         inventoryRegistry = new InventoryRegistry();
+        inventoryRegistry.InitializeRegistry();
         logRegistry = new QuestLogRegistry();
-        PreWarmLogRegistry();
+        logRegistry.InitializeRegistry();
+       // PreWarmLogRegistry();
         questBootstrapper.BootStrap(logRegistry);
         NPCBootstrapper.BootStrap();
         PlayerBootStrapper.BootStrap();
+        InventoryBootstrapper.Bootstrap(inventoryRegistry);
     }
-
+    /*
     void PreWarmLogRegistry() {
         var players = FindObjectsByType<Player>(FindObjectsSortMode.None);
 
@@ -30,7 +34,7 @@ public class GameBootstrapper : MonoBehaviour
             logRegistry.TryCreate(player.EntityRuntimeID);
             inventoryRegistry.TryCreate(player.EntityRuntimeID);
         }
-    }
+    }*/
 
 
 

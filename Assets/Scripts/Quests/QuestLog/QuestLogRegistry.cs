@@ -3,13 +3,22 @@ using UnityEngine;
 
 public sealed class QuestLogRegistry
 {
-    
+    EventBinding<RegisterQuestLogEvent> registerQuestLogBinding;
 
     private readonly Dictionary<int, QuestLog> _logs = new();
 
     public IEnumerable<KeyValuePair<int, QuestLog>> All => _logs;
 
     public bool TryGet(int id, out QuestLog log) => _logs.TryGetValue(id, out log);
+
+    public void InitializeRegistry() {
+        registerQuestLogBinding = new EventBinding<RegisterQuestLogEvent>(RegisterQuestLog);
+        EventBus<RegisterQuestLogEvent>.Register(registerQuestLogBinding);
+    }
+
+    public void RegisterQuestLog(RegisterQuestLogEvent evt) {
+        GetOrCreate(evt.EntityRuntimeID);
+    }
 
     public QuestLog GetOrCreate(int id)
     {

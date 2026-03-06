@@ -31,6 +31,7 @@ public class InventoryViewController : MonoBehaviour
 
 
     void OpenInventory() {
+        Debug.Log("opening inventory in view");
         root.style.display = DisplayStyle.Flex;
     }
 

@@ -10,6 +10,9 @@ public class InventoryController
 
     InventoryRegistry inventoryRegistry;
 
+
+   
+
     public void InitiateService(InventoryRegistry registry)
     {
         displayInventoryReqBinding = new EventBinding<RequestOpenInventoryEvent>(OnOpenInventoryRequested);
@@ -33,10 +36,13 @@ public class InventoryController
 
 
     void OnOpenInventoryRequested(RequestOpenInventoryEvent evt) {
-        Debug.Log("Opening Inventory");
+   
+        Debug.Log($"Trying to open Inventory for {evt.EntityRuntimeID}");
         var displayList = new List<InventoryUIItem>();
-        if (inventoryRegistry.TryGet(evt.EntityRuntimeID, out var log))
+       
+        if (inventoryRegistry.TryGet(evt.EntityRuntimeID, out var inventory))
         {
+            Debug.Log("opening inventory");
             EventBus<DisplayInventoryEvent>.Raise(new DisplayInventoryEvent(displayList));
         }
         else

@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleOpenInventory() {
+        Debug.Log("received open inventory input");
         player.ShowInventory();
     }
 
