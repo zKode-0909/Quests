@@ -13,6 +13,7 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
     public PlayerQuests playerQuests;
     public PlayerLevelling playerLevelling;
     PlayerRegistries registries;
+    public PlayerInventory playerInventory;
     //public PlayerEquipment equipment;
    // public PlayerStats statSnapshot;
     Rigidbody rb;
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
     private void Awake()
     {
         entityRuntimeID = RuntimeIDGenerator.GetNext();
+        playerInventory = new PlayerInventory();
         registries = new PlayerRegistries();
         registries.Register(entityRuntimeID);
         attackCooldownTimer = new CountdownTimer(weapon.cooldown);
@@ -93,10 +95,9 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
     void HandleTimerFinish() {
     }
 
-    public void ShowInventory() {
-        Debug.Log("Showing inventory");
-        EventBus<RequestOpenInventoryEvent>.Raise(new RequestOpenInventoryEvent(entityRuntimeID));
-    }
+
+
+    
 
 
     private void Start()

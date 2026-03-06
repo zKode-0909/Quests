@@ -3,7 +3,7 @@ using UnityEngine;
 public class GroundItem : MonoBehaviour, IInteractable
 {
     [SerializeField] private ItemSettings settings;
-    IRuntimeItem item;
+    //IRuntimeItem item;
 
     void IInteractable.HandleInteract(IInteractor interactor)
     {
@@ -15,11 +15,8 @@ public class GroundItem : MonoBehaviour, IInteractable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        if (settings == null)
+        if (settings == null) { 
             Debug.LogError($"{name}: GroundItem missing ItemSettings", this);
-        else {
-            if (item == null)
-                item = settings.CreateItem();
         }
         
     }

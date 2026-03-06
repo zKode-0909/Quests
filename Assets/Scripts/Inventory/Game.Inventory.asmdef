@@ -4,7 +4,8 @@
     "references": [
         "Game.Core",
         "Game.Events",
-        "Game.Shared"
+        "Game.Shared",
+        "Game.Items"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,4 +1,22 @@
 .inventoryDisplay{
-	height: 500px;
-	width: 500px;
+	
+	justify-content: center;
+	align-items: center;
+
 }
+
+.inventoryContainer{
+	height: 50%;
+	width: 50%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	background-color: green;
+}
+
+.inventoryGrid{
+	height: 100%
+	width: 100%;
+	display: flex;
+}
+

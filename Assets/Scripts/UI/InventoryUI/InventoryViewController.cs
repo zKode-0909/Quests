@@ -25,8 +25,20 @@ public class InventoryViewController : MonoBehaviour
         closeInventory = new EventBinding<CloseInventoryEvent>(CloseInventory);
         EventBus<CloseInventoryEvent>.Register(closeInventory);
 
+        BuildInventory();
+
 
         root.style.display = DisplayStyle.None;
+    }
+
+    void BuildInventory() {
+        var inventoryContainer = new VisualElement();
+        inventoryContainer.AddToClassList("inventoryContainer");
+        var inventoryGrid = new VisualElement();
+        inventoryGrid.AddToClassList("inventoryGrid");
+
+        inventoryContainer.Add(inventoryGrid);
+        root.Add(inventoryContainer);
     }
 
 

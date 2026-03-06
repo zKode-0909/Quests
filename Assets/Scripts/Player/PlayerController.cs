@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleOpenInventory() {
         Debug.Log("received open inventory input");
-        player.ShowInventory();
+        player.playerInventory.ToggleInventory(player.entityRuntimeID);
     }
 
     void HandleMove(Vector2 dir)
