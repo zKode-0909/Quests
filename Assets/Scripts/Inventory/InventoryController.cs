@@ -8,21 +8,30 @@ public class InventoryController
     private EventBinding<RequestOpenInventoryEvent> displayInventoryReqBinding;
     private EventBinding<RequestCloseInventoryEvent> closeInventoryReqBinding;
 
+    private EventBinding<GatherItemEvent> gatherItemReqBinding;
+
     InventoryRegistry inventoryRegistry;
+    ItemFactory itemFactory;
 
 
    
 
-    public void InitiateService(InventoryRegistry registry)
+    public void InitiateService(InventoryRegistry registry,ItemFactory factory)
     {
+
         displayInventoryReqBinding = new EventBinding<RequestOpenInventoryEvent>(OnOpenInventoryRequested);
         closeInventoryReqBinding = new EventBinding<RequestCloseInventoryEvent>(OnCloseInventoryRequested);
+
+        gatherItemReqBinding = new EventBinding<GatherItemEvent>(OnAddItemToInventory);
+
         inventoryRegistry = registry;
+        itemFactory = factory;
    
 
 
         EventBus<RequestOpenInventoryEvent>.Register(displayInventoryReqBinding);
         EventBus<RequestCloseInventoryEvent>.Register(closeInventoryReqBinding);
+        EventBus<GatherItemEvent>.Register(gatherItemReqBinding);
     }
 
 
@@ -30,8 +39,17 @@ public class InventoryController
     {
         EventBus<RequestOpenInventoryEvent>.Deregister(displayInventoryReqBinding);
         EventBus<RequestCloseInventoryEvent>.Deregister(closeInventoryReqBinding);
+        EventBus<GatherItemEvent>.Deregister(gatherItemReqBinding);
 
 
+    }
+
+    void OnAddItemToInventory(GatherItemEvent evt) {
+        if (inventoryRegistry.TryGet(evt.gatheredByRuntimeID, out var inventory)) {
+            if (itemFactory.TryCreateItemFromID(evt.itemStableID, evt.gatheredByRuntimeID, out var item)) { 
+                inventory.TryAddItemToInventory(item);
+            }
+        }
     }
 
 

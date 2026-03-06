@@ -11,13 +11,13 @@ public class ItemFactory
 
     }
 
-    public bool TryCreateQuestFromID(string itemID, int receiverRuntimeID, out IRuntimeItem item)
+    public bool TryCreateItemFromID(string itemID, int receiverRuntimeID, out IRuntimeItem item)
     {
         if (database.TryGetItemDef(itemID, out var i))
         {
-            var ItemSettings = i;
-            item = null;
-            //item = //new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel, QuestSettings.objectives.BuildRuntimeQuestStages(), receiverRuntimeID);
+            
+
+            item = i.CreateItem();//new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel, QuestSettings.objectives.BuildRuntimeQuestStages(), receiverRuntimeID);
             return true;
         }
         else

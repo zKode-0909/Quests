@@ -12,4 +12,6 @@ public interface IRuntimeItem
 
     public void HandleLeftClick();
     public void HandleRightClick();
+
+   
 }
