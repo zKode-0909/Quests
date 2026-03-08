@@ -25,7 +25,7 @@ public class AttackState : BasePlayerState
 
     public override void OnExit()
     {
-        Debug.Log("leaving attackstate");
+   
        
     }
 }

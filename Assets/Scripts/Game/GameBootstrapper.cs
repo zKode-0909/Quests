@@ -8,17 +8,16 @@ public class GameBootstrapper : MonoBehaviour
     [SerializeField] NPCBootStrapper NPCBootstrapper;
     [SerializeField] PlayerBootStrapper PlayerBootStrapper;
     [SerializeField] InventoryBootstrapper InventoryBootstrapper;
-
+    [SerializeField] ItemBootstrapper ItemBootstrapper;
+    [SerializeField] ItemDB itemDatabase;
   
     QuestLogRegistry logRegistry;
     InventoryRegistry inventoryRegistry;
-    ItemDB itemDatabase;
     ItemFactory itemFactory;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        itemDatabase = new ItemDB();
-        itemDatabase.BuildItemDB();
+   
         itemFactory = new ItemFactory();
 
         inventoryRegistry = new InventoryRegistry();
@@ -30,6 +29,7 @@ public class GameBootstrapper : MonoBehaviour
         NPCBootstrapper.BootStrap();
         PlayerBootStrapper.BootStrap();
         InventoryBootstrapper.Bootstrap(inventoryRegistry,itemFactory);
+        ItemBootstrapper.Bootstrap(itemDatabase,itemFactory);
     }
     /*
     void PreWarmLogRegistry() {

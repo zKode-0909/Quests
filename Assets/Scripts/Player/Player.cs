@@ -12,7 +12,7 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
     public StateMachine stateMachine;
     public PlayerQuests playerQuests;
     public PlayerLevelling playerLevelling;
-    PlayerRegistries registries;
+    [SerializeField] EntityRegistration registries;
     public PlayerInventory playerInventory;
     //public PlayerEquipment equipment;
    // public PlayerStats statSnapshot;
@@ -62,10 +62,10 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
         {
             //var ctx = new AttackContext(this.gameObject);
             attackCooldownTimer.Start();
-            Debug.Log($"attack result: {runtimeWeapon.TryAttack(this.gameObject,this.entityRuntimeID)}");
+            //Debug.Log($"attack result: {runtimeWeapon.TryAttack(this.gameObject,this.entityRuntimeID)}");
         }
         else {
-            Debug.Log("No weapon");
+            //Debug.Log("No weapon");
         }
         
     }
@@ -74,7 +74,6 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
     {
         entityRuntimeID = RuntimeIDGenerator.GetNext();
         playerInventory = new PlayerInventory();
-        registries = new PlayerRegistries();
         registries.Register(entityRuntimeID);
         attackCooldownTimer = new CountdownTimer(weapon.cooldown);
         weaponFactory = new WeaponFactory();

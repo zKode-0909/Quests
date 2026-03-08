@@ -25,10 +25,10 @@ public class Weapon : IWeapon
     {
         var attCtx = new AttackContext(attacker,damage,attackRange);
         hits.Clear();
-        Debug.Log($"about to execute weapon strat for: {attCtx.attacker.name}");
+       // Debug.Log($"about to execute weapon strat for: {attCtx.attacker.name}");
         strategy.CollectHits(attCtx, hits);
 
-        Debug.Log($"just hit {hits.Count} damagables");
+       // Debug.Log($"just hit {hits.Count} damagables");
 
         foreach (var hit in hits) {
             //Debug.Log($"didnt hit: {hit.target}");

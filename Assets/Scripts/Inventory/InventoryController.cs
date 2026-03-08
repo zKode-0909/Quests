@@ -9,6 +9,7 @@ public class InventoryController
     private EventBinding<RequestCloseInventoryEvent> closeInventoryReqBinding;
 
     private EventBinding<GatherItemEvent> gatherItemReqBinding;
+    private EventBinding<InventoryItemSwappedEvent> swappedItemsBinding;
 
     InventoryRegistry inventoryRegistry;
     ItemFactory itemFactory;
@@ -24,6 +25,8 @@ public class InventoryController
 
         gatherItemReqBinding = new EventBinding<GatherItemEvent>(OnAddItemToInventory);
 
+        swappedItemsBinding = new EventBinding<InventoryItemSwappedEvent>(HandleItemSwap);
+
         inventoryRegistry = registry;
         itemFactory = factory;
    
@@ -32,6 +35,7 @@ public class InventoryController
         EventBus<RequestOpenInventoryEvent>.Register(displayInventoryReqBinding);
         EventBus<RequestCloseInventoryEvent>.Register(closeInventoryReqBinding);
         EventBus<GatherItemEvent>.Register(gatherItemReqBinding);
+        EventBus<InventoryItemSwappedEvent>.Register(swappedItemsBinding);
     }
 
 
@@ -40,16 +44,26 @@ public class InventoryController
         EventBus<RequestOpenInventoryEvent>.Deregister(displayInventoryReqBinding);
         EventBus<RequestCloseInventoryEvent>.Deregister(closeInventoryReqBinding);
         EventBus<GatherItemEvent>.Deregister(gatherItemReqBinding);
+        EventBus<InventoryItemSwappedEvent>.Deregister(swappedItemsBinding);
 
 
     }
 
     void OnAddItemToInventory(GatherItemEvent evt) {
         if (inventoryRegistry.TryGet(evt.gatheredByRuntimeID, out var inventory)) {
-            if (itemFactory.TryCreateItemFromID(evt.itemStableID, evt.gatheredByRuntimeID, out var item)) { 
-                inventory.TryAddItemToInventory(item);
+            if (itemFactory.TryCreateItemFromID(evt.itemStableID, evt.gatheredByRuntimeID, out var item)) {
+                if (inventory.TryAddItemToInventory(item)) {
+                    Debug.Log($"{item.ItemName} has been added to {evt.gatheredByRuntimeID}'s inventory");
+                }
             }
         }
+    }
+
+    void HandleItemSwap(InventoryItemSwappedEvent evt) {
+        if (inventoryRegistry.TryGet(evt.EntityRuntimeID, out var inventory)) {
+            inventory.SwapItems(evt.item1Idx, evt.item2Idx);
+        }
+
     }
 
 
@@ -61,7 +75,7 @@ public class InventoryController
         if (inventoryRegistry.TryGet(evt.EntityRuntimeID, out var inventory))
         {
             Debug.Log("opening inventory");
-            EventBus<DisplayInventoryEvent>.Raise(new DisplayInventoryEvent(displayList));
+            EventBus<DisplayInventoryEvent>.Raise(new DisplayInventoryEvent(BuildUIListFromInventory(inventory),evt.EntityRuntimeID));
         }
         else
         {
@@ -71,5 +85,24 @@ public class InventoryController
 
     void OnCloseInventoryRequested(RequestCloseInventoryEvent evt) {
         EventBus<CloseInventoryEvent>.Raise(new CloseInventoryEvent());
+    }
+
+    List<InventoryUIItem> BuildUIListFromInventory(Inventory inventory) {
+        var uiInventory = new List<InventoryUIItem>();
+
+        foreach (var item in inventory.GetItems()) {
+            if (item != null)
+            {
+                var uiInventoryItem = new InventoryUIItem(item.ItemName, item.Icon);
+                uiInventory.Add(uiInventoryItem);
+            }
+            else {
+                var uiInventoryItem = new InventoryUIItem("blank", null);
+                uiInventory.Add(uiInventoryItem);
+            }
+            
+        }
+
+        return uiInventory;
     }
 }

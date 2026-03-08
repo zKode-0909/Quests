@@ -5,7 +5,8 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
 
     EntityHealth health;
     [SerializeField] NPCSettings settings;
-    [SerializeField] NPCBootStrapper bootstrapper; 
+    [SerializeField] NPCBootStrapper bootstrapper;
+    [SerializeField] EntityRegistration registration;
 
     public GameObject GameObject => this.gameObject;
 
@@ -17,6 +18,7 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
 
     int runTimeID;
     int currentLevel;
+
 
 
 
@@ -39,15 +41,18 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-
+        
         runTimeID = RuntimeIDGenerator.GetNext();
         currentLevel  = settings.startingLevel;
         health = new EntityHealth(settings.startingHealth);
-        bootstrapper.characterRegistry.Register(this);
+        registration.Register(runTimeID);
+        //bootstrapper.characterRegistry.Register(this);
         if (bootstrapper.characterRegistry.TryGet(StableID, out var ent))
         {
         }
     }
+
+
 
     // Update is called once per frame
     void Update()

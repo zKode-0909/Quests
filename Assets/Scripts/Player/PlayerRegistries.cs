@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class PlayerRegistries
+public class PlayerRegistration : EntityRegistration
 {
-    public void Register(int id) {
+    public override void Register(int id)
+    {
         EventBus<RegisterInventoryEvent>.Raise(new RegisterInventoryEvent(id));
         EventBus<RegisterQuestLogEvent>.Raise(new RegisterQuestLogEvent(id));
     }

@@ -14,6 +14,8 @@ public class OrbitCamera : MonoBehaviour
     [SerializeField] float verticalOffset = 1f;
     [SerializeField] float rotationSpeed = 0.001f;
 
+    
+
 
     private bool UICam = false;
 
@@ -66,12 +68,16 @@ public class OrbitCamera : MonoBehaviour
         {
             lookPosition.y = 0.6f;
         }
+        /*
         if (UICam == false)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             transform.SetPositionAndRotation(lookPosition, lookRotation);
-        }
+        }*/
+
+
+        transform.SetPositionAndRotation(lookPosition, lookRotation);
 
 
     }

@@ -17,7 +17,7 @@ public class LocomotionState : BasePlayerState
 
     public override void OnEnter()
     {
-
+        /*
         UnityEngine.Debug.Log($"CurrentSpeed {speed}");
 
 
@@ -25,7 +25,7 @@ public class LocomotionState : BasePlayerState
         Debug.Log($"Controller = {animator.runtimeAnimatorController?.name}");
         Debug.Log($"LayerCount = {animator.layerCount}");
         Debug.Log("entering locomotion");
-        Debug.Log($"Locomotion hash is: {LocomotionHash}");
+        Debug.Log($"Locomotion hash is: {LocomotionHash}");*/
         animator.CrossFade(LocomotionHash, crossFadeDuration,0);
     }
 
