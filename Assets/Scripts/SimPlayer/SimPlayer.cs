@@ -20,18 +20,12 @@ public class SimPlayer : MonoBehaviour,IEntity,IDamageable,IInteractor,IInteract
 
     public void TakeDamage(float damage, int damagerRuntimeID)
     {
-        Debug.Log($"I have taken {damage} damage {damagerRuntimeID}");
+        Debug.Log($"I have taken {damage} damage from {damagerRuntimeID}");
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Initialize(int id,int level)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+       entityRuntimeID = id;
+       entityLevel = level;
     }
 }
