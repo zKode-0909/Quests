@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
 {
-    public PlayerController controller;
+    
     public PlayerMotor motor;
     public StateMachine stateMachine;
     public PlayerQuests playerQuests;
@@ -16,8 +16,7 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
     public PlayerInventory playerInventory;
     //public PlayerEquipment equipment;
    // public PlayerStats statSnapshot;
-    Rigidbody rb;
-    [SerializeField] LayerMask questGiverSearchLayerMask;
+
     [SerializeField] PlayerBootStrapper bootstrapper;
     [SerializeField] Animator animator;
     [SerializeField] WeaponSettings weapon;
@@ -72,7 +71,7 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
 
     private void Awake()
     {
-        entityRuntimeID = RuntimeIDGenerator.GetNext();
+        
         playerInventory = new PlayerInventory();
         registries.Register(entityRuntimeID);
         attackCooldownTimer = new CountdownTimer(weapon.cooldown);
@@ -95,22 +94,22 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
     }
 
 
-
+    public void Intialize(PlayerMotor motor,int runtimeID) {
+        this.motor = motor;
+        stateMachine = new StateMachine();
+        playerLevelling = new PlayerLevelling();
+    }
     
 
 
     private void Start()
     {
         Debug.Log(bootstrapper.playerRegistry);
-        bootstrapper.playerRegistry.Register(this);
+        
         if (bootstrapper.playerRegistry.TryGet(entityRuntimeID, out var ent)) {
         }
-        playerLevelling = new PlayerLevelling();
         
-        rb = controller.GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
-        motor = new PlayerMotor(rb, transform, 7f, Camera.main);
-        stateMachine = new StateMachine();
+        
 
         
         timers = new List<Timer>(1) { scanCooldownTimer,attackCooldownTimer };
@@ -133,41 +132,6 @@ public class Player : MonoBehaviour,IInteractor,IEntity,IDamageable,IPlayer
        // Debug.Log(Mathf.Lerp(0,600f,currentSpeed));
         animator.SetFloat("Speed", Mathf.InverseLerp(0,7f,motor.GetVelocityMagnitude()));
     }
-    /*
-    private void Start()
-    {
-        
-    }*/
-
-    public void ForceRescanNearby()
-    {
-        //List<int> idList = new List<int>();
-        
-        var hits = Physics.OverlapSphere(
-            this.gameObject.transform.position,
-            500f,
-            questGiverSearchLayerMask
-        );
-
-            foreach (var col in hits)
-            {
-                var giver = col.GetComponentInParent<QuestGiver>();
-                if (giver != null)
-                {
-                    //idList.Add(giver.entityRuntimeId);
-                    EventBus<RequestQuestGiverIconDisplay>.Raise(new RequestQuestGiverIconDisplay(giver.EntityRuntimeID,entityRuntimeID, EntityLevel));
-                }
-
-            }
-
-
-        }
-
-
-
-
-
-
 
     void HandleTimers()
     {

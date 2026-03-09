@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerInputReader input;
     [SerializeField] Player player;
 
+    Rigidbody rb;
+
     EventBinding<TestEvent> testEventBinding;
     EventBinding<PlayerEvent> playerEventBinding;
 
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
+        rb = this.gameObject.GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
         input.MoveEvent += HandleMove;
         input.AttackEvent += HandleAttack;
         input.OpenQuestLogEvent += HandleOpenQuestLog;
