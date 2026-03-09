@@ -9,16 +9,22 @@ public class Weapon : IWeapon
     GameObject weapon;
     float attackRange;
     List<HitContext> hits = new List<HitContext>();
+    float cooldown;
 
-    public Weapon(BaseWeaponStrategy strat,string name,int dmg,float range) { 
+    public Weapon(BaseWeaponStrategy strat,string name,int dmg,float range,float cooldown) { 
         strategy = strat;
         weaponName = name;
         damage = dmg; 
         attackRange = range;
+        this.cooldown = cooldown;
 
     }
 
-    
+
+
+    public float GetCooldown() { 
+        return cooldown;
+    }
 
 
     public bool TryAttack(GameObject attacker,int runtimeID)

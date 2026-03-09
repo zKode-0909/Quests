@@ -6,7 +6,7 @@ public class WeaponFactory
     public Weapon CreateWeapon(WeaponSettings weaponToSpawn,Transform handSocket)
     {
         var weapon = new Weapon(weaponToSpawn.strategy, weaponToSpawn.weaponName,
-            weaponToSpawn.weaponDamage,weaponToSpawn.range);
+            weaponToSpawn.weaponDamage,weaponToSpawn.range,weaponToSpawn.cooldown);
 
         var go = Object.Instantiate(weaponToSpawn.prefab);
         go.transform.SetParent(handSocket, false);
