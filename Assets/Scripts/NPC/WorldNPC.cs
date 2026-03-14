@@ -12,10 +12,18 @@ public class WorldNPC : MonoBehaviour,IDamageable,IEntity
 
     public int EntityLevel => level;
 
+    GameObject IEntity.GameObject => throw new System.NotImplementedException();
+
+    int IEntity.EntityRuntimeID => throw new System.NotImplementedException();
+
+    EntityHealth IEntity.Health => throw new System.NotImplementedException();
+
+    int IEntity.EntityLevel => throw new System.NotImplementedException();
+
     int runtimeID;
     int level;
 
-    public void TakeDamage(float damage, int changerRuntimeID)
+    public void TakeDamage(int damage, int changerRuntimeID)
     {
         health.ChangeHealth(damage);
         Debug.Log($"GOT DAMN NIGGA! I JUST GOT HIT for {damage} damage, my shit be bleedin! I now have {health.GetHealth()}");
@@ -40,5 +48,10 @@ public class WorldNPC : MonoBehaviour,IDamageable,IEntity
         runtimeID = RuntimeIDGenerator.GetNext();
         level = settings.startingLevel;
         health = new EntityHealth(settings.startingHealth);
+    }
+
+    public void TakeDamage(float damage, int damagerRuntimeID)
+    {
+        throw new System.NotImplementedException();
     }
 }

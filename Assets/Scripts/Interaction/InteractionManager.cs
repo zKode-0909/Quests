@@ -6,7 +6,7 @@ public class InteractionManager : MonoBehaviour
 {
     [SerializeField] ScriptableObject inputReader;
     [SerializeField] LayerMask interactableLayerMask;
-    [SerializeField] MonoBehaviour target;
+    MonoBehaviour target;
 
     private IInteractor interactor;
     private IInputSource input;
@@ -45,6 +45,10 @@ public class InteractionManager : MonoBehaviour
         }
             
 
+    }
+
+    public void SetTarget(MonoBehaviour target) { 
+        this.target = target;
     }
 
   

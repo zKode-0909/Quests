@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HoverManager : MonoBehaviour
 {
-    [SerializeField] Transform target;
+    Transform target;
     [SerializeField] LayerMask interactableLayerMask;
     [SerializeField] HoverableUI hoverableUI;
     Vector3 rayOrigin = Vector3.zero;
@@ -37,5 +37,9 @@ public class HoverManager : MonoBehaviour
         }
 
         hoverableUI.HideHoverableUI();
+    }
+
+    public void SetTarget(Transform trans) { 
+        this.target = trans;
     }
 }

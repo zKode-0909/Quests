@@ -19,6 +19,7 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
     public event Action PressYEvent;
     public event Action PressTEvent;
     public event Action OpenInventoryEvent;
+    public event Action<Vector2> SelectionEvent;
 
 
 
@@ -59,7 +60,10 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        Debug.Log("Not Implemented");
+        if (context.phase == InputActionPhase.Started)
+        {
+            Debug.Log("nigga you just clicked");
+        }
     }
 
     public void OnCloseInv(InputAction.CallbackContext context)
@@ -188,6 +192,15 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
         if (context.phase == InputActionPhase.Started)
         {
             PressYEvent?.Invoke();
+        }
+    }
+
+    public void OnSelect(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            var mousePos = Mouse.current.position.ReadValue();
+            SelectionEvent?.Invoke(mousePos);
         }
     }
 }

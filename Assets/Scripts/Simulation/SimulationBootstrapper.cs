@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SimulationBootstrapper : MonoBehaviour
 {
-    [SerializeField] SimPlayerTemplateDB dB;
+    [SerializeField] PlayerTemplateDB dB;
     SimulationManager simManager;
     public void Bootstrap() { 
         simManager = new SimulationManager();

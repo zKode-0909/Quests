@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ade3b6731822244879f98fd6c7bc5f, type: 3}
+  m_Name: HumanVisualVariants
+  m_EditorClassIdentifier: Game.Shared::HumanVisualVariants
+  colors:
+  - {fileID: 2100000, guid: 20a42f3a84ba9b046a60c8166d108e02, type: 2}
+  - {fileID: 2100000, guid: c12652fdc81a85f408ded027eb4be5d6, type: 2}
+  - {fileID: 2100000, guid: 89be734badf961246ad9491cd40c5f3c, type: 2}

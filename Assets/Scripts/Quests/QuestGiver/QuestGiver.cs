@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-9999)]
 public class QuestGiver : MonoBehaviour,IInteractable
 {
     //[SerializeField] QuestHandoutView view;
@@ -32,7 +33,7 @@ public class QuestGiver : MonoBehaviour,IInteractable
     {
         var level = ((IEntity)interactor).EntityLevel;
         
-        Debug.Log("Interacted with QuestGiver");
+        Debug.Log($"Interacted with QuestGiver with entityruntimeid of {entityRuntimeId}");
         EventBus<RequestOpenQuestGiverUI>.Raise(new RequestOpenQuestGiverUI(interactor.EntityRuntimeID,entityRuntimeId,level));
    
     }

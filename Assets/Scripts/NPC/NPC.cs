@@ -16,13 +16,19 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
 
     public string StableID => settings.StableID;
 
+
+
+    EntityHealth IEntity.Health => throw new System.NotImplementedException();
+
+
+
     int runTimeID;
     int currentLevel;
 
 
 
 
-    public void TakeDamage(float damage,int changerRuntimeID)
+    public void TakeDamage(int damage,int changerRuntimeID)
     {
         health.ChangeHealth(damage);
         Debug.Log($"GOT DAMN NIGGA! I JUST GOT HIT for {damage} damage, my shit be bleedin! I now have {health.GetHealth()}");

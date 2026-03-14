@@ -3,9 +3,9 @@ using UnityEngine;
 
 public readonly struct RequestGenerateSimPlayerEvent : IEvent
 {
-    public readonly Level1CharacterTemplate templateToGenerate;
+    public readonly string templateToGenerate;
 
-    public RequestGenerateSimPlayerEvent(Level1CharacterTemplate template)
+    public RequestGenerateSimPlayerEvent(string template)
     {
         this.templateToGenerate = template;
     }

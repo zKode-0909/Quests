@@ -2,18 +2,21 @@ using UnityEngine;
 
 public class SimulationManager
 {
-    SimPlayerTemplateDB SimPlayerTemplateDB;
+    PlayerTemplateDB playerTemplateDB;
 
-    public void Initialize(SimPlayerTemplateDB db) { 
-        SimPlayerTemplateDB = db;
+    public void Initialize(PlayerTemplateDB db) { 
+        playerTemplateDB = db;
+
+        RequestSimPlayerGeneration();
     }
 
     public void RequestSimPlayerGeneration()
     {
-        if (SimPlayerTemplateDB.TryGetTemplateDef("testTemplate", out var characterTemplate))
+        if (playerTemplateDB.TryGetTemplateDef("HumanTemplate", out var characterTemplate))
         {
+            Debug.Log($"about to request sim player generatoin");
             EventBus<RequestGenerateSimPlayerEvent>.Raise(
-                new RequestGenerateSimPlayerEvent(characterTemplate));
+                new RequestGenerateSimPlayerEvent(characterTemplate.StableID));
         }
     }
 }

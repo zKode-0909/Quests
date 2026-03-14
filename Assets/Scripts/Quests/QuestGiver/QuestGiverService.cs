@@ -56,11 +56,12 @@ public class QuestGiverService
 
 
     void OnQuestGiverIconDisplayRequested(RequestQuestGiverIconDisplay evt) {
+        Debug.Log($"quest giver's id is: {evt.QuestGiverEntityRuntimeID}");
         if (giverRegistry.TryGet(evt.QuestGiverEntityRuntimeID,out var giver)) {
            
             var questGiver = giver;
             var questLog = logRegistry.GetOrCreate(evt.QuesterEntityRuntimeID);
-
+            Debug.Log($"checking for icon, questlog is: {questLog} and questgiver is {giver}");
             if (questGiver != null && questLog != null)
             {
                 var icon = QuestUtils.DetermineIcon(questGiver, questLog, evt.QuesterLevel);

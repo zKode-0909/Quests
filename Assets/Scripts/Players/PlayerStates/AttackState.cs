@@ -1,0 +1,32 @@
+using UnityEngine;
+using System;
+
+public class AttackState : BasePlayerState
+{
+    Animator animator;
+    Player player;
+    public AttackState(Player player,Animator animator) : base(player,animator)
+    {
+        this.animator = animator;
+        this.player = player;
+    }
+
+    public override void OnEnter()
+    {
+        // player.playerCombatHandler.TryAttack(player.statSnapshot,player.equipment.weapon);
+        animator.CrossFade(AttackHash, crossFadeDuration);
+    }
+
+    public override void FixedUpdate()
+    {
+       
+        player.playerMotor.Move();
+    }
+
+    public override void OnExit()
+    {
+   
+       
+    }
+}
+

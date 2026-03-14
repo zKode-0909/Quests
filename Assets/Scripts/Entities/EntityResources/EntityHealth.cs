@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EntityHealth
 {
-    float currentHealth;
+    int currentHealth;
     int maxHealth;
 
     public EntityHealth(int maxHealth)
@@ -11,7 +11,7 @@ public class EntityHealth
         this.maxHealth = maxHealth;
     }
 
-    public float ChangeHealth(float delta) {
+    public int ChangeHealth(int delta) {
 
         if (currentHealth + delta > maxHealth) { 
             delta = maxHealth - currentHealth;
@@ -23,6 +23,12 @@ public class EntityHealth
 
         
         
+    }
+
+    public int ChangeMaxHealth(int newMaxHealth) { 
+        this.maxHealth = newMaxHealth;
+
+        return maxHealth;
     }
 
     public float GetHealth() { 

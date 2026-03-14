@@ -82,6 +82,10 @@ public class OrbitCamera : MonoBehaviour
 
     }
 
+    public void SetFocus(Transform focus) { 
+        this.focus = focus;
+    }
+
     void HandleInv(bool stateOfInv)
     {
         UICam = stateOfInv;
