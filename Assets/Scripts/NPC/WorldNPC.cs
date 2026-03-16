@@ -26,8 +26,8 @@ public class WorldNPC : MonoBehaviour,IDamageable,IEntity
     public void TakeDamage(int damage, int changerRuntimeID)
     {
         health.ChangeHealth(damage);
-        Debug.Log($"GOT DAMN NIGGA! I JUST GOT HIT for {damage} damage, my shit be bleedin! I now have {health.GetHealth()}");
-        if (health.GetHealth() <= 0)
+        Debug.Log($"GOT DAMN NIGGA! I JUST GOT HIT for {damage} damage, my shit be bleedin! I now have {health.GetCurrentHealth()}");
+        if (health.GetCurrentHealth() <= 0)
         {
             Debug.Log("I be dead");
             Die(changerRuntimeID);

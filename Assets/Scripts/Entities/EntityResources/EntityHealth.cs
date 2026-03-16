@@ -31,7 +31,11 @@ public class EntityHealth
         return maxHealth;
     }
 
-    public float GetHealth() { 
+    public int GetMaxHealth() { 
+        return maxHealth;
+    }
+
+    public int GetCurrentHealth() { 
         return currentHealth;
     }
 }

@@ -13,54 +13,82 @@ public class HumanPlayerOverlayViewController : MonoBehaviour
     Portrait humanPortrait;
     Portrait selectedPortrait;
     VisualElement humanPlayerOverlayHolder;
+    PortraitManager portraits;
 
 
     EventBinding<SelectionChangedEvent> selectionChangedEventBinding;
+    EventBinding<PlayerLoadedEvent> playerLoadedEventBinding;
 
-    List<Portrait> managedPortraits;
+  
 
     private void Start()
     {
+        portraits = new PortraitManager();
+
         root = document.rootVisualElement;
         root.Clear();
-        managedPortraits = new List<Portrait>();
         //      .. allQuests = new List<QuestSettings>();
         root.styleSheets.Add(styleSheet);
         root.AddToClassList("root");
 
-        selectionChangedEventBinding = new EventBinding<SelectionChangedEvent>(HandleSelectionChanged);
+        selectionChangedEventBinding = new EventBinding<SelectionChangedEvent>(BuildSelectedPortrait);
+        playerLoadedEventBinding = new EventBinding<PlayerLoadedEvent>(BuildLayout);
 
         EventBus<SelectionChangedEvent>.Register(selectionChangedEventBinding);
+        EventBus<PlayerLoadedEvent>.Register(playerLoadedEventBinding);
 
-        BuildLayout();
+        //BuildLayout();
 
 
     }
 
-    void HandleSelectionChanged(SelectionChangedEvent evt) {
-        //evt.selected.healthChangedEvent += portrait.UpdatePortraitHealth;
-    }
 
 
-    void BuildLayout() {
+    void BuildLayout(PlayerLoadedEvent evt) {
         BuildUIPanel();
-        BuildPortrait();
+        BuildHumanPlayerPortrait(evt.playerStats.selectable);
     }
 
-    private void AddPortrait(ISelectable newPortrait)
+    private void BuildSelectedPortrait(SelectionChangedEvent evt)
     {
-       // var portrait = new Portrait(newPortrait);
+        if (selectedPortrait != null) {
+            portraits.TryRemovePortrait(selectedPortrait.GetDisplayedPortrait(), out var old);
+            
+        }
+        
+
+
+        if (portraits.TryAddPortrait(evt.selected, out var portrait)) {
+            selectedPortrait.Clear();
+            selectedPortrait = portrait;
+            
+     
+            
+        }
     }
 
-    void BuildPortrait() {
-       // humanPortrait = new Portrait(100,100);
-        humanPlayerOverlayHolder.Add(humanPortrait);
-        managedPortraits.Add(humanPortrait);
+    void BuildHumanPlayerPortrait(ISelectable selectable) {
+
+        if (humanPortrait != null) {
+            portraits.TryRemovePortrait(humanPortrait.GetDisplayedPortrait(), out var old);
+            
+        }
+        
+
+        if (portraits.TryAddPortrait((selectable), out var portrait)) {
+            humanPortrait.Clear();
+            humanPortrait = portrait;
+            
+        }
+        
+        
     }
 
     void BuildUIPanel() { 
         humanPlayerOverlayHolder = new VisualElement();
         humanPlayerOverlayHolder.AddToClassList("overlay");
+        humanPlayerOverlayHolder.Add(humanPortrait);
+        humanPlayerOverlayHolder.Add(selectedPortrait);
         root.Add(humanPlayerOverlayHolder);
     }
 }

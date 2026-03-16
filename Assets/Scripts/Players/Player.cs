@@ -1,8 +1,9 @@
+using System;
 using System.Security.Principal;
 using UnityEngine;
 
 
-public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor, IInteractable
+public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor, IInteractable,ISelectable
 {
     public GameObject GameObject => gameObject;
 
@@ -17,6 +18,8 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
     protected PlayerState playerState;
     protected Animator animator;
 
+    public event Action<int> healthChangedEvent;
+
     [SerializeField] protected Transform holdingHand;
 
     protected EntityHealth health;
@@ -28,6 +31,8 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
     protected PlayerRegistration registration;
     protected PlayerRegistry registry;
+
+    protected string playerName;
     
 
     public void Initialize(Animator animator,EntityHealth health,int runtimeID,PlayerRegistration registration,PlayerState playerState,PlayerMotor motor,PlayerRegistry registry)
@@ -52,7 +57,8 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
     public void TakeDamage(int damage, int damagerRuntimeID)
     {
-        throw new System.NotImplementedException();
+        health.ChangeHealth(damage);
+        healthChangedEvent?.Invoke(damage);
     }
 
     public void RequestAttack()
@@ -107,6 +113,11 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
     public Weapon GetPlayerRuntimeWeapon()
     {
         return runtimeWeapon;
+    }
+
+    public SelectableData SendSelectionData()
+    {
+        return new SelectableData(health.GetMaxHealth(),health.GetCurrentHealth(),false,true,true,"testyname");
     }
 
     public Animator GetPlayerAnimator()

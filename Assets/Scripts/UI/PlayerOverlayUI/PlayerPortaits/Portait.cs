@@ -9,21 +9,40 @@ public class Portrait : VisualElement
     bool elitePortrait;
     bool playerPortrait;
     bool friendlyPortrait;
-    int index;
+    public int id;
 
     VisualElement portrait;
     ResourceBar healthBar;
 
-    public Portrait(SelectableData data,int idx) {
+    ISelectable displayed;
+
+    public Portrait(ISelectable entityToDisplay) {
+
+        displayed = entityToDisplay;
+
+        displayed.healthChangedEvent += SetCurrentHealth;
+
+        var data = displayed.SendSelectionData();
         maxHealth = data.maxHealth;
         currentHealth = data.currentHealth;
         portraitName = data.selectedName;
         elitePortrait = data.isElite;
         playerPortrait = data.isPlayer;
         friendlyPortrait = data.isFriendly;
-        index = idx;
+
+        id = entityToDisplay.EntityRuntimeID;
 
         BuildPortrait();
+    }
+
+    public ISelectable GetDisplayedPortrait()
+    {
+        return displayed;
+
+    }
+
+    public void Dispose() { 
+        displayed.healthChangedEvent -= SetCurrentHealth;
     }
 
 
@@ -34,7 +53,7 @@ public class Portrait : VisualElement
         portrait.AddToClassList("portraitHolder");
 
 
-        var healthBar = new ResourceBar(Color.green);
+        healthBar = new ResourceBar(Color.green);
 
         this.Add(portrait);
         this.Add(healthBar);
@@ -51,6 +70,10 @@ public class Portrait : VisualElement
 
     public void SetCurrentHealth(int newCurrentHealth) { 
         currentHealth = newCurrentHealth;
+        var percent = ((float)currentHealth / (float)maxHealth) * 100;
+        healthBar.SetHealthIndicator(percent);
+
+
     }
 
    

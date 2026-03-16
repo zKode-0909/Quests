@@ -6,6 +6,6 @@ public interface ISelectable
 {
     public event Action<int> healthChangedEvent;
     int EntityRuntimeID { get; }
-    void SendSelectionData(SelectableData data);
+    SelectableData SendSelectionData();
 
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 public class HumanPlayer : Player
 {
     
-   
+    
     public HumanPlayerQuests playerQuests;
     //public PlayerLevelling playerLevelling;
     public HumanPlayerInventoryToggle humanInventoryToggle;
@@ -17,9 +17,8 @@ public class HumanPlayer : Player
 
     public SelectionManager selectionManager;
 
+    
 
-    
-    
     public void InitializeHumanPlayer(HumanPlayerQuests quests,HumanPlayerInventoryToggle inventoryToggle) {
         this.playerQuests = quests;
         this.humanInventoryToggle = inventoryToggle;
@@ -28,7 +27,8 @@ public class HumanPlayer : Player
         questScanTimer.OnTimerStart += HandleRescan;
         questScanTimer.OnTimerStop += ResetScanTimer;
 
-        
+        EventBus<PlayerLoadedEvent>.Raise(new PlayerLoadedEvent(new PlayerDTO(entityRuntimeID,level,"testPlayerName",health.GetMaxHealth()
+            ,health.GetCurrentHealth(),this)));
     }
 
     private void Awake()
@@ -63,18 +63,5 @@ public class HumanPlayer : Player
         questScanTimer.Start();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 }
