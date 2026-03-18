@@ -29,7 +29,7 @@ public class ResourceBar : VisualElement
     }
 
     public void SetHealthIndicator(float percent) {
-
+        //Debug.Log($"setting health indicator to {percent}%");
         healthIndicator.style.width = Length.Percent(percent);
     
     }

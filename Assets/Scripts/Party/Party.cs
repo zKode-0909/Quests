@@ -12,6 +12,7 @@ public class Party
     public Party(int leader,int id) { 
         leaderId = leader;
         runtimeId = id;
+        PartyMembers = new List<int>();
     }
 
     public bool TryAddMemberToParty(int idToAdd) {

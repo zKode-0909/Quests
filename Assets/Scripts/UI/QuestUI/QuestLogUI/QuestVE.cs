@@ -28,12 +28,13 @@ public class QuestVE : Button
         }
 
 
-        clicked += () => QuestClicked?.Invoke(QuestStableID);
+        clicked += () => OnQuestClicked(); 
         
     }
 
     void OnQuestClicked()
     {
+        //QuestClicked?.Invoke(QuestStableID);
         Debug.Log($"just cliked {QuestName}");
     }
 

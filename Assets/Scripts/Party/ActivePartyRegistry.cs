@@ -30,6 +30,7 @@ public class ActivePartyRegistry
 
         partyById.Add(partyId, partyToRegister);
         partyByMember.Add(leaderId, partyToRegister);
+        Debug.Log($"{leaderId} has successfully started a party with id {partyId}");
         return true;
     }
 

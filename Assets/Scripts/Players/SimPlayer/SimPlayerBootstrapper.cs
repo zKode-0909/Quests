@@ -6,6 +6,7 @@ public class SimPlayerBootstrapper : MonoBehaviour
     SimPlayerFactory simPlayerFactory;
     PlayerSpawner playerSpawner;
     PlayerRegistry playerRegistry;
+    PlayerPartyInviteHandler playerPartyInviteHandler;
     
 
     SimPlayer simPlayerPrefab;

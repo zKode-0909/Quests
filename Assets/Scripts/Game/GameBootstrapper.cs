@@ -10,7 +10,7 @@ public class GameBootstrapper : MonoBehaviour
     [SerializeField] InventoryBootstrapper InventoryBootstrapper;
     [SerializeField] ItemBootstrapper ItemBootstrapper;
     [SerializeField] ItemDB itemDatabase;
-
+    [SerializeField] PartyBootstrapper PartyBootstrapper;
     [SerializeField] SimulationBootstrapper SimulationBootstrapper;
   
     QuestLogRegistry logRegistry;
@@ -35,6 +35,7 @@ public class GameBootstrapper : MonoBehaviour
         InventoryBootstrapper.Bootstrap(inventoryRegistry,itemFactory);
         ItemBootstrapper.Bootstrap(itemDatabase,itemFactory);
         SimulationBootstrapper.Bootstrap();
+        PartyBootstrapper.Bootstrap();
         
 
     }

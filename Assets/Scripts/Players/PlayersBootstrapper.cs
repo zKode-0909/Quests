@@ -13,12 +13,15 @@ public class PlayersBootstrapper : MonoBehaviour
     [SerializeField] PlayerRegistration registration;
     PlayerSpawner spawner;
     PlayerRegistry registry;
+    PlayerPartyInviteHandler playerPartyInviteHandler;
 
 
     public void Bootstrap() {
-        var spawner = new PlayerSpawner(spawnPoints);
-        var registry = new PlayerRegistry();
-        var registration = new PlayerRegistration();
+        spawner = new PlayerSpawner(spawnPoints);
+        registry = new PlayerRegistry();
+        registration = new PlayerRegistration();
+        playerPartyInviteHandler = new PlayerPartyInviteHandler();
+        playerPartyInviteHandler.Initialize(registry);
 
         humanBootstrapper.BootStrap(registration,spawner,registry);
         simPlayerBootstrapper.Bootstrap(spawner,registry,registration,simPrefab,playerTemplateDB);

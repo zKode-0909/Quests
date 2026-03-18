@@ -11,18 +11,10 @@ public class EntityHealth
         this.maxHealth = maxHealth;
     }
 
-    public int ChangeHealth(int delta) {
-
-        if (currentHealth + delta > maxHealth) { 
-            delta = maxHealth - currentHealth;
-        }
-
-        currentHealth += delta;
-
-        return currentHealth;   
-
-        
-        
+    public int ChangeHealth(int delta)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + delta, 0, maxHealth);
+        return currentHealth;
     }
 
     public int ChangeMaxHealth(int newMaxHealth) { 

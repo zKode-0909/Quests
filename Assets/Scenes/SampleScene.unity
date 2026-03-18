@@ -119,6 +119,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &30854188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 30854190}
+  - component: {fileID: 30854189}
+  m_Layer: 0
+  m_Name: PartyBootstrapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &30854189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30854188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bce08737015b8746a1d8191a46ebbe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Party::PartyBootstrapper
+--- !u!4 &30854190
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30854188}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.37975, y: -4.9319, z: 8.67098}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &48785522
 GameObject:
   m_ObjectHideFlags: 0
@@ -3731,6 +3775,7 @@ MonoBehaviour:
   InventoryBootstrapper: {fileID: 1485589911}
   ItemBootstrapper: {fileID: 1983915527}
   itemDatabase: {fileID: 11400000, guid: e668d5bd3f68e1549977142a245e4888, type: 2}
+  PartyBootstrapper: {fileID: 30854189}
   SimulationBootstrapper: {fileID: 1059532441}
 --- !u!4 &1904805934
 Transform:
@@ -4118,3 +4163,4 @@ SceneRoots:
   - {fileID: 1055209981}
   - {fileID: 967915431}
   - {fileID: 2114847737}
+  - {fileID: 30854190}

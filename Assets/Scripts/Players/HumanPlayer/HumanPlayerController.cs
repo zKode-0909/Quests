@@ -49,7 +49,8 @@ public class HumanPlayerController : MonoBehaviour
     }
 
     void HandleSelection(Vector2 pos) {
-        Debug.Log($"selecting on screen at {pos}");
+        player.HandleSelect(pos);
+        
     }
 
     void HandleMove(Vector2 dir)

@@ -15,6 +15,8 @@ public class HumanPlayerBootStrapper : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] PlayerInputReader inputReader;
     [SerializeField] LayerMask questGiverLayerMask;
+
+
     
 
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,6 +17,8 @@ public class Portrait : VisualElement
 
     ISelectable displayed;
 
+    public event Action<Vector2,ISelectable> showContextMenuOnPortrait;
+
     public Portrait(ISelectable entityToDisplay) {
 
         displayed = entityToDisplay;
@@ -31,8 +34,9 @@ public class Portrait : VisualElement
         friendlyPortrait = data.isFriendly;
 
         id = entityToDisplay.EntityRuntimeID;
-
+        
         BuildPortrait();
+
     }
 
     public ISelectable GetDisplayedPortrait()
@@ -47,19 +51,37 @@ public class Portrait : VisualElement
 
 
     void BuildPortrait() {
+        this.pickingMode = PickingMode.Position;
+        AddToClassList("portraitRoot");
+
         portrait = new VisualElement();
-        
-
         portrait.AddToClassList("portraitHolder");
-
+        portrait.pickingMode = PickingMode.Position;
 
         healthBar = new ResourceBar(Color.green);
+        healthBar.pickingMode = PickingMode.Ignore;
 
-        this.Add(portrait);
-        this.Add(healthBar);
-        
+        Add(portrait);
+        Add(healthBar);
 
-        
+        portrait.RegisterCallback<MouseDownEvent>(OnPortraitClicked);
+
+
+
+    }
+
+    void OnPortraitClicked(MouseDownEvent evt)
+    {
+        Debug.Log($"MouseDown fired on portrait, button = {evt.button}");
+
+        if (evt.button == 1)
+        {
+            evt.StopPropagation();
+
+            var displayedData = displayed.SendSelectionData();
+            Debug.Log($"Right clicked portrait for {displayed.EntityRuntimeID}");
+            showContextMenuOnPortrait?.Invoke(evt.mousePosition,displayed);
+        }
     }
 
 

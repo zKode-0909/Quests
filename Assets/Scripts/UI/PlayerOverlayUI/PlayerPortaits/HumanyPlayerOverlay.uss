@@ -18,3 +18,21 @@
     border-width: 2px;
     border-color: black;
 }
+
+.humanPortraitHolder{
+    width: 200px;
+    height: 150px;
+}
+
+.selectedPortraitHolder{
+    width: 200px;
+    height: 150px;
+    position: absolute;
+    left: 250px;
+    
+}
+
+.contextMenuButtonsHolder{
+    width: 98%;
+    height: 98%;
+}

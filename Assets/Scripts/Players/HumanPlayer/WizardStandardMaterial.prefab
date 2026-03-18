@@ -1110,6 +1110,7 @@ GameObject:
   - component: {fileID: 5144735972746187523}
   - component: {fileID: 6829818051437960602}
   - component: {fileID: 2107341643568590176}
+  - component: {fileID: 7612027682674456782}
   m_Layer: 0
   m_Name: WizardStandardMaterial
   m_TagString: Untagged
@@ -1181,6 +1182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   holdingHand: {fileID: 8666590441311958476}
+  selectionManager: {fileID: 7612027682674456782}
 --- !u!54 &6829818051437960602
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1231,6 +1233,18 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.43, z: 0}
+--- !u!114 &7612027682674456782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4741995423619011447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e8c7804e61f8d4aa4a488fa4afd899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Players::SelectionManager
 --- !u!1 &4991359197289445584
 GameObject:
   m_ObjectHideFlags: 0

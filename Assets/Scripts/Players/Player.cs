@@ -1,3 +1,4 @@
+using Codice.CM.Common;
 using System;
 using System.Security.Principal;
 using UnityEngine;
@@ -33,7 +34,11 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
     protected PlayerRegistry registry;
 
     protected string playerName;
-    
+
+
+    public CountdownTimer damageTimer;
+
+    bool hitZero = false;
 
     public void Initialize(Animator animator,EntityHealth health,int runtimeID,PlayerRegistration registration,PlayerState playerState,PlayerMotor motor,PlayerRegistry registry)
     {
@@ -48,6 +53,12 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
         registry.TryRegisterPlayer(this,entityRuntimeID);
         registration.Register(entityRuntimeID);
+
+        damageTimer = new CountdownTimer(1);
+
+        damageTimer.OnTimerStart += TestDamage;
+        damageTimer.OnTimerStop += ResetDamageTimer;
+
     }
 
     public virtual void HandleInteract(IInteractor interactor)
@@ -57,8 +68,9 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
     public void TakeDamage(int damage, int damagerRuntimeID)
     {
+        //Debug.Log($"I have taken {damage} damage, I now have {health.GetCurrentHealth()} out of {health.GetMaxHealth()} health");
         health.ChangeHealth(damage);
-        healthChangedEvent?.Invoke(damage);
+        healthChangedEvent?.Invoke(health.GetCurrentHealth());
     }
 
     public void RequestAttack()
@@ -90,7 +102,7 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
 
 
-    private void Update()
+    protected virtual void Update()
     {
         HandleTimers();
         if (playerState.scanCooldownTimer.IsFinished)
@@ -98,12 +110,13 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
             playerState.scanCooldownTimer.Start();
         }
         playerState.stateMachine.Update();
+        damageTimer.Tick(Time.deltaTime);
 
-       // UpdateAnimator();
+        // UpdateAnimator();
 
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         playerState.stateMachine.FixedUpdate();
     }
@@ -115,13 +128,49 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
         return runtimeWeapon;
     }
 
-    public SelectableData SendSelectionData()
+    public virtual SelectableData SendSelectionData()
     {
-        return new SelectableData(health.GetMaxHealth(),health.GetCurrentHealth(),false,true,true,"testyname");
+        return new SelectableData(health.GetMaxHealth(),health.GetCurrentHealth(),false,true,true,false,$"testyname {UnityEngine.Random.Range(0,1000)}");
     }
 
     public Animator GetPlayerAnimator()
     {
         return animator;
+    }
+
+    private void ResetDamageTimer()
+    {
+        damageTimer.Reset();
+        damageTimer.Start();
+    }
+
+    private void TestDamage()
+    {
+        if (health.GetCurrentHealth() == 0)
+        {
+            hitZero = true;
+        }
+
+        if (hitZero == false)
+        {
+            Debug.Log("TAKING DAMAGE");
+            TakeDamage(UnityEngine.Random.Range(-10,-2), 55);
+        }
+        else
+        {
+            TakeDamage(UnityEngine.Random.Range(1,10), 55);
+            if (health.GetCurrentHealth() == health.GetMaxHealth()) {
+                hitZero = false;
+            }
+        }
+
+    }
+
+    public virtual void HandlePartyInvite(int partyID) {
+        Debug.Log("base party invite");
+    }
+
+    protected virtual void Start() {
+        damageTimer.Start();
     }
 }
