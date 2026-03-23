@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UIElements;
 
-public class HumanPlayerOverlayViewController : MonoBehaviour
+public class HumanPlayerOverlayViewController : VisualElement 
 {
-    [SerializeField] UIDocument document;
-    [SerializeField] StyleSheet styleSheet;
+
+    StyleSheet styleSheet;
 
     VisualElement root;
 
@@ -37,26 +37,26 @@ public class HumanPlayerOverlayViewController : MonoBehaviour
 
     bool layoutBuilt = false;
 
-    private void Awake()
-    {
-        portraits = new PortraitManager();
+    public HumanPlayerOverlayViewController(VisualElement root,StyleSheet styleSheet) {
+        this.root = root;
+        this.styleSheet = styleSheet;
+    }
 
-        root = document.rootVisualElement;
+    public void Initialize() { 
+        portraits = new PortraitManager();
         root.Clear();
         root.styleSheets.Add(styleSheet);
         root.AddToClassList("root");
 
         selectionChangedEventBinding = new EventBinding<SelectionChangedEvent>(BuildSelectedPortrait);
         playerLoadedEventBinding = new EventBinding<PlayerLoadedEvent>(BuildLayout);
-    }
 
-    private void OnEnable()
-    {
         EventBus<SelectionChangedEvent>.Register(selectionChangedEventBinding);
         EventBus<PlayerLoadedEvent>.Register(playerLoadedEventBinding);
     }
 
-    private void OnDisable()
+    
+    public void Dispose()
     {
         EventBus<SelectionChangedEvent>.Deregister(selectionChangedEventBinding);
         EventBus<PlayerLoadedEvent>.Deregister(playerLoadedEventBinding);
@@ -73,10 +73,6 @@ public class HumanPlayerOverlayViewController : MonoBehaviour
             selectedPortrait.Dispose();
         }
 
-        if (root != null)
-        {
-            //root.UnregisterCallback<MouseDownEvent>(HandleRootMouseDown, TrickleDown.TrickleDown);
-        }
     }
 
     void BuildLayout(PlayerLoadedEvent evt)

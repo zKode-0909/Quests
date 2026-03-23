@@ -3,30 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class QuestLogView : MonoBehaviour
+public class QuestLogView : VisualElement
 {
-    [SerializeField] UIDocument document;
-    [SerializeField] StyleSheet styleSheet;
+
+    StyleSheet styleSheet;
     VisualElement root;
     VisualElement titleHolder;
     Label titleLabel;
     VisualElement bodyHolder;
     VisualElement questLogHolder;
 
-    EventBinding<DisplayQuestLogEvent> displayQuestLog;
-    EventBinding<CloseQuestLogEvent> closeQuestLog;
 
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        displayQuestLog = new EventBinding<DisplayQuestLogEvent>(OpenQuestLog);
-        EventBus<DisplayQuestLogEvent>.Register(displayQuestLog);
+    public QuestLogView(VisualElement root, StyleSheet styleSheet) {
+        this.root = root;
+        this.styleSheet = styleSheet;
+    }
 
-        closeQuestLog = new EventBinding<CloseQuestLogEvent>(CloseQuestLog);
-        EventBus<CloseQuestLogEvent>.Register(closeQuestLog);
-
-        root = document.rootVisualElement;
+    public void Initialize() {
         root.Clear();
 
         root.styleSheets.Add(styleSheet);
@@ -34,6 +27,9 @@ public class QuestLogView : MonoBehaviour
         BuildQuestLogView();
         root.AddToClassList("questLogDisplay");
     }
+
+    
+
 
 
     void BuildQuestLogView() {

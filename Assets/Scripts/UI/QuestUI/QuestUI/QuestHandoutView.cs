@@ -2,15 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class QuestHandoutView : MonoBehaviour
+public class QuestHandoutView : VisualElement
 {
-    [SerializeField] UIDocument document;
-    [SerializeField] StyleSheet styleSheet;
+   
     //[SerializeField] QuestService qService;
 
     private static EventBinding<OpenQuestGiverUI> openBinding;
 
     VisualElement root;
+    StyleSheet styleSheet;
     SelectedQuestView selectedQuestView;
     QuestGiverView questGiverView;
     IReadOnlyList<QuestUIItem> questsToDisplay;
@@ -22,40 +22,31 @@ public class QuestHandoutView : MonoBehaviour
     int questerID;
     int giverID;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        openBinding = new EventBinding<OpenQuestGiverUI>(HandleOpenUI);
-        EventBus<OpenQuestGiverUI>.Register(openBinding);
-  
 
+    public QuestHandoutView(VisualElement root,StyleSheet styleSheet) { 
+        this.root = root;
+        this.styleSheet = styleSheet;
+    }
 
-        root = document.rootVisualElement;
+    public void Initialize() {
         root.Clear();
- //      .. allQuests = new List<QuestSettings>();
         root.styleSheets.Add(styleSheet);
-
         root.AddToClassList("questHandoutDisplay");
+
         BuildQuestGiverDisplay();
         BuildQuestHandoutDisplay();
+
         questGiverView.QuestSelected += ShowQuestDisplay;
         questGiverView.CloseView += CloseDisplay;
         selectedQuestView.DeclinedQuest += BackToQuestGiver;
         selectedQuestView.AcceptedQuest += HandleAcceptQuest;
-        
+
         CloseDisplay();
-        //CloseQuestDisplay();
     }
 
+   
 
-  
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void HandleOpenUI(OpenQuestGiverUI evt) {
+    public void HandleOpenUI(OpenQuestGiverUI evt) {
         ShowQuestGiverDisplay(evt.questsToShow,evt.questerName,evt.questGiverName,evt.questerID,evt.questGiverID,evt.questerLevel);
     }
 

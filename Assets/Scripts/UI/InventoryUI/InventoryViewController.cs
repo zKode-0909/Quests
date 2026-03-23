@@ -2,16 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class InventoryViewController : MonoBehaviour
+public class InventoryViewController : VisualElement
 {
-    [SerializeField] UIDocument document;
-    [SerializeField] StyleSheet styleSheet;
-    [SerializeField] Sprite placeholderSprite;
+    
+    StyleSheet styleSheet;
+
+    Sprite placeholderSprite;
 
     VisualElement root;
-
-    EventBinding<DisplayInventoryEvent> displayInventory;
-    EventBinding<CloseInventoryEvent> closeInventory;
 
     VisualElement inventoryContainer;
     VisualElement inventoryGrid;
@@ -27,22 +25,25 @@ public class InventoryViewController : MonoBehaviour
 
     bool itemSelected = false;
 
-    void Start()
-    {
-        if (document == null) return;
+    public InventoryViewController(VisualElement root,StyleSheet styleSheet,Sprite placeholderSprite) {
 
-        root = document.rootVisualElement;
-        if (root == null) return;
+        this.root = root;
+        this.styleSheet = styleSheet;
+        this.placeholderSprite = placeholderSprite;
+
+    }
+
+    public void Initialize()
+    {
+        
+
+        
 
         root.Clear();
         root.styleSheets.Add(styleSheet);
         root.AddToClassList("inventoryDisplay");
 
-        displayInventory = new EventBinding<DisplayInventoryEvent>(OpenInventory);
-        EventBus<DisplayInventoryEvent>.Register(displayInventory);
-
-        closeInventory = new EventBinding<CloseInventoryEvent>(CloseInventory);
-        EventBus<CloseInventoryEvent>.Register(closeInventory);
+        
 
         BuildInventory();
         root.pickingMode = PickingMode.Ignore;
@@ -50,19 +51,9 @@ public class InventoryViewController : MonoBehaviour
         root.RegisterCallback<PointerMoveEvent>(OnPointerMove);
     }
 
-    private void OnDisable()
-    {
-        if (displayInventory != null)
-            EventBus<DisplayInventoryEvent>.Deregister(displayInventory);
+   
 
-        if (closeInventory != null)
-            EventBus<CloseInventoryEvent>.Deregister(closeInventory);
-
-        if (root != null)
-            root.UnregisterCallback<PointerMoveEvent>(OnPointerMove);
-    }
-
-    private void OnDestroy()
+    public void Dispose()
     {
         if (root != null)
             root.UnregisterCallback<PointerMoveEvent>(OnPointerMove);
@@ -135,7 +126,7 @@ public class InventoryViewController : MonoBehaviour
         root.Add(inventoryItemHeld);
     }
 
-    void OpenInventory(DisplayInventoryEvent evt)
+    public void OpenInventory(DisplayInventoryEvent evt)
     {
         if (root == null || inventoryGrid == null) return;
 
@@ -210,7 +201,7 @@ public class InventoryViewController : MonoBehaviour
         }
     }
 
-    void CloseInventory()
+    public void CloseInventory()
     {
         if (root == null) return;
 
