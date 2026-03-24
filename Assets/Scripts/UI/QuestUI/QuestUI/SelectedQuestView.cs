@@ -22,6 +22,7 @@ public class SelectedQuestView : VisualElement
 
 
     public SelectedQuestView() {
+        this.AddToClassList("SelectedQuestView");
         backPanel = new VisualElement();
         backPanel.AddToClassList("backPanel");
 
@@ -58,7 +59,8 @@ public class SelectedQuestView : VisualElement
         backPanel.Add(buttonsHolder);
         this.Add(backPanel);
         this.style.position = Position.Absolute;
-
+        this.style.height = Length.Percent(100);
+        this.style.width = Length.Percent(100);
         this.style.display = DisplayStyle.None;
     }
 

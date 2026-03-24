@@ -21,6 +21,7 @@ public class QuestHandoutView : VisualElement
     int questerLevel;
     int questerID;
     int giverID;
+    bool open;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public QuestHandoutView(VisualElement root,StyleSheet styleSheet) { 
@@ -29,6 +30,9 @@ public class QuestHandoutView : VisualElement
     }
 
     public void Initialize() {
+
+        open = false;
+
         root.Clear();
         root.styleSheets.Add(styleSheet);
         root.AddToClassList("questHandoutDisplay");
@@ -44,10 +48,20 @@ public class QuestHandoutView : VisualElement
         CloseDisplay();
     }
 
+    public void Dispose() {
+        root.Clear();
+    }
+
    
 
     public void HandleOpenUI(OpenQuestGiverUI evt) {
-        ShowQuestGiverDisplay(evt.questsToShow,evt.questerName,evt.questGiverName,evt.questerID,evt.questGiverID,evt.questerLevel);
+        Debug.Log($"Opening quest giver display!");
+        if (!open) {
+            Debug.Log($"Showing quest giver display!");
+            open = true;
+            ShowQuestGiverDisplay(evt.questsToShow, evt.questerName, evt.questGiverName, evt.questerID, evt.questGiverID, evt.questerLevel);
+        }
+        
     }
 
 
@@ -61,6 +75,7 @@ public class QuestHandoutView : VisualElement
     public void BuildQuestGiverDisplay() {
         questGiverView = new QuestGiverView(this);
         root.Add(questGiverView);
+        
     }
     
     public void ShowQuestDisplay(QuestUIItem quest) {
@@ -74,7 +89,9 @@ public class QuestHandoutView : VisualElement
     }
     
     public void BackToQuestGiver() {
+        open = false;
         EventBus<RequestOpenQuestGiverUI>.Raise(new RequestOpenQuestGiverUI(questerID,giverID,questerLevel));
+        
         //ShowQuestGiverDisplay(allQuests, currentInteractor, questGiver);
     }
     
@@ -96,13 +113,17 @@ public class QuestHandoutView : VisualElement
     }
 
     public void CloseDisplay() {
-        root.style.display = DisplayStyle.None;
-        selectedQuestView.HideSelectedQuest();
-        questGiverView.CloseQuestGiverView();
-
-        currentQuester = null;
        
-       // currentQuest = null;
+            root.style.display = DisplayStyle.None;
+            selectedQuestView.HideSelectedQuest();
+            questGiverView.CloseQuestGiverView();
+
+            currentQuester = null;
+
+            open = false;
+            // currentQuest = null;
+        
+
     }
 
 

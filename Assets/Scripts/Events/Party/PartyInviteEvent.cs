@@ -3,12 +3,12 @@ using UnityEngine;
 public struct RequestPartyInviteEvent : IEvent
 {
     public int InviterEntityRuntimeID;
-    public int InviteeEntityRuntimeID;
+    public ISelectable Invitee;
 
-    public RequestPartyInviteEvent(int inviter,int invitee)
+    public RequestPartyInviteEvent(int inviter,ISelectable invitee)
     {
         InviterEntityRuntimeID = inviter;
-        InviteeEntityRuntimeID = invitee;
+        Invitee = invitee;
     }
 
 }

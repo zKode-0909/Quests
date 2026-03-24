@@ -43,7 +43,10 @@ public class QuestGiver : MonoBehaviour,IInteractable
     }
     private void Awake()
     {
-        entityRuntimeId = GetComponentInParent<IEntity>().EntityRuntimeID;//GetEntityId();
+        
+        entityRuntimeId = RuntimeIDGenerator.GetNext();
+        Debug.Log($"I {gameObject.name} am registering with id {entityRuntimeId}");
+        //entityRuntimeId = GetComponentInParent<IEntity>().EntityRuntimeID;//GetEntityId();
         //Debug.Log(bootstrapper.questGiverRegistry);
         bootstrapper.questGiverRegistry.TryRegister(this);//.questGiverRegistry//.TryRegister(this); 
     }

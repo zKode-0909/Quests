@@ -30,11 +30,12 @@ public class PartyController
 
     void OnJoinPartyRequest(RequestJoinPartyEvent evt) {
         if (activePartyRegistry.TryGetPartyById(evt.PartyRuntimeID, out var party)) {
-            if (!party.CheckForPlayer(evt.InviteeEntityRuntimeID))
+            if (!party.CheckForPlayer(evt.Invitee.EntityRuntimeID))
             {
-                if (activePartyRegistry.TryRegisterMemberToParty(evt.InviteeEntityRuntimeID, party))
+                if (activePartyRegistry.TryRegisterMemberToParty(evt.Invitee.EntityRuntimeID, party))
                 {
-                    Debug.Log($"{evt.InviteeEntityRuntimeID} has joined the party with ID: {party.GetPartyId()} led by {party.GetPartyLeader()}");
+                    Debug.Log($"{evt.Invitee.EntityRuntimeID} has joined the party with ID: {party.GetPartyId()} led by {party.GetPartyLeader()}");
+                    EventBus<PartyJoinedEvent>.Raise(new PartyJoinedEvent(party.GetPartyLeader(), evt.Invitee));
                 }
             }
             else {
@@ -56,7 +57,7 @@ public class PartyController
 
     void OnPartyInviteRequest(RequestPartyInviteEvent evt)
     {
-        if (activePartyRegistry.TryGetActivePartyByMember(evt.InviteeEntityRuntimeID, out _))
+        if (activePartyRegistry.TryGetActivePartyByMember(evt.Invitee.EntityRuntimeID, out _))
         {
             Debug.Log("Invited player is already in a party");
             return;
@@ -76,6 +77,6 @@ public class PartyController
         }
 
         EventBus<SendPartyInviteEvent>.Raise(
-            new SendPartyInviteEvent(party.GetPartyId(), evt.InviteeEntityRuntimeID));
+            new SendPartyInviteEvent(party.GetPartyId(), evt.Invitee));
     }
 }

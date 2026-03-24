@@ -62,6 +62,7 @@ public class HumanPlayer : Player
 
     public void HandleSelect(Vector2 mousePos)
     {
+        /*
         if (selectionManager.TryGetSelection(mousePos, out var hit))
         {
             if (currentSelection != null &&
@@ -78,7 +79,7 @@ public class HumanPlayer : Player
         {
             currentSelection = null;
             EventBus<SelectionChangedEvent>.Raise(new SelectionChangedEvent(null, mousePos));
-        }
+        }*/
     }
 
     public override SelectableData SendSelectionData()

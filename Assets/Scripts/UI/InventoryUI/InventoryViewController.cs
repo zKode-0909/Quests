@@ -67,6 +67,8 @@ public class InventoryViewController : VisualElement
                 slot.Dispose();
             }
         }
+
+        root.Clear();
     }
 
     InventorySlot hoveredSlot;

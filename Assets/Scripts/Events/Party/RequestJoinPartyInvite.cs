@@ -3,12 +3,12 @@ using UnityEngine;
 public struct RequestJoinPartyEvent : IEvent
 {
     public int PartyRuntimeID;
-    public int InviteeEntityRuntimeID;
+    public ISelectable Invitee;
 
-    public RequestJoinPartyEvent(int party, int invitee)
+    public RequestJoinPartyEvent(int party, ISelectable invitee)
     {
         PartyRuntimeID = party;
-        InviteeEntityRuntimeID = invitee;
+        Invitee = invitee;
     }
 
 }

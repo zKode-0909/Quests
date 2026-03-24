@@ -30,8 +30,9 @@ public class HumanPlayerOverlayViewController : VisualElement
     PortraitManager portraits;
     PortraitContextMenu contextMenu;
 
-    EventBinding<SelectionChangedEvent> selectionChangedEventBinding;
+  //  EventBinding<SelectionChangedEvent> selectionChangedEventBinding;
     EventBinding<PlayerLoadedEvent> playerLoadedEventBinding;
+    EventBinding<PartyJoinedEvent> partyJoinedEventBinding;
 
     ISelectable overlayOwner;
 
@@ -46,20 +47,24 @@ public class HumanPlayerOverlayViewController : VisualElement
         portraits = new PortraitManager();
         root.Clear();
         root.styleSheets.Add(styleSheet);
+        root.name = "overlayRoot";
         root.AddToClassList("root");
 
-        selectionChangedEventBinding = new EventBinding<SelectionChangedEvent>(BuildSelectedPortrait);
+       // selectionChangedEventBinding = new EventBinding<SelectionChangedEvent>(BuildSelectedPortrait);
         playerLoadedEventBinding = new EventBinding<PlayerLoadedEvent>(BuildLayout);
+        partyJoinedEventBinding = new EventBinding<PartyJoinedEvent>(HandlePartyJoined);
 
-        EventBus<SelectionChangedEvent>.Register(selectionChangedEventBinding);
+       // EventBus<SelectionChangedEvent>.Register(selectionChangedEventBinding);
         EventBus<PlayerLoadedEvent>.Register(playerLoadedEventBinding);
+        EventBus<PartyJoinedEvent>.Register(partyJoinedEventBinding);
     }
 
     
     public void Dispose()
     {
-        EventBus<SelectionChangedEvent>.Deregister(selectionChangedEventBinding);
+        //EventBus<SelectionChangedEvent>.Deregister(selectionChangedEventBinding);
         EventBus<PlayerLoadedEvent>.Deregister(playerLoadedEventBinding);
+        EventBus<PartyJoinedEvent>.Deregister(partyJoinedEventBinding);
 
         if (humanPortrait != null)
         {
@@ -73,17 +78,34 @@ public class HumanPlayerOverlayViewController : VisualElement
             selectedPortrait.Dispose();
         }
 
+        root.Clear();
+
+    }
+
+    void HandlePartyJoined(PartyJoinedEvent evt) {
+        if (evt.OwnerEntityRuntimeID == overlayOwner.EntityRuntimeID) {
+            Debug.Log("player has joined overlay owner's party");
+            if (portraits.TryAddPartyPortrait(evt.Joiner, partyPortraitsHolder, out var portrait))
+            {
+                Debug.Log("Succesfully added portrait to partyPortraits");
+                partyPortraitsHolder.style.display = DisplayStyle.Flex;
+            }
+            else {
+                Debug.Log("Failed to add portrait");
+            }
+        }
     }
 
     void BuildLayout(PlayerLoadedEvent evt)
     {
+        Debug.Log("Building Layout");
         overlayOwner = evt.playerStats.selectable;
         if (!layoutBuilt)
         {
             BuildUIPanel();
             CreateContextBox();
-
-           // root.RegisterCallback<MouseDownEvent>(HandleRootMouseDown, TrickleDown.TrickleDown);
+            root.pickingMode = PickingMode.Position;
+            root.RegisterCallback<MouseDownEvent>(HandleMouseDown);
 
             layoutBuilt = true;
         }
@@ -94,6 +116,7 @@ public class HumanPlayerOverlayViewController : VisualElement
     void BuildUIPanel()
     {
         humanPlayerOverlayHolder = new VisualElement();
+        humanPlayerOverlayHolder.name = "overlayHolder";
         BuildPortraits();
 
         root.Add(humanPlayerOverlayHolder);
@@ -120,11 +143,14 @@ public class HumanPlayerOverlayViewController : VisualElement
         humanPlayerOverlayHolder.AddToClassList("overlay");
         humanPortraitHolder.AddToClassList("humanPortraitHolder");
         selectedPortraitHolder.AddToClassList("selectedPortraitHolder");
+        partyPortraitsHolder.AddToClassList("partyPortraitsHolder");
 
-
+        selectedPortraitHolder.style.display = DisplayStyle.None;
+        partyPortraitsHolder.style.display = DisplayStyle.None;    
 
         humanPlayerOverlayHolder.Add(humanPortraitHolder);
         humanPlayerOverlayHolder.Add(selectedPortraitHolder);
+        humanPlayerOverlayHolder.Add(partyPortraitsHolder);
     }
 
     void CreateContextBox()
@@ -155,96 +181,36 @@ public class HumanPlayerOverlayViewController : VisualElement
         }
     }
 
-    /*
-    void BuildSelectedPortrait(SelectionChangedEvent evt)
+    public ISelectable Select(Vector2 mousePosition)
     {
-       // Debug.Log($"clicked at world: {evt.mousePos}  local: {humanPlayerOverlayHolder.WorldToLocal(evt.mousePos)}");
 
-        Vector2 mousePos = evt.mousePos;
-        mousePos.y = Screen.height - mousePos.y;
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        Debug.Log("TRYING SELECT");
 
-        
-
-        
-
-        var elt = HandleMouseDown(mousePos);
-
-        Portrait newSelectedPortrait = elt as Portrait;
-
-     
-
-
-        if (evt.selected == null) {
-            if (elt == null) {
-                // hide selected and context box
-                ClearSelectedPortrait();
-                return;
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if (hit.collider.TryGetComponent<ISelectable>(out var selectable))
+            {
+                
+                //Debug.Log($"I have hit the selectable {selected}");
+                return selectable;
             }
         }
 
-        if (evt.selected != null) {
-            if (newSelectedPortrait != null) {
-                // new selection, change selected portrait
-                if (portraits.TryAddPortrait(evt.selected, out var portrait))
-                {
-                    ClearSelectedPortrait();
-                    selectedPortrait = portrait;
-                    selectedPortrait.showContextMenuOnPortrait += ShowContextBox;
-                    selectedPortraitHolder.Add(selectedPortrait);
-                }
-            }
-        }
-    */
-    //ShowContextBox(humanPlayerOverlayHolder.WorldToLocal(mousePos),evt.selected);
-    /*
-    if (evt.selected == null)
-    {
-        if (selectedPortrait != null && IsMouseOverElement(evt.mousePos, selectedPortrait))
-        {
-            Debug.Log("Null world selection, but click was on selected portrait UI. Keeping portrait.");
-            return;
-        }
-
-        if (selectionContextBox != null &&
-            selectionContextBox.style.display == DisplayStyle.Flex &&
-            IsMouseOverElement(evt.mousePos, selectionContextBox))
-        {
-            Debug.Log("Null world selection, but click was on context box. Keeping portrait.");
-            return;
-        }
-
-        ClearSelectedPortrait();
-        HideContextBox();
-        return;
+        
+        return null;
     }
 
-    if (selectedPortrait != null &&
-        selectedPortrait.GetDisplayedPortrait() != null &&
-        selectedPortrait.GetDisplayedPortrait().EntityRuntimeID == evt.selected.EntityRuntimeID)
-    {
-        Debug.Log("Same selected target, keeping portrait");
-        return;
-    }
 
-    ClearSelectedPortrait();
-
-    if (portraits.TryAddPortrait(evt.selected, out var portrait))
+    void BuildSelectedPortrait(ISelectable selected,Vector2 mousePos)
     {
-        selectedPortrait = portrait;
-        selectedPortrait.showContextMenuOnPortrait += ShowContextBox;
-        selectedPortraitHolder.Add(selectedPortrait);
-    }*/
-    // }
-
-    void BuildSelectedPortrait(SelectionChangedEvent evt)
-    {
-        Vector2 mousePos = evt.mousePos;
-        mousePos.y = Screen.height - mousePos.y;
+        
 
         VisualElement picked = humanPlayerOverlayHolder.panel.Pick(mousePos);
         Portrait clickedPortrait = GetTypeFromPickedElement<Portrait>(picked);
         PortraitContextMenu menu = GetTypeFromPickedElement<PortraitContextMenu>(picked);
 
+        Debug.Log($"picked: {picked}, clickedPortrait: {clickedPortrait}, menu: {menu}");
 
         if (menu != null)
         {
@@ -253,6 +219,7 @@ public class HumanPlayerOverlayViewController : VisualElement
         }
         else if (clickedPortrait != null && humanPortrait != null && clickedPortrait.id != humanPortrait.id)
         {
+            Debug.Log($"Showing clicked portrait");
             HideContextBox();
             if (selectedPortrait != null && selectedPortrait.id == clickedPortrait.id)
                 return;
@@ -265,16 +232,19 @@ public class HumanPlayerOverlayViewController : VisualElement
         }
         else
         {
+            Debug.Log("in selected elsewhere");
             // clicked elsewhere
             // Clicked in the world and selected something
-            if (evt.selected != null)
+            if (selected != null)
             {
-                if (portraits.TryAddPortrait(evt.selected, out var portrait))
+                
+                if (portraits.TryAddPortrait(selected, out var portrait))
                 {
                     ClearSelectedPortrait();
                     selectedPortrait = portrait;
                     selectedPortrait.showContextMenuOnPortrait += ShowContextBox;
                     selectedPortraitHolder.Add(selectedPortrait);
+                    selectedPortraitHolder.style.display = DisplayStyle.Flex;
                 }
 
                 return;
@@ -284,12 +254,7 @@ public class HumanPlayerOverlayViewController : VisualElement
             HideContextBox();
             ClearSelectedPortrait();
         }
-
-
-
-
-        
-        
+ 
     }
 
     T GetTypeFromPickedElement<T>(VisualElement elt) where T : VisualElement
@@ -333,6 +298,7 @@ public class HumanPlayerOverlayViewController : VisualElement
 
         selectedPortraitHolder.Clear();
         selectedPortrait = null;
+        selectedPortraitHolder.style.display = DisplayStyle.None;
     }
 
     void ShowContextBox(Vector2 mousePos,ISelectable selected)
@@ -359,79 +325,19 @@ public class HumanPlayerOverlayViewController : VisualElement
         }
     }
 
-    VisualElement HandleMouseDown(Vector2 mousePos)
+
+    void HandleMouseDown(MouseDownEvent evt)
     {
+        Vector2 uiPos = evt.mousePosition;
 
-        var selectedElt = humanPlayerOverlayHolder.panel.Pick(mousePos);
+        Vector2 worldPos = evt.mousePosition;
+        worldPos.y = Screen.height - worldPos.y;
 
-        if (selectedElt != null && selectedElt != humanPlayerOverlayHolder && selectedElt != root)
-        {
-            Debug.Log($"selected {selectedElt}!");
-            return selectedElt;
-        }
-        else {
-            return null;
-        }
-
-        /*
-        if (selectionContextBox == null ||
-            selectionContextBox.style.display == DisplayStyle.None)
-        {
-            return;
-        }
-
-        var clicked = evt.target as VisualElement;
-        if (clicked == null)
-        {
-            Debug.Log("clicked was null, hiding context box");
-            HideContextBox();
-            return;
-        }
-
-        if (IsInside(clicked, selectionContextBox))
-        {
-            Debug.Log("is inside");
-            return;
-        }
-
-        var clickedPortrait = GetPortraitFromElement(clicked);
-        if (clickedPortrait != null)
-        {
-            Debug.Log("portrait is clickjed");
-            return;
-        }
-
-        HideContextBox();
-        */
+        BuildSelectedPortrait(Select(worldPos), uiPos);
     }
 
-    Portrait GetPortraitFromElement(VisualElement element)
-    {
-        VisualElement current = element;
+   
 
-        while (current != null)
-        {
-            if (current is Portrait portrait)
-                return portrait;
 
-            current = current.parent;
-        }
-
-        return null;
-    }
-
-    bool IsInside(VisualElement child, VisualElement possibleAncestor)
-    {
-        VisualElement current = child;
-
-        while (current != null)
-        {
-            if (current == possibleAncestor)
-                return true;
-
-            current = current.parent;
-        }
-
-        return false;
-    }
+    
 }

@@ -28,6 +28,10 @@ public class QuestLogView : VisualElement
         root.AddToClassList("questLogDisplay");
     }
 
+    public void Dispose() {
+        root.Clear();
+    }
+
     
 
 

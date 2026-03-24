@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] UIDocument uiDocument;
 
+    [SerializeField] StyleSheet rootStyle;
     [SerializeField] StyleSheet overlayStyle;
     [SerializeField] StyleSheet questlogStyle;
     [SerializeField] StyleSheet questhandoutStyle;
@@ -35,15 +36,35 @@ public class UIManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnEnable()
     {
+        
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        root.Clear();
+        root.styleSheets.Add(rootStyle);
+
         overlayRoot = new VisualElement();
         questGiverRoot = new VisualElement();
         questLogRoot = new VisualElement();
         inventoryRoot = new VisualElement();
 
+        root.AddToClassList("uiRoot");
+        
+
+        root.Add(overlayRoot);
+        root.Add(questGiverRoot);
+        root.Add(questLogRoot);
+        root.Add(inventoryRoot);
+
         overlayController = new HumanPlayerOverlayViewController(overlayRoot, overlayStyle);
+        overlayController.Initialize();
+
         questGiverHandoutView = new QuestHandoutView(questGiverRoot, questhandoutStyle);
+        questGiverHandoutView.Initialize();
+
         questLogView = new QuestLogView(questLogRoot, questlogStyle);
+        questLogView.Initialize();
+
         inventoryView = new InventoryViewController(inventoryRoot, inventoryStyle, inventoryPlaceholderSprite);
+        inventoryView.Initialize();
 
         openBinding = new EventBinding<OpenQuestGiverUI>(questGiverHandoutView.HandleOpenUI);
         EventBus<OpenQuestGiverUI>.Register(openBinding);
@@ -64,6 +85,8 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         overlayController.Dispose();
+        questGiverHandoutView.Dispose();
+        questLogView.Dispose();
         inventoryView.Dispose();
 
         EventBus<OpenQuestGiverUI>.Deregister(openBinding);

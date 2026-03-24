@@ -57,7 +57,7 @@ public class PortraitContextMenu : VisualElement
         Debug.Log("invite clicked");
         var selectionData = currentContextOwner.SendSelectionData();
         var humanData = overlayOwner.SendSelectionData();
-        EventBus<RequestPartyInviteEvent>.Raise(new RequestPartyInviteEvent(overlayOwner.EntityRuntimeID, currentContextOwner.EntityRuntimeID));
+        EventBus<RequestPartyInviteEvent>.Raise(new RequestPartyInviteEvent(overlayOwner.EntityRuntimeID, currentContextOwner));
         //Debug.Log($"{humanData.selectedName} trying to invite {selectionData.selectedName} to party;p");
     }
 }

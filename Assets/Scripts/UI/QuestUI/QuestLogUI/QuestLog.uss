@@ -2,6 +2,13 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: row;
+	position: absolute;
+
+	top: 25%;
+	left: 35%;
+
+    width: 30%;
+    height: 60%;
 }
 
 
@@ -9,8 +16,8 @@
 	background-color: green;
 	align-items:center;
 	justify-content: center;	
-	height: 70%;
-	width: 30%;
+	height: 100%;
+	width: 100%;
 	display: flex;
 	flex-direction:column;
 }
@@ -35,6 +42,12 @@
 	margin-right: 2%;
 	margin-left:2%;
 	*/
+}
+
+.SelectedQuestView{
+	
+	height: 100%;
+	width: 100%;
 }
 
 .questLabel{
