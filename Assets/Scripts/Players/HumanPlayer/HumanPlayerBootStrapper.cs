@@ -68,7 +68,8 @@ public class HumanPlayerBootStrapper : MonoBehaviour
             registration,
             playerState,
             motor,
-            registry
+            registry,
+            "Human Player"
         );
 
         runtimePlayer.InitializeHumanPlayer(playerQuests, playerInventoryToggle);

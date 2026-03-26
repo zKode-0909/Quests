@@ -39,8 +39,10 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
     public CountdownTimer damageTimer;
 
     bool hitZero = false;
+    protected bool inParty = false;   
 
-    public void Initialize(Animator animator,EntityHealth health,int runtimeID,PlayerRegistration registration,PlayerState playerState,PlayerMotor motor,PlayerRegistry registry)
+
+    public void Initialize(Animator animator,EntityHealth health,int runtimeID,PlayerRegistration registration,PlayerState playerState,PlayerMotor motor,PlayerRegistry registry,string name)
     {
         this.health = health;
         this.entityRuntimeID = runtimeID;
@@ -49,6 +51,7 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
         this.playerState = playerState;
         this.playerMotor = motor;
         this.registry = registry;
+        this.playerName = name;
 
 
         registry.TryRegisterPlayer(this,entityRuntimeID);
@@ -130,7 +133,7 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
     public virtual SelectableData SendSelectionData()
     {
-        return new SelectableData(health.GetMaxHealth(),health.GetCurrentHealth(),false,true,true,false,$"testyname {UnityEngine.Random.Range(0,1000)}");
+        return new SelectableData(health.GetMaxHealth(),health.GetCurrentHealth(),false,true,true,false,playerName,inParty);
     }
 
     public Animator GetPlayerAnimator()
@@ -153,7 +156,7 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
         if (hitZero == false)
         {
-            Debug.Log("TAKING DAMAGE");
+            //Debug.Log("TAKING DAMAGE");
             TakeDamage(UnityEngine.Random.Range(-10,-2), 55);
         }
         else
@@ -172,5 +175,10 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
     protected virtual void Start() {
         damageTimer.Start();
+    }
+
+    public void UpdatePartyStatus(bool status)
+    {
+        inParty = status;
     }
 }

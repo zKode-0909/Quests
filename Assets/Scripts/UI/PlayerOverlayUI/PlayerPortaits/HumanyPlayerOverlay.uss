@@ -3,8 +3,15 @@
     height: 100px;
     background-color: red;
     border-radius: 50%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.portraitNameText{
+    height: 25px;
+    width: 25px;
+}
 
 .overlay{
     width: 100%;

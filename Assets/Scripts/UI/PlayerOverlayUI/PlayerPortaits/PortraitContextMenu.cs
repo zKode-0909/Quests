@@ -5,6 +5,7 @@ public class PortraitContextMenu : VisualElement
 {
     VisualElement buttonsHolder;
     Button inviteToPartyButton;
+    Button removeFromPartyButton;
     Button tradeButton;
     Button inspectButton;
     Button testButton;
@@ -21,6 +22,10 @@ public class PortraitContextMenu : VisualElement
         inviteToPartyButton = new Button();
         inviteToPartyButton.text = "Invite to party";
         inviteToPartyButton.clicked += () => OnInviteClicked();
+
+        removeFromPartyButton = new Button();
+        removeFromPartyButton.text = "Remove from party";
+        removeFromPartyButton.clicked += () => OnRemovePartyClicked();
 
         tradeButton = new Button();
         tradeButton.text = "Trade";
@@ -49,7 +54,14 @@ public class PortraitContextMenu : VisualElement
     public void BuildSimPlayerContextMenu(ISelectable sim) { 
         currentContextOwner = sim;
         buttonsHolder.Clear();
-        buttonsHolder.Add(inviteToPartyButton);
+        if (sim.SendSelectionData().inParty)
+        {
+            buttonsHolder.Add(removeFromPartyButton);
+        }
+        else {
+            buttonsHolder.Add(inviteToPartyButton);
+        }
+        
     
     }
 
@@ -59,5 +71,10 @@ public class PortraitContextMenu : VisualElement
         var humanData = overlayOwner.SendSelectionData();
         EventBus<RequestPartyInviteEvent>.Raise(new RequestPartyInviteEvent(overlayOwner.EntityRuntimeID, currentContextOwner));
         //Debug.Log($"{humanData.selectedName} trying to invite {selectionData.selectedName} to party;p");
+    }
+
+    public void OnRemovePartyClicked() {
+        Debug.Log("Remove clicked");
+        EventBus<RemoveFromPartyRequestEvent>.Raise(new RemoveFromPartyRequestEvent(currentContextOwner));
     }
 }

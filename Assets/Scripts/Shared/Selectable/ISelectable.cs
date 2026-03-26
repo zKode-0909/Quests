@@ -8,4 +8,6 @@ public interface ISelectable
     int EntityRuntimeID { get; }
     SelectableData SendSelectionData();
 
+    public void UpdatePartyStatus(bool status);
+
 }

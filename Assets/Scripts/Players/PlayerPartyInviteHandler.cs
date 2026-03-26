@@ -9,6 +9,7 @@ public class PlayerPartyInviteHandler
         registry = reg;
 
         sendPartyInviteBinding = new EventBinding<SendPartyInviteEvent>(HandlePartyInvite);
+ 
 
         EventBus<SendPartyInviteEvent>.Register(sendPartyInviteBinding);
     }
@@ -21,4 +22,6 @@ public class PlayerPartyInviteHandler
             player.HandlePartyInvite(evt.PartyID);
         }
     }
+
+
 }

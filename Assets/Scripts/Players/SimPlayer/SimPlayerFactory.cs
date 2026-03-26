@@ -24,7 +24,7 @@ public class SimPlayerFactory
         
         
         player.gameObject.SetActive(false);
-        player.Initialize(animator, health, RuntimeIDGenerator.GetNext(),registration,playerState,motor, registry);
+        player.Initialize(animator, health, RuntimeIDGenerator.GetNext(),registration,playerState,motor, registry,$"simPlayer {UnityEngine.Random.Range(0,100000)}");
         template.VisualVariants.ApplyVariant(player);
         return player;   
     }

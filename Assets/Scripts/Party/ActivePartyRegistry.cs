@@ -40,12 +40,18 @@ public class ActivePartyRegistry
             return false;
 
         partyByMember.Add(memberId, party);
+
+
         return true;
     }
 
     public bool TryUnregisterMember(int memberId)
     {
-        return partyByMember.Remove(memberId);
+
+       return partyByMember.Remove(memberId);
+        
+
+        
     }
 
 

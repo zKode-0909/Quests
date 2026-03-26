@@ -11,6 +11,7 @@ public class Portrait : VisualElement
     bool playerPortrait;
     bool friendlyPortrait;
     public int id;
+    public bool partyPortrait { get;private set; }
 
     VisualElement portrait;
     ResourceBar healthBar;
@@ -19,7 +20,8 @@ public class Portrait : VisualElement
 
     public event Action<Vector2,ISelectable> showContextMenuOnPortrait;
 
-    public Portrait(ISelectable entityToDisplay) {
+    public Portrait(ISelectable entityToDisplay, bool partyPortrait)
+    {
 
         displayed = entityToDisplay;
 
@@ -34,9 +36,10 @@ public class Portrait : VisualElement
         friendlyPortrait = data.isFriendly;
 
         id = entityToDisplay.EntityRuntimeID;
-        
-        BuildPortrait();
+        this.partyPortrait = partyPortrait;
 
+        BuildPortrait();
+        
     }
 
     public ISelectable GetDisplayedPortrait()
@@ -58,6 +61,10 @@ public class Portrait : VisualElement
         portrait.AddToClassList("portraitHolder");
         portrait.pickingMode = PickingMode.Position;
 
+        var portraitNameText = new Label($"{portraitName}");
+        portraitNameText.AddToClassList("portraitNameText");
+        portrait.Add(portraitNameText);
+
         healthBar = new ResourceBar(Color.green);
         healthBar.pickingMode = PickingMode.Ignore;
 
@@ -72,7 +79,7 @@ public class Portrait : VisualElement
 
     void OnPortraitClicked(MouseDownEvent evt)
     {
-        Debug.Log($"MouseDown fired on portrait, button = {evt.button}");
+        Debug.Log($"MouseDown fired on portrait {id}, button = {evt.button}");
 
         if (evt.button == 1)
         {

@@ -9,8 +9,9 @@ public readonly struct SelectableData
     public readonly bool isFriendly;
     public readonly bool isHuman;
     public readonly string selectedName;
+    public readonly bool inParty;
 
-    public SelectableData(int max,int curr,bool elite,bool player,bool friendly,bool human, string name) {
+    public SelectableData(int max,int curr,bool elite,bool player,bool friendly,bool human, string name,bool inParty) {
         this.maxHealth = max;
         this.currentHealth = curr;
         this.isElite = elite;
@@ -18,6 +19,7 @@ public readonly struct SelectableData
         this.isFriendly = friendly;
         this.isHuman = human;
         this.selectedName = name;
+        this.inParty = inParty;
     }
     
 }

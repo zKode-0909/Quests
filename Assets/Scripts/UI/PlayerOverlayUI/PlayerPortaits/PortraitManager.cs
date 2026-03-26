@@ -20,7 +20,7 @@ public class PortraitManager
             }
         }*/
 
-        newPortrait = new Portrait(selectable);
+        newPortrait = new Portrait(selectable,false);
         portraits.Add(newPortrait);
         return true;
     }
@@ -44,9 +44,10 @@ public class PortraitManager
         {
             if (holder.childCount == 0)
             {
-                newPortrait = new Portrait(selectable);
+                newPortrait = new Portrait(selectable,true);
                 holder.Add(newPortrait);
                 portraits.Add(newPortrait);
+                holder.style.display = DisplayStyle.Flex;
                 return true;
             }
         }
@@ -59,7 +60,8 @@ public class PortraitManager
     public bool TryRemovePortrait(ISelectable selectable, out Portrait oldPortrait) {
 
         for (int i = 0; i < portraits.Count; i++) {
-            if (portraits[i].id == selectable.EntityRuntimeID) {
+            if (portraits[i].id == selectable.EntityRuntimeID && portraits[i].partyPortrait == false) {
+                Debug.Log("REMOVING PORTRAIT");
                 oldPortrait = portraits[i];
                 oldPortrait.Dispose();
                 portraits.Remove(portraits[i]);
@@ -68,6 +70,28 @@ public class PortraitManager
         }
 
         oldPortrait = null;
+        return false;
+    }
+
+    public bool TryRemovePartyPortrait(ISelectable selectable, VisualElement partyPortraits, out Portrait removedPortrait)
+    {
+        foreach (var holder in partyPortraits.Children())
+        {
+            if (holder.childCount == 0)
+                continue;
+
+            if (holder[0] is Portrait portrait && portrait.id == selectable.EntityRuntimeID)
+            {
+                portrait.Dispose();
+                holder.Remove(portrait);
+                portraits.Remove(portrait); 
+                removedPortrait = portrait;
+                holder.style.display = DisplayStyle.None;
+                return true;
+            }
+        }
+
+        removedPortrait = null;
         return false;
     }
 }

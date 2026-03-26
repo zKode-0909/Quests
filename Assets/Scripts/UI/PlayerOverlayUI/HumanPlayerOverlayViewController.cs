@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+
 
 public class HumanPlayerOverlayViewController : VisualElement 
 {
@@ -15,6 +17,8 @@ public class HumanPlayerOverlayViewController : VisualElement
     VisualElement partyPortraitHolder2;
     VisualElement partyPortraitHolder3;
     VisualElement partyPortraitHolder4;
+
+    
 
 
     VisualElement partyPortraitsHolder;
@@ -33,6 +37,7 @@ public class HumanPlayerOverlayViewController : VisualElement
   //  EventBinding<SelectionChangedEvent> selectionChangedEventBinding;
     EventBinding<PlayerLoadedEvent> playerLoadedEventBinding;
     EventBinding<PartyJoinedEvent> partyJoinedEventBinding;
+    EventBinding<RemoveFromPartyEvent> removeFromPartyEventBinding;
 
     ISelectable overlayOwner;
 
@@ -41,6 +46,7 @@ public class HumanPlayerOverlayViewController : VisualElement
     public HumanPlayerOverlayViewController(VisualElement root,StyleSheet styleSheet) {
         this.root = root;
         this.styleSheet = styleSheet;
+        
     }
 
     public void Initialize() { 
@@ -53,10 +59,12 @@ public class HumanPlayerOverlayViewController : VisualElement
        // selectionChangedEventBinding = new EventBinding<SelectionChangedEvent>(BuildSelectedPortrait);
         playerLoadedEventBinding = new EventBinding<PlayerLoadedEvent>(BuildLayout);
         partyJoinedEventBinding = new EventBinding<PartyJoinedEvent>(HandlePartyJoined);
+        removeFromPartyEventBinding = new EventBinding<RemoveFromPartyEvent>(HandleRemovedFromParty);
 
        // EventBus<SelectionChangedEvent>.Register(selectionChangedEventBinding);
         EventBus<PlayerLoadedEvent>.Register(playerLoadedEventBinding);
         EventBus<PartyJoinedEvent>.Register(partyJoinedEventBinding);
+        EventBus<RemoveFromPartyEvent>.Register(removeFromPartyEventBinding);
     }
 
     
@@ -65,6 +73,7 @@ public class HumanPlayerOverlayViewController : VisualElement
         //EventBus<SelectionChangedEvent>.Deregister(selectionChangedEventBinding);
         EventBus<PlayerLoadedEvent>.Deregister(playerLoadedEventBinding);
         EventBus<PartyJoinedEvent>.Deregister(partyJoinedEventBinding);
+        EventBus<RemoveFromPartyEvent>.Deregister(removeFromPartyEventBinding);
 
         if (humanPortrait != null)
         {
@@ -82,13 +91,20 @@ public class HumanPlayerOverlayViewController : VisualElement
 
     }
 
+    void HandleRemovedFromParty(RemoveFromPartyEvent evt) {
+        if (portraits.TryRemovePartyPortrait(evt.toBeRemoved, partyPortraitsHolder, out var removed)) {
+            Debug.Log("Removed party portrait");
+        }
+    }
     void HandlePartyJoined(PartyJoinedEvent evt) {
         if (evt.OwnerEntityRuntimeID == overlayOwner.EntityRuntimeID) {
             Debug.Log("player has joined overlay owner's party");
             if (portraits.TryAddPartyPortrait(evt.Joiner, partyPortraitsHolder, out var portrait))
             {
                 Debug.Log("Succesfully added portrait to partyPortraits");
+                portrait.showContextMenuOnPortrait += ShowContextBox;  
                 partyPortraitsHolder.style.display = DisplayStyle.Flex;
+
             }
             else {
                 Debug.Log("Failed to add portrait");
@@ -204,8 +220,8 @@ public class HumanPlayerOverlayViewController : VisualElement
 
     void BuildSelectedPortrait(ISelectable selected,Vector2 mousePos)
     {
-        
 
+        //Debug.Log($"mousePos: {mousePos}, screen: {Screen.width}x{Screen.height}, panelScale: {humanPlayerOverlayHolder.panel.scale}");
         VisualElement picked = humanPlayerOverlayHolder.panel.Pick(mousePos);
         Portrait clickedPortrait = GetTypeFromPickedElement<Portrait>(picked);
         PortraitContextMenu menu = GetTypeFromPickedElement<PortraitContextMenu>(picked);
@@ -224,10 +240,16 @@ public class HumanPlayerOverlayViewController : VisualElement
             if (selectedPortrait != null && selectedPortrait.id == clickedPortrait.id)
                 return;
 
+            Debug.Log("selected portrait is null");
+            
             ClearSelectedPortrait();
-            selectedPortrait = clickedPortrait;
-            selectedPortrait.showContextMenuOnPortrait += ShowContextBox;
-            selectedPortraitHolder.Add(selectedPortrait);
+            if (portraits.TryAddPortrait(clickedPortrait.GetDisplayedPortrait(), out var newSelection)) {
+                selectedPortrait = newSelection;
+                selectedPortrait.showContextMenuOnPortrait += ShowContextBox;
+                selectedPortraitHolder.Add(selectedPortrait);
+                selectedPortraitHolder.style.display = DisplayStyle.Flex;
+            }
+            
             return;
         }
         else
@@ -237,9 +259,10 @@ public class HumanPlayerOverlayViewController : VisualElement
             // Clicked in the world and selected something
             if (selected != null)
             {
-                
+                Debug.Log("selected is not null");
                 if (portraits.TryAddPortrait(selected, out var portrait))
                 {
+                    Debug.Log("Added portrait");
                     ClearSelectedPortrait();
                     selectedPortrait = portrait;
                     selectedPortrait.showContextMenuOnPortrait += ShowContextBox;
@@ -249,7 +272,7 @@ public class HumanPlayerOverlayViewController : VisualElement
 
                 return;
             }
-
+            Debug.Log("CLIcked nothing useful");
             // Clicked nothing useful
             HideContextBox();
             ClearSelectedPortrait();
@@ -288,8 +311,11 @@ public class HumanPlayerOverlayViewController : VisualElement
 
     void ClearSelectedPortrait()
     {
+        Debug.Log("Clear selected portrait");
         if (selectedPortrait == null)
             return;
+
+        Debug.Log("Clearing selected portrait");
 
         selectedPortrait.showContextMenuOnPortrait -= ShowContextBox;
         selectedPortrait.Dispose();
@@ -330,10 +356,14 @@ public class HumanPlayerOverlayViewController : VisualElement
     {
         Vector2 uiPos = evt.mousePosition;
 
+        /*
         Vector2 worldPos = evt.mousePosition;
         worldPos.y = Screen.height - worldPos.y;
+        */
+        
 
-        BuildSelectedPortrait(Select(worldPos), uiPos);
+
+        BuildSelectedPortrait(Select(Mouse.current.position.ReadValue()), uiPos);
     }
 
    

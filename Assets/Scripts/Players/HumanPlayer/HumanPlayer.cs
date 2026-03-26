@@ -84,7 +84,7 @@ public class HumanPlayer : Player
 
     public override SelectableData SendSelectionData()
     {
-        return new SelectableData(health.GetMaxHealth(), health.GetCurrentHealth(), false, true, true, true, $"humanyname {UnityEngine.Random.Range(0, 1000)}");
+        return new SelectableData(health.GetMaxHealth(), health.GetCurrentHealth(), false, true, true, true, $"humanyname {UnityEngine.Random.Range(0, 1000)}",inParty);
     }
 
     private void HandleRescan() {
