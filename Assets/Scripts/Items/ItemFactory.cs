@@ -11,7 +11,7 @@ public class ItemFactory
 
     }
 
-    public bool TryCreateItemFromID(string itemID, int receiverRuntimeID, out IRuntimeItem item)
+    public bool TryCreateItemFromID(string itemID, out IRuntimeItem item)
     {
         if (database.TryGetItemDef(itemID, out var i))
         {

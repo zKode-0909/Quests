@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 
 public class QuestFactory
@@ -13,11 +13,11 @@ public class QuestFactory
 
     }
 
-    public bool TryCreateQuestFromID(string questID,int receiverRuntimeID, out Quest quest) {
+    public bool TryCreateQuestFromID(string questID,string receiverStableID, out Quest quest) {
         if (dataBase.TryGetQuestDef(questID, out var q))
         {
             var QuestSettings = q;
-            quest = new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel,QuestSettings.objectives.BuildRuntimeQuestStages(),receiverRuntimeID);
+            quest = new Quest(QuestSettings.QuestName, "blank", QuestSettings.ID, 3, QuestSettings.RequiredLevel,QuestSettings.objectives.BuildRuntimeQuestStages(),receiverStableID);
             return true;
         }
         else {

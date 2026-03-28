@@ -3,5 +3,5 @@ using UnityEngine;
 
 public interface IWeapon
 {
-    public bool TryAttack(GameObject attacker,int attackerID);
+    public bool TryAttack(GameObject attacker,string attackerID);
 }

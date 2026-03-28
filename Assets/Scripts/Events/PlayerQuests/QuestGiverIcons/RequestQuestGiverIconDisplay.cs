@@ -2,13 +2,13 @@ using UnityEngine;
 
 public struct RequestQuestGiverIconDisplay : IEvent
 {
-    public int QuestGiverEntityRuntimeID;
-    public int QuesterEntityRuntimeID;
+    public string QuestGiverEntityStableID;
+    public string QuesterEntityStableID;
     public int QuesterLevel;
 
-    public RequestQuestGiverIconDisplay(int giverID,int questerID,int questerLevel) { 
-        this.QuestGiverEntityRuntimeID = giverID;
-        this.QuesterEntityRuntimeID = questerID;
+    public RequestQuestGiverIconDisplay(string giverID,string questerID,int questerLevel) { 
+        this.QuestGiverEntityStableID = giverID;
+        this.QuesterEntityStableID = questerID;
         this.QuesterLevel = questerLevel;
     }
 }

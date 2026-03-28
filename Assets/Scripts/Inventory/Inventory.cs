@@ -5,9 +5,11 @@ public class Inventory
 {
     int capacity;
     IRuntimeItem[] items;
-    public Inventory(int capacity) { 
+    public string ownerStableID;
+    public Inventory(int capacity,string ownerStableID) { 
         this.capacity = capacity;
         items = new IRuntimeItem[capacity];
+        this.ownerStableID = ownerStableID;
     }
 
     public bool TryAddItemToInventory(IRuntimeItem item) {
@@ -15,13 +17,25 @@ public class Inventory
         foreach (var i in items) {
             if (i == null) {
                 items[idx] = item;
-                Debug.Log($"added {item.ItemName} to inventory");
+                if (item != null)
+                {
+                    Debug.Log($"added {item.ItemName} to inventory");
+                }
+                else {
+                    Debug.Log("Added null to inventory");
+                }
+                
                 return true;
             }
             idx++;
         }
 
         return false;
+    }
+
+    public void SetItemAtIndex(int index, IRuntimeItem item)
+    {
+        items[index] = item;
     }
 
     public IRuntimeItem[] GetItems() { 

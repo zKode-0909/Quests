@@ -56,11 +56,11 @@ public class QuestGiverService
 
 
     void OnQuestGiverIconDisplayRequested(RequestQuestGiverIconDisplay evt) {
-        Debug.Log($"quest giver's id is: {evt.QuestGiverEntityRuntimeID}");
-        if (giverRegistry.TryGet(evt.QuestGiverEntityRuntimeID,out var giver)) {
+        Debug.Log($"quest giver's id is: {evt.QuestGiverEntityStableID}");
+        if (giverRegistry.TryGet(evt.QuestGiverEntityStableID,out var giver)) {
            
             var questGiver = giver;
-            var questLog = logRegistry.GetOrCreate(evt.QuesterEntityRuntimeID);
+            var questLog = logRegistry.GetOrCreate(evt.QuesterEntityStableID);
             Debug.Log($"checking for icon, questlog is: {questLog} and questgiver is {giver}");
             if (questGiver != null && questLog != null)
             {
@@ -90,7 +90,7 @@ public class QuestGiverService
             var questLog = logRegistry.GetOrCreate(evt.QuesterEntityId);
             var questItems = BuildQuestItems(giver, questLog, evt.QuesterLevel);
    
-            EventBus<OpenQuestGiverUI>.Raise(new OpenQuestGiverUI(questItems, "TestGiverName", "TestQuesterName", giver.EntityRuntimeID, evt.QuesterEntityId,evt.QuesterLevel));
+            EventBus<OpenQuestGiverUI>.Raise(new OpenQuestGiverUI(questItems, "TestGiverName", "TestQuesterName", giver.StableID, evt.QuesterEntityId,evt.QuesterLevel));
         }    
     }
 

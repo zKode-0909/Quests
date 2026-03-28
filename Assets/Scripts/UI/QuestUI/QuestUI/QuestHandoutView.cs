@@ -19,8 +19,8 @@ public class QuestHandoutView : VisualElement
     QuestUIItem currentQuest;
      string questGiverName;
     int questerLevel;
-    int questerID;
-    int giverID;
+    string questerID;
+    string giverID;
     bool open;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -95,7 +95,7 @@ public class QuestHandoutView : VisualElement
         //ShowQuestGiverDisplay(allQuests, currentInteractor, questGiver);
     }
     
-    public void ShowQuestGiverDisplay(IReadOnlyList<QuestUIItem> quests,string questerName,string giverName,int questerID,int giverID,int questerLevel) {
+    public void ShowQuestGiverDisplay(IReadOnlyList<QuestUIItem> quests,string questerName,string giverName,string questerID,string giverID,int questerLevel) {
         root.style.display= DisplayStyle.Flex;
         currentQuester = questerName;
         //allQuests.Clear();

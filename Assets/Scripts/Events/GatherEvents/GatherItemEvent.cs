@@ -2,12 +2,12 @@ using UnityEngine;
 
 public readonly struct GatherItemEvent : IEvent
 {
-    public readonly int gatheredByRuntimeID;
+    public readonly string gatheredByStableID;
     public readonly string itemStableID;
 
-    public GatherItemEvent(int gathererID, string itemID)
+    public GatherItemEvent(string gathererID, string itemID)
     {
-        this.gatheredByRuntimeID = gathererID;
+        this.gatheredByStableID = gathererID;
         this.itemStableID = itemID;
     }
 }

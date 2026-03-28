@@ -33,24 +33,24 @@ public class QuestLogController
 
 
 
-    public void RequestIncrementQuestObjective(int questerRuntimeID,string objectiveTriggerID) {
-        if (logRegistry.TryGet(questerRuntimeID, out var log)) {
+    public void RequestIncrementQuestObjective(string questerStableID,string objectiveTriggerID) {
+        if (logRegistry.TryGet(questerStableID, out var log)) {
             log.TryIncrementQuestObjective(objectiveTriggerID);
         }
     }
 
     void OnAcceptRequested(RequestAcceptQuest evt)
     {
-        if (logRegistry.TryGet(evt.AccepterEntityRuntimeID, out var log))
+        if (logRegistry.TryGet(evt.AccepterEntityStableID, out var log))
         {
-            if (questFactory.TryCreateQuestFromID(evt.QuestID,evt.AccepterEntityRuntimeID, out var quest))
+            if (questFactory.TryCreateQuestFromID(evt.QuestID,evt.AccepterEntityStableID, out var quest))
             {
                 if (log.TryAddQuest(quest))
                 {
                     quest.allObjectiveCompleteEvent += HandleObjectivesComplete;
                     // quest.BindActionSink(actions => questActionRunner.HandleActions(actions));
                     quest.BindActions(questActionRunner);
-                    EventBus<EntityWorldQuestStateChangedEvent>.Raise(new EntityWorldQuestStateChangedEvent(evt.AccepterEntityRuntimeID, evt.QuestID));
+                    EventBus<EntityWorldQuestStateChangedEvent>.Raise(new EntityWorldQuestStateChangedEvent(evt.AccepterEntityStableID, evt.QuestID));
                     foreach (KeyValuePair<string,Quest> pair in log.GetQuests()) {
                     }
                 }
@@ -60,16 +60,16 @@ public class QuestLogController
 
     }
 
-    void HandleObjectivesComplete(string questID,int runtimeID) {
-        Debug.Log($"OBJECTIVES COMPLETE FOR {runtimeID} on questID: {questID}");
-        EventBus<EntityWorldQuestStateChangedEvent>.Raise(new EntityWorldQuestStateChangedEvent(runtimeID, questID));
+    void HandleObjectivesComplete(string questID,string stableID) {
+        Debug.Log($"OBJECTIVES COMPLETE FOR {stableID} on questID: {questID}");
+        EventBus<EntityWorldQuestStateChangedEvent>.Raise(new EntityWorldQuestStateChangedEvent(stableID, questID));
     }
 
     void OnOpenQuestLogRequested(RequestDisplayQuestLogEvent evt)
     {
 
 
-        if (logRegistry.TryGet(evt.EntityRuntimeID, out var log))
+        if (logRegistry.TryGet(evt.EntityStableID, out var log))
         {
             EventBus<DisplayQuestLogEvent>.Raise(new DisplayQuestLogEvent(questFactory.CreateQuestUIListFromQuestLog(log)));
         }

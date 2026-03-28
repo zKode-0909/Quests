@@ -5,11 +5,11 @@ public sealed class QuestLogRegistry
 {
     EventBinding<RegisterQuestLogEvent> registerQuestLogBinding;
 
-    private readonly Dictionary<int, QuestLog> _logs = new();
+    private readonly Dictionary<string, QuestLog> _logs = new();
 
-    public IEnumerable<KeyValuePair<int, QuestLog>> All => _logs;
+    public IEnumerable<KeyValuePair<string, QuestLog>> All => _logs;
 
-    public bool TryGet(int id, out QuestLog log) => _logs.TryGetValue(id, out log);
+    public bool TryGet(string id, out QuestLog log) => _logs.TryGetValue(id, out log);
 
     public void InitializeRegistry() {
         registerQuestLogBinding = new EventBinding<RegisterQuestLogEvent>(RegisterQuestLog);
@@ -17,10 +17,10 @@ public sealed class QuestLogRegistry
     }
 
     public void RegisterQuestLog(RegisterQuestLogEvent evt) {
-        GetOrCreate(evt.EntityRuntimeID);
+        GetOrCreate(evt.EntityStableID);
     }
 
-    public QuestLog GetOrCreate(int id)
+    public QuestLog GetOrCreate(string id)
     {
         if (_logs.TryGetValue(id, out var log)) return log;
         log = new QuestLog(25);
@@ -28,9 +28,9 @@ public sealed class QuestLogRegistry
         return log;
     }
 
-    public bool Remove(int id) => _logs.Remove(id);
+    public bool Remove(string id) => _logs.Remove(id);
 
-    public bool TryCreate(int id) {
+    public bool TryCreate(string id) {
         if (_logs.TryGetValue(id, out var log)) { 
             return false;
         }

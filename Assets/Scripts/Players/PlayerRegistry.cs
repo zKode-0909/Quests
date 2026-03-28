@@ -7,11 +7,15 @@ public sealed class PlayerRegistry
 
 
 
-    private readonly Dictionary<int, Player> players = new();
+    private readonly Dictionary<string, Player> players = new();
 
-    public bool TryGetPlayer(int id, out Player player) => players.TryGetValue(id, out player);
+    public Dictionary<string,Player> Players => players;
 
-    public bool TryRegisterPlayer(Player player, int id) => players.TryAdd(id, player);
+    public bool TryGetPlayer(string id, out Player player) => players.TryGetValue(id, out player);
 
-    public bool Remove(int id) => players.Remove(id);
+    public bool TryRegisterPlayer(Player player, string id) => players.TryAdd(id, player);
+
+    public bool Remove(string id) => players.Remove(id);
+
+    
 }

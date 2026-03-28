@@ -19,7 +19,7 @@ public class QuestGiver : MonoBehaviour,IInteractable
     public int EntityLevel => 5;
     
 
-
+    public string StableID = "TESTQUESTGIVER";
   
     public int entityRuntimeId;
 
@@ -34,7 +34,7 @@ public class QuestGiver : MonoBehaviour,IInteractable
         var level = ((IEntity)interactor).EntityLevel;
         
         Debug.Log($"Interacted with QuestGiver with entityruntimeid of {entityRuntimeId}");
-        EventBus<RequestOpenQuestGiverUI>.Raise(new RequestOpenQuestGiverUI(interactor.EntityRuntimeID,entityRuntimeId,level));
+        EventBus<RequestOpenQuestGiverUI>.Raise(new RequestOpenQuestGiverUI(interactor.StableID,StableID,level));
    
     }
 

@@ -22,4 +22,8 @@ public class SimPlayerBootstrapper : MonoBehaviour
         simPlayerGenerator.Initialize(simPlayerFactory, playerRegistry, playerSpawner,playerTemplateDB);
 
     }
+
+    public void BuildFromSaveData(PlayerSaveData saveData) { 
+        
+    }
 }

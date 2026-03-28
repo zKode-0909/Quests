@@ -4,7 +4,7 @@ public class HumanPlayerInventoryToggle
 {
     private bool isOpen;
 
-    public void ToggleInventory(int id) {
+    public void ToggleInventory(string id) {
         if (!isOpen)
         {
             isOpen = true;

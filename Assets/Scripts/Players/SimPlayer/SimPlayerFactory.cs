@@ -13,18 +13,18 @@ public class SimPlayerFactory
         this.registry = registry;
     }
 
-    public SimPlayer CreateSimPlayer(Level1CharacterTemplate template) {
+    public SimPlayer CreateSimPlayer(Level1CharacterTemplate template,PlayerSaveData playerSaveData) {
 
         var motor = new SimPlayerMotor();
         var player = Object.Instantiate(simPlayerPrefab);
        // var runTimeWeapon = weaponFactory.CreateWeapon(template.WeaponSettings);
         var animator = player.GetComponent<Animator>();
-        var health = new EntityHealth(template.MaxHealth);
+        var health = new EntityHealth(template.MaxHealth,template.MaxHealth);
         var playerState = new PlayerState(player, animator);
         
         
         player.gameObject.SetActive(false);
-        player.Initialize(animator, health, RuntimeIDGenerator.GetNext(),registration,playerState,motor, registry,$"simPlayer {UnityEngine.Random.Range(0,100000)}");
+      //  player.Initialize(animator, health, RuntimeIDGenerator.GetNext(),registration,playerState,motor, registry,$"simPlayer {UnityEngine.Random.Range(0,100000)}", System.Guid.NewGuid().ToString(),PlayerType.Sim);
         template.VisualVariants.ApplyVariant(player);
         return player;   
     }

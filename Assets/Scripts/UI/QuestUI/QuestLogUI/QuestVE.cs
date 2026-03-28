@@ -9,6 +9,7 @@ public class QuestVE : Button
     string QuestName;
     Label QuestLabel;
     public event Action<string> QuestClicked;
+
     public QuestVE(string name, string questStableID,string status)
     {
         QuestName = name;

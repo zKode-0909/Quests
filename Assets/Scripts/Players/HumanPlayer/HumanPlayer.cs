@@ -15,6 +15,8 @@ public class HumanPlayer : Player
     //[SerializeField] HumanPlayerMotor humanMotor;
     public CountdownTimer questScanTimer;
 
+    public HumanMenuToggle menuToggle;
+
     public SelectionManager selectionManager;
 
     ISelectable currentSelection;
@@ -24,9 +26,12 @@ public class HumanPlayer : Player
 
 
 
-    public void InitializeHumanPlayer(HumanPlayerQuests quests,HumanPlayerInventoryToggle inventoryToggle) {
+    public void InitializeHumanPlayer(HumanPlayerQuests quests,HumanPlayerInventoryToggle inventoryToggle,HumanMenuToggle menuToggle) {
         this.playerQuests = quests;
         this.humanInventoryToggle = inventoryToggle;
+        this.menuToggle = menuToggle;
+
+
         level = 5;
         questScanTimer = new CountdownTimer(10);
         
@@ -58,6 +63,10 @@ public class HumanPlayer : Player
         questScanTimer.Tick(Time.deltaTime);
 
         
+    }
+
+    public void HandleToggleMenu() { 
+        menuToggle.ToggleMenu();
     }
 
     public void HandleSelect(Vector2 mousePos)

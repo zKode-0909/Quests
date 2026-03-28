@@ -28,7 +28,7 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
 
 
 
-    public void TakeDamage(int damage,int changerRuntimeID)
+    public void TakeDamage(int damage,string changerRuntimeID)
     {
         health.ChangeHealth(damage);
         Debug.Log($"GOT DAMN NIGGA! I JUST GOT HIT for {damage} damage, my shit be bleedin! I now have {health.GetCurrentHealth()}");
@@ -39,7 +39,7 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
         
     }
 
-    void Die(int killerID) {
+    void Die(string killerID) {
         EventBus<KilledEvent>.Raise(new KilledEvent(killerID,StableID));
         Destroy(gameObject);
     }
@@ -50,8 +50,8 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
         
         runTimeID = RuntimeIDGenerator.GetNext();
         currentLevel  = settings.startingLevel;
-        health = new EntityHealth(settings.startingHealth);
-        registration.Register(runTimeID);
+        health = new EntityHealth(settings.startingHealth,settings.startingHealth);
+        registration.Register(StableID);
         //bootstrapper.characterRegistry.Register(this);
         if (bootstrapper.characterRegistry.TryGet(StableID, out var ent))
         {

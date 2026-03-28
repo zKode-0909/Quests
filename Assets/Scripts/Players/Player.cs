@@ -1,4 +1,4 @@
-using Codice.CM.Common;
+
 using System;
 using System.Security.Principal;
 using UnityEngine;
@@ -30,32 +30,33 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
     protected int entityRuntimeID;
 
-    protected PlayerRegistration registration;
-    protected PlayerRegistry registry;
 
     protected string playerName;
+
+    public string PlayerName => playerName;
+
+    public PlayerType playerType;
 
 
     public CountdownTimer damageTimer;
 
     bool hitZero = false;
-    protected bool inParty = false;   
+    protected bool inParty = false;
+    public string StableID => stableID;
+    string stableID;
 
 
-    public void Initialize(Animator animator,EntityHealth health,int runtimeID,PlayerRegistration registration,PlayerState playerState,PlayerMotor motor,PlayerRegistry registry,string name)
+
+    public void Initialize(Animator animator,EntityHealth health,int runtimeID,PlayerState playerState,PlayerMotor motor,string name,string stable,PlayerType type)
     {
         this.health = health;
         this.entityRuntimeID = runtimeID;
         this.animator = animator;
-        this.registration = registration;
         this.playerState = playerState;
         this.playerMotor = motor;
-        this.registry = registry;
         this.playerName = name;
-
-
-        registry.TryRegisterPlayer(this,entityRuntimeID);
-        registration.Register(entityRuntimeID);
+        this.stableID = stable;
+        this.playerType = type;
 
         damageTimer = new CountdownTimer(1);
 
@@ -69,7 +70,7 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
         Debug.Log($"{interactor} has interacted with me.");
     }
 
-    public void TakeDamage(int damage, int damagerRuntimeID)
+    public void TakeDamage(int damage, string damagerRuntimeID)
     {
         //Debug.Log($"I have taken {damage} damage, I now have {health.GetCurrentHealth()} out of {health.GetMaxHealth()} health");
         health.ChangeHealth(damage);
@@ -157,11 +158,11 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
         if (hitZero == false)
         {
             //Debug.Log("TAKING DAMAGE");
-            TakeDamage(UnityEngine.Random.Range(-10,-2), 55);
+            TakeDamage(UnityEngine.Random.Range(-10,-2), "testDamage");
         }
         else
         {
-            TakeDamage(UnityEngine.Random.Range(1,10), 55);
+            TakeDamage(UnityEngine.Random.Range(1,10), "testDamage");
             if (health.GetCurrentHealth() == health.GetMaxHealth()) {
                 hitZero = false;
             }

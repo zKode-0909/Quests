@@ -29,10 +29,11 @@ public class HumanPlayerBootStrapper : MonoBehaviour
     HumanPlayerMotor motor;
     HumanPlayerQuests playerQuests;
     PlayerRegistry playerRegistry;
+    HumanMenuToggle menuToggle;
 
-    public void BootStrap(PlayerRegistration reg,PlayerSpawner spawn,PlayerRegistry registry) {
+    public void BootStrap(PlayerRegistration reg,PlayerSpawner spawn,PlayerRegistry registry,PlayerSaveData playerData) {
 
-
+        /*
         spawner = spawn;
         registration = reg;
         playerRegistry = registry;
@@ -61,6 +62,8 @@ public class HumanPlayerBootStrapper : MonoBehaviour
           
         controller.Initialize(runtimeRb, inputReader, runtimePlayer);
 
+        menuToggle = new HumanMenuToggle();
+
         runtimePlayer.Initialize(
             runtimeAnimator,
             health,
@@ -69,10 +72,12 @@ public class HumanPlayerBootStrapper : MonoBehaviour
             playerState,
             motor,
             registry,
-            "Human Player"
+            "Human Player",
+            System.Guid.NewGuid().ToString(),
+            PlayerType.Human
         );
 
-        runtimePlayer.InitializeHumanPlayer(playerQuests, playerInventoryToggle);
+        runtimePlayer.InitializeHumanPlayer(playerQuests, playerInventoryToggle,menuToggle);
 
         spawner.SpawnPlayer(runtimePlayer);
 
@@ -80,7 +85,7 @@ public class HumanPlayerBootStrapper : MonoBehaviour
         interactionManager.SetTarget(runtimePlayer);
         orbitCamera.SetFocus(runtimePlayer.transform);
 
-
+        */
 
 
 

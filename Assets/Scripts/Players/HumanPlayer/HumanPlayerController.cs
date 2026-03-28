@@ -24,6 +24,8 @@ public class HumanPlayerController : MonoBehaviour
         input.OpenQuestLogEvent += HandleOpenQuestLog;
         input.SelectionEvent += HandleSelection;
 
+        input.OpenMenuEvent += HandleShowMenu;
+
 
         input.OpenInventoryEvent += HandleOpenInventory;
 
@@ -45,12 +47,16 @@ public class HumanPlayerController : MonoBehaviour
 
     void HandleOpenInventory() {
         Debug.Log("received open inventory input");
-        player.humanInventoryToggle.ToggleInventory(player.EntityRuntimeID);
+        player.humanInventoryToggle.ToggleInventory(player.StableID);
     }
 
     void HandleSelection(Vector2 pos) {
         player.HandleSelect(pos);
         
+    }
+
+    void HandleShowMenu() {
+        player.HandleToggleMenu();
     }
 
     void HandleMove(Vector2 dir)

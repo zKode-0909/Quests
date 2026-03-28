@@ -27,13 +27,13 @@ public class QuestService
     }
 
     void HandleGatheredEvent(GatherItemEvent evt) {
-        questLogController.RequestIncrementQuestObjective(evt.gatheredByRuntimeID, evt.itemStableID);
+        questLogController.RequestIncrementQuestObjective(evt.gatheredByStableID, evt.itemStableID);
     }
 
 
     void HandleKilledEvent(KilledEvent evt) {
 
-        questLogController.RequestIncrementQuestObjective(evt.killedByRuntimeID, evt.killedCreatureStableID);
+        questLogController.RequestIncrementQuestObjective(evt.killedByStableID, evt.killedCreatureStableID);
 
         /*
         Debug.Log($"the quest log that will need to be updated is...");

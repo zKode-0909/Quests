@@ -9,21 +9,62 @@ public class PlayersBootstrapper : MonoBehaviour
     [SerializeField] List<Transform> spawnPoints;
     [SerializeField] SimPlayer simPrefab;
     [SerializeField] PlayerTemplateDB playerTemplateDB;
+    [SerializeField] SimPlayer simPlayerPrefab;
 
     [SerializeField] PlayerRegistration registration;
     PlayerSpawner spawner;
     PlayerRegistry registry;
     PlayerPartyInviteHandler playerPartyInviteHandler;
+    PlayerFactory playerFactory;
+
+    [SerializeField] HumanPlayer humanPlayerPrefab;
+
+    [SerializeField] InteractionManager interactionManager;
+    [SerializeField] HoverManager hoverManager;
+    [SerializeField] OrbitCamera orbitCamera;
+
+    [SerializeField] PlayerInputReader inputReader;
+
+    [SerializeField] LayerMask questGiverLayerMask;
 
 
-    public void Bootstrap() {
+    public void Bootstrap(PlayerRegistry registry,List<PlayerSaveData> playerSaveData,bool newGame) {
         spawner = new PlayerSpawner(spawnPoints);
-        registry = new PlayerRegistry();
-        registration = new PlayerRegistration();
+        this.registry = registry;
         playerPartyInviteHandler = new PlayerPartyInviteHandler();
         playerPartyInviteHandler.Initialize(registry);
 
-        humanBootstrapper.BootStrap(registration,spawner,registry);
-        simPlayerBootstrapper.Bootstrap(spawner,registry,registration,simPrefab,playerTemplateDB);
+        //humanBootstrapper.BootStrap(registration,spawner,registry);
+        //simPlayerBootstrapper.Bootstrap(spawner,registry,registration,simPrefab,playerTemplateDB);
+
+        playerFactory = new PlayerFactory(spawner, registration, registry);
+
+        if (!newGame)
+        {
+            BuildPlayersFromData(playerSaveData);
+        }
+        else {
+            BuildStartupPlayers();
+        }
+        
+    }
+
+    void BuildPlayersFromData(List<PlayerSaveData> saveData)
+    {
+        foreach (var data in saveData) {
+            Player player = data.Type switch
+            {
+                PlayerType.Human =>  playerFactory.BuildHumanPlayerFromData(data,humanPlayerPrefab,inputReader,hoverManager,interactionManager,orbitCamera,questGiverLayerMask),
+                PlayerType.Sim => playerFactory.BuildSimPlayerFromData(data,simPlayerPrefab),
+                _ => throw new System.ArgumentOutOfRangeException()
+
+            };
+       
+        }
+
+    }
+
+    void BuildStartupPlayers() { 
+        playerFactory.BuildNewHumanPlayer(humanPlayerPrefab, inputReader, hoverManager, interactionManager, orbitCamera, questGiverLayerMask);
     }
 }

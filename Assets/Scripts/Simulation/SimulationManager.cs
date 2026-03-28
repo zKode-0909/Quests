@@ -7,7 +7,7 @@ public class SimulationManager
     public void Initialize(PlayerTemplateDB db) { 
         playerTemplateDB = db;
 
-        RequestSimPlayerGeneration();
+        //RequestSimPlayerGeneration();
     }
 
     public void RequestSimPlayerGeneration()

@@ -208,6 +208,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowInGameMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""27dbdd0b-e63a-48d9-86de-754a385a2741"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -538,6 +547,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51711a9a-4378-4972-993d-716296682b12"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowInGameMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1178,6 +1198,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_PressT = m_Player.FindAction("PressT", throwIfNotFound: true);
         m_Player_PressY = m_Player.FindAction("PressY", throwIfNotFound: true);
         m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
+        m_Player_ShowInGameMenu = m_Player.FindAction("ShowInGameMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1286,6 +1307,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PressT;
     private readonly InputAction m_Player_PressY;
     private readonly InputAction m_Player_Select;
+    private readonly InputAction m_Player_ShowInGameMenu;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1349,6 +1371,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Select".
         /// </summary>
         public InputAction @Select => m_Wrapper.m_Player_Select;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ShowInGameMenu".
+        /// </summary>
+        public InputAction @ShowInGameMenu => m_Wrapper.m_Player_ShowInGameMenu;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1414,6 +1440,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Select.started += instance.OnSelect;
             @Select.performed += instance.OnSelect;
             @Select.canceled += instance.OnSelect;
+            @ShowInGameMenu.started += instance.OnShowInGameMenu;
+            @ShowInGameMenu.performed += instance.OnShowInGameMenu;
+            @ShowInGameMenu.canceled += instance.OnShowInGameMenu;
         }
 
         /// <summary>
@@ -1464,6 +1493,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Select.started -= instance.OnSelect;
             @Select.performed -= instance.OnSelect;
             @Select.canceled -= instance.OnSelect;
+            @ShowInGameMenu.started -= instance.OnShowInGameMenu;
+            @ShowInGameMenu.performed -= instance.OnShowInGameMenu;
+            @ShowInGameMenu.canceled -= instance.OnShowInGameMenu;
         }
 
         /// <summary>
@@ -1877,6 +1909,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSelect(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ShowInGameMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShowInGameMenu(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

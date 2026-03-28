@@ -2,10 +2,10 @@ using UnityEngine;
 
 public struct RequestCloseInventoryEvent : IEvent
 {
-    public int EntityRuntimeID;
+    public string EntityStableID;
 
-    public RequestCloseInventoryEvent(int entityID)
+    public RequestCloseInventoryEvent(string entityID)
     {
-        EntityRuntimeID = entityID;
+        EntityStableID = entityID;
     }
 }

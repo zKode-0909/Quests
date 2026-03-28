@@ -27,7 +27,7 @@ public class Weapon : IWeapon
     }
 
 
-    public bool TryAttack(GameObject attacker,int runtimeID)
+    public bool TryAttack(GameObject attacker,string entityID)
     {
         var attCtx = new AttackContext(attacker,damage,attackRange);
         hits.Clear();
@@ -38,7 +38,7 @@ public class Weapon : IWeapon
 
         foreach (var hit in hits) {
             //Debug.Log($"didnt hit: {hit.target}");
-            hit.target.TakeDamage(-damage,runtimeID);
+            hit.target.TakeDamage(-damage,entityID);
         }
 
         return true;

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static Codice.Client.Common.Connection.AskCredentialsToUser;
+
 
 public class PlayerState
 {

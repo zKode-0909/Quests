@@ -18,4 +18,9 @@ public class PlayerSpawner
         
         
     }
+
+    public void SpawnPlayer(Player player, Vector3 position) { 
+        player.transform.position = position;
+        player.gameObject.SetActive(true);
+    }
 }

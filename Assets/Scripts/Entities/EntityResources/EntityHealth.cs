@@ -5,9 +5,9 @@ public class EntityHealth
     int currentHealth;
     int maxHealth;
 
-    public EntityHealth(int maxHealth)
+    public EntityHealth(int currentHealth,int maxHealth)
     {
-        this.currentHealth = maxHealth;
+        this.currentHealth = currentHealth;
         this.maxHealth = maxHealth;
     }
 

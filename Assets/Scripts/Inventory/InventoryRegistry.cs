@@ -7,11 +7,11 @@ public sealed class InventoryRegistry
    
 
 
-    private readonly Dictionary<int, Inventory> _inventories = new();
+    private readonly Dictionary<string, Inventory> _inventories = new();
 
-    public IEnumerable<KeyValuePair<int,Inventory>> All => _inventories;
+    public IEnumerable<KeyValuePair<string,Inventory>> All => _inventories;
 
-    public bool TryGet(int id, out Inventory inventory) => _inventories.TryGetValue(id, out inventory);
+    public bool TryGet(string id, out Inventory inventory) => _inventories.TryGetValue(id, out inventory);
 
     public void InitializeRegistry() {
         registerInventoryBinding = new EventBinding<RegisterInventoryEvent>(RegisterInventory);
@@ -20,28 +20,32 @@ public sealed class InventoryRegistry
 
 
     public void RegisterInventory(RegisterInventoryEvent evt) {
-        Debug.Log($"registering inventory for {evt.EntityRuntimeID}");
-        GetOrCreate(evt.EntityRuntimeID);
+        Debug.Log($"registering inventory for {evt.EntityStableID}");
+        GetOrCreate(evt.EntityStableID);
     }
 
-    public Inventory GetOrCreate(int id)
+    public bool RegisterInventory(string ownerID,Inventory inventory) {
+        return _inventories.TryAdd(ownerID, inventory);
+    }
+
+    public Inventory GetOrCreate(string id)
     {
         if (_inventories.TryGetValue(id, out var inventory)) return inventory;
-        inventory = new Inventory(50);
+        inventory = new Inventory(50,id);
         _inventories.Add(id, inventory);
         return inventory;
     }
 
-    public bool Remove(int id) => _inventories.Remove(id);
+    public bool Remove(string id) => _inventories.Remove(id);
 
-    public bool TryCreate(int id)
+    public bool TryCreate(string id)
     {
         if (_inventories.TryGetValue(id, out var inventory))
         {
             return false;
         }
 
-        inventory = new Inventory(50);
+        inventory = new Inventory(50, id);
         _inventories.Add(id, inventory);
         Debug.Log($"created inventory for id {id}");
         return true;

@@ -1,10 +1,15 @@
-using Codice.CM.Common.Tree;
+
 using UnityEngine;
 
 public class ItemBootstrapper : MonoBehaviour
 {
+    ItemDB dataBase;
+    ItemFactory itemFactory;
     public void Bootstrap(ItemDB database, ItemFactory factory) {
-        database.BuildItemDB();
-        factory.InitializeFactory(database);
+
+        this.dataBase = database;
+        this.itemFactory = factory;
+
+        
     }
 }

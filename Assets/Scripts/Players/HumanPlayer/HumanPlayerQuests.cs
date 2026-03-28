@@ -20,7 +20,7 @@ public class HumanPlayerQuests
         if (isOpen)
         {
             Debug.Log($"Displaying Quest Log");
-            EventBus<RequestDisplayQuestLogEvent>.Raise(new RequestDisplayQuestLogEvent(player.EntityRuntimeID));
+            EventBus<RequestDisplayQuestLogEvent>.Raise(new RequestDisplayQuestLogEvent(player.StableID));
         }
 
         else {
@@ -48,7 +48,7 @@ public class HumanPlayerQuests
             var giver = col.GetComponentInParent<QuestGiver>();
             if (giver != null) {
                 Debug.Log($"found questgiver, my current level is {player.EntityLevel}");
-                EventBus<RequestQuestGiverIconDisplay>.Raise(new RequestQuestGiverIconDisplay(giver.EntityRuntimeID, player.EntityRuntimeID,player.EntityLevel));  
+                EventBus<RequestQuestGiverIconDisplay>.Raise(new RequestQuestGiverIconDisplay(giver.StableID, player.StableID,player.EntityLevel));  
             }
                 
         }

@@ -7,7 +7,7 @@ public class GroundItem : MonoBehaviour, IInteractable
 
     void IInteractable.HandleInteract(IInteractor interactor)
     {
-        EventBus<GatherItemEvent>.Raise(new GatherItemEvent(interactor.EntityRuntimeID, settings.StableID));
+        EventBus<GatherItemEvent>.Raise(new GatherItemEvent(interactor.StableID, settings.StableID));
         Destroy(gameObject);
         
     }

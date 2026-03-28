@@ -3,9 +3,9 @@ using UnityEngine;
 
 public struct RequestDisplayQuestLogEvent : IEvent
 {
-    public int EntityRuntimeID;
+    public string EntityStableID;
 
-    public RequestDisplayQuestLogEvent(int entityID) {
-        EntityRuntimeID = entityID;
+    public RequestDisplayQuestLogEvent(string entityID) {
+        EntityStableID = entityID;
     }
 }

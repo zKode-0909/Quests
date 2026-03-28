@@ -21,7 +21,7 @@ public class InventoryViewController : VisualElement
 
     InventorySlot selectedSlot;
 
-    int entityID;
+    string entityID;
 
     bool itemSelected = false;
 
@@ -132,7 +132,7 @@ public class InventoryViewController : VisualElement
     {
         if (root == null || inventoryGrid == null) return;
 
-        entityID = evt.EntityRuntimeID;
+        entityID = evt.EntityStableID;
         Debug.Log("opening inventory in view");
         int idx = 0;
         foreach (var item in evt.Items)

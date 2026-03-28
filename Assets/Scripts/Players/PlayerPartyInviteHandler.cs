@@ -17,7 +17,7 @@ public class PlayerPartyInviteHandler
 
     public void HandlePartyInvite(SendPartyInviteEvent evt) {
         Debug.Log("handling party invite");
-        if (registry.TryGetPlayer(evt.Invitee.EntityRuntimeID, out var player)) {
+        if (registry.TryGetPlayer(evt.Invitee.StableID, out var player)) {
             Debug.Log("player invited found");
             player.HandlePartyInvite(evt.PartyID);
         }

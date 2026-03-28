@@ -1,6 +1,6 @@
 
 using System.Collections.Generic;
-using UnityEditor.Rendering;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerTemplateDB", menuName = "Databases/PlayerTemplateDB")]

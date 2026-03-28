@@ -18,6 +18,8 @@ public class InventorySlot : VisualElement
         this.slotIdx = slotIdx;
     }
 
+  
+
     public int GetSlotIdx() { 
         return slotIdx;
     }

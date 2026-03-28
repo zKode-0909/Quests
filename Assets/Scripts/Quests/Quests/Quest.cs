@@ -6,26 +6,26 @@ using UnityEngine;
 
 public class Quest
 {
-    public int entityOwnerRuntimeID { get; private set; }
+    public string entityOwnerStableID { get; private set; }
     public string questName { get; private set; }
     public string questGiverID { get; private set; }
     public string questID { get; private set; }
     public int questRuntimeID { get; private set; }
     public int questLevel { get; private set; }
-    public event Action<string,int> allObjectiveCompleteEvent;
+    public event Action<string,string> allObjectiveCompleteEvent;
     QuestStages questStages;
     private Action<IReadOnlyList<QuestAction>> actionSink;
 
     Dictionary<string, int> progressByTargetId;
 
-    public Quest(string name,string questGiverID,string questID,int runtimeID,int questLevel,QuestStages stages,int entityID)
+    public Quest(string name,string questGiverID,string questID,int runtimeID,int questLevel,QuestStages stages,string entityID)
     {
         this.questName = name;
         this.questGiverID = questGiverID;
         this.questID = questID;
         this.questRuntimeID = runtimeID;
         this.questLevel = questLevel;
-        this.entityOwnerRuntimeID = entityID;
+        this.entityOwnerStableID = entityID;
         this.questStages = stages;
 
         progressByTargetId = new Dictionary<string, int>();
@@ -51,7 +51,7 @@ public class Quest
     }
 
     void HandleObjectivesComplete() {
-        allObjectiveCompleteEvent?.Invoke(questID,entityOwnerRuntimeID);
+        allObjectiveCompleteEvent?.Invoke(questID,entityOwnerStableID);
     }
 
 

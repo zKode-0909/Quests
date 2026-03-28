@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class QuestGiverRegistry
 {
-    Dictionary<int, QuestGiver> questGivers;
+    Dictionary<string, QuestGiver> questGivers;
 
     public QuestGiverRegistry() { 
-        questGivers = new Dictionary<int, QuestGiver>();
+        questGivers = new Dictionary<string, QuestGiver>();
     }
 
     public void Dispose() { 
@@ -17,14 +17,14 @@ public class QuestGiverRegistry
 
         if (questGiver == null) return false;
         
-        return questGivers.TryAdd(questGiver.entityRuntimeId, questGiver);
+        return questGivers.TryAdd(questGiver.StableID, questGiver);
     }
 
 
-    public bool TryUnregister(int entityId)
+    public bool TryUnregister(string entityId)
         => questGivers.Remove(entityId);
 
-    public bool TryGet(int entityId, out QuestGiver questGiver)
+    public bool TryGet(string entityId, out QuestGiver questGiver)
         => questGivers.TryGetValue(entityId, out questGiver);
 
 

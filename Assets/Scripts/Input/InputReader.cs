@@ -20,6 +20,7 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
     public event Action PressTEvent;
     public event Action OpenInventoryEvent;
     public event Action<Vector2> SelectionEvent;
+    public event Action OpenMenuEvent;
 
 
 
@@ -201,6 +202,14 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
         {
             var mousePos = Mouse.current.position.ReadValue();
             SelectionEvent?.Invoke(mousePos);
+        }
+    }
+
+    public void OnShowInGameMenu(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            OpenMenuEvent?.Invoke();
         }
     }
 }

@@ -15,22 +15,22 @@ public class SimPlayerGenerator
         this.simPlayerSpawner = spawner;
         this.playerTemplateDB = db;
 
-        generateSimPlayerReqBinding = new EventBinding<RequestGenerateSimPlayerEvent>(TryGenerateSimPlayer);
-        EventBus<RequestGenerateSimPlayerEvent>.Register(generateSimPlayerReqBinding);
+       // generateSimPlayerReqBinding = new EventBinding<RequestGenerateSimPlayerEvent>(TryGenerateSimPlayer);
+       // EventBus<RequestGenerateSimPlayerEvent>.Register(generateSimPlayerReqBinding);
     }
 
     public void Dispose() {
-        EventBus<RequestGenerateSimPlayerEvent>.Deregister(generateSimPlayerReqBinding);
+      //  EventBus<RequestGenerateSimPlayerEvent>.Deregister(generateSimPlayerReqBinding);
     }
-
+    /*
     public void TryGenerateSimPlayer(RequestGenerateSimPlayerEvent evt) {
         if (playerTemplateDB.TryGetTemplateDef(evt.templateToGenerate,out var template)) {
             var generatedPlayer = simPlayerFactory.CreateSimPlayer(template);
-            if (playerRegistry.TryGetPlayer(generatedPlayer.EntityRuntimeID,out var player))
+            if (playerRegistry.TryGetPlayer(generatedPlayer.StableID,out var player))
             {
                 simPlayerSpawner.SpawnPlayer(player);
             }
         }
         
-    }
+    }*/
 }

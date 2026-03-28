@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] StyleSheet questlogStyle;
     [SerializeField] StyleSheet questhandoutStyle;
     [SerializeField] StyleSheet inventoryStyle;
+    [SerializeField] StyleSheet menuStyle;
 
     [SerializeField] Sprite inventoryPlaceholderSprite;
 
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour
     QuestHandoutView questGiverHandoutView;
     QuestLogView questLogView;
     InventoryViewController inventoryView;
+    InGameMenu inGameMenu;
 
     EventBinding<OpenQuestGiverUI> openBinding;
 
@@ -27,12 +29,16 @@ public class UIManager : MonoBehaviour
     EventBinding<DisplayInventoryEvent> displayInventory;
     EventBinding<CloseInventoryEvent> closeInventory;
 
+    EventBinding<ShowMenuEvent> showMenu;
+    EventBinding<HideMenuEvent> hideMenu;
+
     private VisualElement root;
 
     private VisualElement overlayRoot;
     private VisualElement questGiverRoot;
     private VisualElement questLogRoot;
     private VisualElement inventoryRoot;
+    private VisualElement menuRoot;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnEnable()
     {
@@ -45,6 +51,7 @@ public class UIManager : MonoBehaviour
         questGiverRoot = new VisualElement();
         questLogRoot = new VisualElement();
         inventoryRoot = new VisualElement();
+        menuRoot = new VisualElement();
 
         root.AddToClassList("uiRoot");
         
@@ -53,6 +60,7 @@ public class UIManager : MonoBehaviour
         root.Add(questGiverRoot);
         root.Add(questLogRoot);
         root.Add(inventoryRoot);
+        root.Add(menuRoot);
 
         overlayController = new HumanPlayerOverlayViewController(overlayRoot, overlayStyle);
         overlayController.Initialize();
@@ -80,6 +88,18 @@ public class UIManager : MonoBehaviour
 
         closeInventory = new EventBinding<CloseInventoryEvent>(inventoryView.CloseInventory);
         EventBus<CloseInventoryEvent>.Register(closeInventory);
+
+        inGameMenu = new InGameMenu(menuRoot, menuStyle);
+        inGameMenu.Initialize();
+
+
+        showMenu = new EventBinding<ShowMenuEvent>(inGameMenu.ShowMenu);
+        EventBus<ShowMenuEvent>.Register(showMenu);
+
+        hideMenu = new EventBinding<HideMenuEvent>(inGameMenu.HideMenu);
+        EventBus<HideMenuEvent>.Register(hideMenu);
+
+        
     }
 
     private void OnDisable()
@@ -96,6 +116,9 @@ public class UIManager : MonoBehaviour
 
         EventBus<DisplayInventoryEvent>.Deregister(displayInventory);
         EventBus<CloseInventoryEvent>.Deregister(closeInventory);
+
+        EventBus<ShowMenuEvent>.Deregister(showMenu);
+        EventBus<HideMenuEvent>.Deregister(hideMenu);
 
     }
 

@@ -1,5 +1,5 @@
-using Codice.Client.BaseCommands.CheckIn;
-using NUnit.Framework;
+
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,17 +50,17 @@ public class InventoryController
     }
 
     void OnAddItemToInventory(GatherItemEvent evt) {
-        if (inventoryRegistry.TryGet(evt.gatheredByRuntimeID, out var inventory)) {
-            if (itemFactory.TryCreateItemFromID(evt.itemStableID, evt.gatheredByRuntimeID, out var item)) {
+        if (inventoryRegistry.TryGet(evt.gatheredByStableID, out var inventory)) {
+            if (itemFactory.TryCreateItemFromID(evt.itemStableID, out var item)) {
                 if (inventory.TryAddItemToInventory(item)) {
-                    Debug.Log($"{item.ItemName} has been added to {evt.gatheredByRuntimeID}'s inventory");
+                    Debug.Log($"{item.ItemName} has been added to {evt.gatheredByStableID}'s inventory");
                 }
             }
         }
     }
 
     void HandleItemSwap(InventoryItemSwappedEvent evt) {
-        if (inventoryRegistry.TryGet(evt.EntityRuntimeID, out var inventory)) {
+        if (inventoryRegistry.TryGet(evt.EntityStableID, out var inventory)) {
             inventory.SwapItems(evt.item1Idx, evt.item2Idx);
         }
 
@@ -69,13 +69,13 @@ public class InventoryController
 
     void OnOpenInventoryRequested(RequestOpenInventoryEvent evt) {
    
-        Debug.Log($"Trying to open Inventory for {evt.EntityRuntimeID}");
+        Debug.Log($"Trying to open Inventory for {evt.EntityStableID}");
         var displayList = new List<InventoryUIItem>();
        
-        if (inventoryRegistry.TryGet(evt.EntityRuntimeID, out var inventory))
+        if (inventoryRegistry.TryGet(evt.EntityStableID, out var inventory))
         {
             Debug.Log("opening inventory");
-            EventBus<DisplayInventoryEvent>.Raise(new DisplayInventoryEvent(BuildUIListFromInventory(inventory),evt.EntityRuntimeID));
+            EventBus<DisplayInventoryEvent>.Raise(new DisplayInventoryEvent(BuildUIListFromInventory(inventory),evt.EntityStableID));
         }
         else
         {

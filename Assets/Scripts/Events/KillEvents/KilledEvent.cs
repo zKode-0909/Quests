@@ -3,11 +3,11 @@ using UnityEngine;
 
 public readonly struct KilledEvent : IEvent
 {
-    public readonly int killedByRuntimeID;
+    public readonly string killedByStableID;
     public readonly string killedCreatureStableID;
 
-    public KilledEvent(int killerID,string creatureID) { 
-        this.killedByRuntimeID = killerID;
+    public KilledEvent(string killerID,string creatureID) { 
+        this.killedByStableID = killerID;
         this.killedCreatureStableID = creatureID;
     }
 }

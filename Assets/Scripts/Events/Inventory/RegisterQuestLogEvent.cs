@@ -2,10 +2,10 @@ using UnityEngine;
 
 public struct RegisterQuestLogEvent : IEvent
 {
-    public int EntityRuntimeID;
+    public string EntityStableID;
 
-    public RegisterQuestLogEvent(int entityID)
+    public RegisterQuestLogEvent(string entityID)
     {
-        EntityRuntimeID = entityID;
+        EntityStableID = entityID;
     }
 }
