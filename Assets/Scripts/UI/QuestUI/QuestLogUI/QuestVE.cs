@@ -8,24 +8,29 @@ public class QuestVE : Button
     string QuestStableID;
     string QuestName;
     Label QuestLabel;
-    public event Action<string> QuestClicked;
+    public event Action<QuestUIItem> QuestClicked;
 
-    public QuestVE(string name, string questStableID,string status)
+
+    QuestUIItem currentQuest;
+
+
+    public QuestVE(QuestUIItem quest)
     {
-        QuestName = name;
+        currentQuest = quest;
+        QuestName = quest.title;
         QuestLabel = new Label();
         QuestLabel.AddToClassList("questLabel");
         this.Add(QuestLabel);
 
         this.AddToClassList("quest");
-        QuestStableID = questStableID;
+        QuestStableID = quest.questID;
 
-        if (status == "Complete")
+        if (quest.status == "Complete")
         {
-            QuestLabel.text = ($"{name} (Complete)");
+            QuestLabel.text = ($"{QuestName} (Complete)");
         }
         else {
-            QuestLabel.text = name;
+            QuestLabel.text = QuestName;
         }
 
 
@@ -36,6 +41,7 @@ public class QuestVE : Button
     void OnQuestClicked()
     {
         //QuestClicked?.Invoke(QuestStableID);
+        QuestClicked?.Invoke(currentQuest);
         Debug.Log($"just cliked {QuestName}");
     }
 

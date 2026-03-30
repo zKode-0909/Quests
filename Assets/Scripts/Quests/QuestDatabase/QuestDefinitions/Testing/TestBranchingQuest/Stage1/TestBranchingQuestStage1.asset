@@ -28,3 +28,4 @@ MonoBehaviour:
   FinishedRequirementActions: []
   StageEndActions: []
   StageStartActions: []
+  stageID: <TestBranchingQuest>.<Stage1>

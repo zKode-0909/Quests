@@ -3,9 +3,9 @@ using UnityEngine;
 
 public struct DisplayQuestLogEvent : IEvent
 {
-    public IReadOnlyList<QuestUIItem> Quests;
+    public List<QuestUIItem> Quests;
 
-    public DisplayQuestLogEvent(IReadOnlyList<QuestUIItem> quests) { 
+    public DisplayQuestLogEvent(List<QuestUIItem> quests) { 
         Quests = quests;
     }
 }

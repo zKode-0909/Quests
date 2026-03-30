@@ -15,6 +15,10 @@ public class ObjectiveStageRequirement
         this.questObjectiveStableID = questObjectiveStableID;
     }
 
+    public void SetCurrentProgress(int progress) { 
+        currentProgress = progress;
+    }
+
     public string GetQuestObjectiveStableID() {
         return questObjectiveStableID;
     }

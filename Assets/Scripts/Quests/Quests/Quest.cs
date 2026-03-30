@@ -18,7 +18,9 @@ public class Quest
 
     Dictionary<string, int> progressByTargetId;
 
-    public Quest(string name,string questGiverID,string questID,int runtimeID,int questLevel,QuestStages stages,string entityID)
+    Inventory currentPlayerInventory;
+
+    public Quest(string name,string questGiverID,string questID,int runtimeID,int questLevel,QuestStages stages,string entityID,Inventory inventory)
     {
         this.questName = name;
         this.questGiverID = questGiverID;
@@ -28,12 +30,32 @@ public class Quest
         this.entityOwnerStableID = entityID;
         this.questStages = stages;
 
+        currentPlayerInventory = inventory;
+
+        questStages.SetInventory(inventory);
+
         progressByTargetId = new Dictionary<string, int>();
 
         questStages.QuestObjectiveEvent += HandleAction;
         questStages.ObjectivesFinishedEvent += HandleObjectivesComplete;
         questStages.SetTargetIDDict(progressByTargetId);
-       
+
+        foreach (var item in currentPlayerInventory.GetItems())
+        {
+            foreach (var requirement in questStages.GetCurrentStage().GetStageRequirements())
+            {
+                if (item != null) {
+                    Debug.Log($"checking item: {item.StableID} vs objective {requirement.Value.GetQuestObjectiveStableID()}");
+                    if (requirement.Value.GetQuestObjectiveStableID() == item.StableID)
+                    {
+                        OnObjectiveEvent(item.StableID);
+                    }
+                }
+                
+                
+            }
+        }
+
     }
 
     public void BindActions(QuestActionRunner runner)
@@ -46,8 +68,9 @@ public class Quest
 
         foreach (QuestAction action in actions) {
             Debug.Log($"emitting action {action}");
+            action.Execute();
         }
-        actionSink?.Invoke(actions);
+       // actionSink?.Invoke(actions);
     }
 
     void HandleObjectivesComplete() {
@@ -72,5 +95,9 @@ public class Quest
             progressByTargetId.Add(objectiveThingId, 0);
         }
         questStages.RequestIncrementObjective(objectiveThingId,1);
+    }
+
+    public QuestStages GetQuestStages() { 
+        return questStages;
     }
 }

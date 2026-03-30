@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class GameSaveLoadController 
@@ -7,15 +9,17 @@ public class GameSaveLoadController
     GameSaveData gameSave;
     PlayerRegistry playerRegistry;
     InventoryRegistry inventoryRegistry;
+    QuestLogRegistry logRegistry;
 
     EventBinding<SaveEvent> saveEventBinding;
 
     PlayerSaveData playerSaveData;
     private string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
 
-    public GameSaveLoadController(PlayerRegistry playerRegistry,InventoryRegistry inventoryRegistry,GameSaveData gameSaveData) { 
+    public GameSaveLoadController(PlayerRegistry playerRegistry,InventoryRegistry inventoryRegistry,QuestLogRegistry questLogRegistry,GameSaveData gameSaveData) { 
         this.playerRegistry = playerRegistry;
         this.inventoryRegistry = inventoryRegistry;
+        this.logRegistry = questLogRegistry;
         this.gameSave = gameSaveData;
     }
 
@@ -56,6 +60,25 @@ public class GameSaveLoadController
             var inventoryItems = inventory.Value.GetItems();
             var inventoryData = new InventorySaveData(inventory.Value.ownerStableID, inventoryItems, inventoryItems.Length);
             gameSave.inventorySaveDatas.Add(inventoryData);
+        }
+
+        foreach (var questLog in logRegistry.All) {
+            List<QuestSaveData> questSaveData = new List<QuestSaveData>();
+            foreach (var quest in questLog.Value.GetQuests()) {
+                var currentStage = quest.Value.GetQuestStages().GetCurrentStage();
+                var currentRequirements = currentStage.GetStageRequirements();
+                List<QuestStageRequirementContext> questStageCtx = new List<QuestStageRequirementContext>();
+                foreach (var req in currentRequirements) {
+                    questStageCtx.Add(new QuestStageRequirementContext(req.Key, req.Value.GetCurrentProgress()));
+                }
+                questSaveData.Add(new QuestSaveData(quest.Key, currentStage.GetStageID(), questStageCtx));
+               
+            }
+            var completedQuests = questLog.Value.GetCompletedQuests();
+            var owner = questLog.Key;
+            var capacity = 25;
+            var questLogData = new QuestLogSaveData(owner, questSaveData, completedQuests, capacity);
+            gameSave.questLogSaveDatas.Add(questLogData);
         }
 
         Save(gameSave);

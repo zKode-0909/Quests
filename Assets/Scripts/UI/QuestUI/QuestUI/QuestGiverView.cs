@@ -13,7 +13,7 @@ public class QuestGiverView : VisualElement
     VisualElement displayButtonsHolder;
     QuestHandoutView parent;
     Button closeButton;
-    public event Action<QuestUIItem> QuestSelected;
+    public event Action<QuestGiverQuestUIItem> QuestSelected;
     public event Action CloseView;
 
     public QuestGiverView(QuestHandoutView parent)
@@ -54,7 +54,7 @@ public class QuestGiverView : VisualElement
         this.AddToClassList("questGiverView");
     }
     
-    public void ShowQuestGiverView(IReadOnlyList<QuestUIItem> quests, string questerName,string questGiverName) {
+    public void ShowQuestGiverView(IReadOnlyList<QuestGiverQuestUIItem> quests, string questerName,string questGiverName) {
         this.style.display = DisplayStyle.Flex;
         backPanel.style.display = DisplayStyle.Flex;
         questGiverBodyText.text = "I forgot text: TEST TEXT";//questGiver.questGiverText;
@@ -85,7 +85,7 @@ public class QuestGiverView : VisualElement
 
     }
 
-    void AddQuestButton(string questStatus,QuestUIItem quest) {
+    void AddQuestButton(string questStatus,QuestGiverQuestUIItem quest) {
         var questButton = new Button(() => { OnQuestSelected(quest); })
         {
             text = $"{quest.title}: {questStatus}"
@@ -99,7 +99,7 @@ public class QuestGiverView : VisualElement
     }
     
     
-    void OnQuestSelected(QuestUIItem quest) {
+    void OnQuestSelected(QuestGiverQuestUIItem quest) {
         QuestSelected.Invoke(quest);
     }
 

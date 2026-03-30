@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65a9fdcfc35cb149822df80f7a7e47c, type: 3}
   m_Name: GatherRock
   m_EditorClassIdentifier: Game.Quests::ObjectiveRequirementSettings
-  MaxProgress: 1
+  MaxProgress: 2
   TargetStableID: <BitchImARock>

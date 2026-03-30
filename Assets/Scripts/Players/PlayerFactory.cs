@@ -148,7 +148,7 @@ public class PlayerFactory
 
         if (playerRegistry.TryRegisterPlayer(runtimePlayer, "TestHumanPlayerStableID"))
         {
-            playerRegistration.Register("TestHumanPlayerStableID");
+            playerRegistration.Register("TestHumanPlayerStableID",true);
             playerSpawner.SpawnPlayer(runtimePlayer);
 
             hoverManager.SetTarget(runtimePlayer.transform);

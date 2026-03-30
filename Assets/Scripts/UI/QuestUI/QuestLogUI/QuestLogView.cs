@@ -12,6 +12,13 @@ public class QuestLogView : VisualElement
     Label titleLabel;
     VisualElement bodyHolder;
     VisualElement questLogHolder;
+    QuestDetailedView questDetailedView;
+
+    List<QuestUIItem> currentQuests;
+
+    bool questBeingShown;
+
+    EventBinding<IncrementPlayerQuestLogUI> incrementProgress;
 
 
     public QuestLogView(VisualElement root, StyleSheet styleSheet) {
@@ -24,6 +31,10 @@ public class QuestLogView : VisualElement
 
         root.styleSheets.Add(styleSheet);
 
+        incrementProgress = new EventBinding<IncrementPlayerQuestLogUI>(HandleIncrement);
+
+        EventBus<IncrementPlayerQuestLogUI>.Register(incrementProgress);
+
         BuildQuestLogView();
         root.AddToClassList("questLogDisplay");
     }
@@ -32,6 +43,31 @@ public class QuestLogView : VisualElement
         root.Clear();
     }
 
+    void HandleIncrement(IncrementPlayerQuestLogUI evt) {
+        if (currentQuests != null) {
+            foreach (var quest in currentQuests)
+            {
+                foreach (var requirement in quest.objectives)
+                {
+
+                    if (requirement.objectiveID == evt.objectiveID)
+                    {
+                        requirement.objectiveProgress += 1;
+                        questDetailedView.UpdateProgress(requirement.objectiveID, requirement);
+                    }
+
+
+                }
+
+
+
+            }
+        }
+        
+
+      
+        
+    }
     
 
 
@@ -52,16 +88,24 @@ public class QuestLogView : VisualElement
         questLogHolder.Add(bodyHolder);
         root.Add(questLogHolder);
 
+        questDetailedView = new QuestDetailedView();    
+        questDetailedView.Initialize();
+
+        root.Add(questDetailedView);
+
         root.style.display = DisplayStyle.None;
 
     }
     
     public void OpenQuestLog(DisplayQuestLogEvent evt) {
         root.style.display = DisplayStyle.Flex;
-        var quests = evt.Quests;
-
-        foreach (var quest in quests) {
-            var questVE = new QuestVE(quest.title,quest.questID,quest.status);
+        
+        currentQuests = evt.Quests;
+       
+        foreach (var quest in currentQuests) {
+            Debug.Log($"Quest {quest.questID} has: {quest.objectives.Count} objectives in quest log opening");
+            var questVE = new QuestVE(quest);
+            questVE.QuestClicked += ShowDetailedQuest;
             bodyHolder.Add(questVE);
         }
     }
@@ -70,5 +114,10 @@ public class QuestLogView : VisualElement
     public void CloseQuestLog() { 
         bodyHolder.Clear();
         root.style.display = DisplayStyle.None;
+    }
+
+    public void ShowDetailedQuest(QuestUIItem quest) { 
+        questBeingShown = true;
+        questDetailedView.ShowQuestView(quest);
     }
 }

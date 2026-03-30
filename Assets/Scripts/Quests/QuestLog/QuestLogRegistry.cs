@@ -17,25 +17,25 @@ public sealed class QuestLogRegistry
     }
 
     public void RegisterQuestLog(RegisterQuestLogEvent evt) {
-        GetOrCreate(evt.EntityStableID);
+        GetOrCreate(evt.EntityStableID,evt.humanLog);
     }
 
-    public QuestLog GetOrCreate(string id)
+    public QuestLog GetOrCreate(string id,bool human)
     {
         if (_logs.TryGetValue(id, out var log)) return log;
-        log = new QuestLog(25);
+        log = new QuestLog(25,human);
         _logs.Add(id, log);
         return log;
     }
 
     public bool Remove(string id) => _logs.Remove(id);
 
-    public bool TryCreate(string id) {
+    public bool TryCreate(string id,bool human) {
         if (_logs.TryGetValue(id, out var log)) { 
             return false;
         }
 
-        log = new QuestLog(25);
+        log = new QuestLog(25, human);
         _logs.Add(id, log);
         return true;
 

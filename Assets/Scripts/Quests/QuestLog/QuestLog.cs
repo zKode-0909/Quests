@@ -1,21 +1,35 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class QuestLog
 {
     public Dictionary<string,Quest> quests;
     public HashSet<string> completedQuests;
     public int capacity;
-    bool open;
+    public bool humanLog;
+ 
 
 
-    public QuestLog(int capacity)
+    public QuestLog(int capacity, bool humanLog)
     {
         this.capacity = capacity;
         quests = new Dictionary<string, Quest>();
         completedQuests = new HashSet<string>();
-        
+        this.humanLog = humanLog;
     }
+
+    public void SetCurrentAndCompletedQuests(List<Quest> quests,List<string> completed) {
+        foreach (Quest quest in quests) {
+            quests.Add(quest);
+        }
+
+        foreach (string completedQuest in completed) {
+            completedQuests.Add(completedQuest);
+        }
+    }
+
+
     /*
     public Quest GetQuestByObjective() { 
         return 
@@ -24,6 +38,10 @@ public class QuestLog
     public Dictionary<string,Quest> GetQuests() { 
         
         return quests;
+    }
+
+    public List<string> GetCompletedQuests() { 
+        return completedQuests.ToList();
     }
 
 

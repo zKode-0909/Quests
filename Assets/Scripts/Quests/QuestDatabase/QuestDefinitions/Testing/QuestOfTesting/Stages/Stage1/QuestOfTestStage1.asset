@@ -26,3 +26,4 @@ MonoBehaviour:
   FinishedRequirementActions: []
   StageEndActions: []
   StageStartActions: []
+  stageID: <QuestOfTesting>.<Stage1>

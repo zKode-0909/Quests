@@ -27,10 +27,16 @@ public class QuestStageDetails {
 
     List<QuestAction> actionSubsetHolder;
 
+    string QuestStageID;
+
+    public string GetStageID() {
+        return QuestStageID;
+    }
+
     public QuestStageDetails(IReadOnlyList<ObjectiveStageRequirement> preReqs,IReadOnlyList<ObjectiveStageRequirement> reqs,
         IReadOnlyList<IReadOnlyList<ObjectiveStageRequirement>> conditions,
         IReadOnlyList<QuestAction> incrementActions,IReadOnlyList<QuestAction> finishedRequirementActions,
-        IReadOnlyList<QuestAction> stageEndActions,IReadOnlyList<QuestAction> stageStartActions) 
+        IReadOnlyList<QuestAction> stageEndActions,IReadOnlyList<QuestAction> stageStartActions,string id) 
     {
         this.preRequisites = preReqs;
         this.requirements = reqs;
@@ -39,12 +45,17 @@ public class QuestStageDetails {
         this.finishedRequirementActions = finishedRequirementActions;
         this.stageEndActions = stageEndActions;
         this.stageStartActions = stageStartActions;
+        this.QuestStageID = id;
 
         reqById = new Dictionary<string,ObjectiveStageRequirement>();
 
         foreach (var req in requirements)
             reqById[req.GetQuestObjectiveStableID()] = req;
 
+    }
+
+    public Dictionary<string, ObjectiveStageRequirement> GetStageRequirements() { 
+        return reqById;
     }
 
     public void SetNextStages(List<QuestStageDetails> nextStages) { 
@@ -97,6 +108,8 @@ public class QuestStageDetails {
                 {
                     if (progress < requirement.GetMaxProgressCount()) {
                         progressDict[id] += count;
+                        reqById[id].TryIncrementProgress(id,count);
+                        
                         RequirementIncrementedEvent?.Invoke(incrementActions);
                         Debug.Log($"incremented requirement: {id}");
                         if (requirement.CheckCompletion(progressDict))

@@ -68,7 +68,7 @@ public class SelectedQuestView : VisualElement
         DeclinedQuest?.Invoke();
     }
     
-    public void ShowSelectedQuest(QuestUIItem quest) {
+    public void ShowSelectedQuest(QuestGiverQuestUIItem quest) {
         titleText.text = quest.title;
         descriptionText.text = quest.description;
 

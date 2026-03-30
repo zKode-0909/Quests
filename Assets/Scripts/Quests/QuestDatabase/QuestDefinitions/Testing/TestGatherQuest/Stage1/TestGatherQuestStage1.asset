@@ -24,3 +24,4 @@ MonoBehaviour:
   StageEndActions:
   - {fileID: 11400000, guid: 8d5596c4d64d3c848878620b6d3e2c9a, type: 2}
   StageStartActions: []
+  stageID: <TestGatherQuest>.<Stage1>

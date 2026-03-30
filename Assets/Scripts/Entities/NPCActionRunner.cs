@@ -4,6 +4,7 @@ public static class NPCActionRunner
 {
     static CharacterRegistry characterRegistry;
 
+    
     public static void Initialize(CharacterRegistry registry) { 
         characterRegistry = registry;
     }
@@ -17,6 +18,6 @@ public static class NPCActionRunner
             npc.Say(words);
         }
     }
-
+    
 
 }

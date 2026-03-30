@@ -13,10 +13,10 @@ public class QuestHandoutView : VisualElement
     StyleSheet styleSheet;
     SelectedQuestView selectedQuestView;
     QuestGiverView questGiverView;
-    IReadOnlyList<QuestUIItem> questsToDisplay;
+    List<QuestGiverQuestUIItem> questsToDisplay;
     string currentQuester;
    // IReadOnlyList<QuestSettings> allQuests;
-    QuestUIItem currentQuest;
+    QuestGiverQuestUIItem currentQuest;
      string questGiverName;
     int questerLevel;
     string questerID;
@@ -78,7 +78,7 @@ public class QuestHandoutView : VisualElement
         
     }
     
-    public void ShowQuestDisplay(QuestUIItem quest) {
+    public void ShowQuestDisplay(QuestGiverQuestUIItem quest) {
         root.style.display = DisplayStyle.Flex;
         selectedQuestView.ShowSelectedQuest(quest);
         questGiverView.CloseQuestGiverView();
@@ -95,7 +95,7 @@ public class QuestHandoutView : VisualElement
         //ShowQuestGiverDisplay(allQuests, currentInteractor, questGiver);
     }
     
-    public void ShowQuestGiverDisplay(IReadOnlyList<QuestUIItem> quests,string questerName,string giverName,string questerID,string giverID,int questerLevel) {
+    public void ShowQuestGiverDisplay(List<QuestGiverQuestUIItem> quests,string questerName,string giverName,string questerID,string giverID,int questerLevel) {
         root.style.display= DisplayStyle.Flex;
         currentQuester = questerName;
         //allQuests.Clear();

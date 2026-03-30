@@ -51,11 +51,11 @@ public class NPC : MonoBehaviour,IDamageable,IEntity,ICharacter
         runTimeID = RuntimeIDGenerator.GetNext();
         currentLevel  = settings.startingLevel;
         health = new EntityHealth(settings.startingHealth,settings.startingHealth);
-        registration.Register(StableID);
+        registration.Register(StableID, false);
         //bootstrapper.characterRegistry.Register(this);
-        if (bootstrapper.characterRegistry.TryGet(StableID, out var ent))
-        {
-        }
+       // if (bootstrapper.characterRegistry.TryGet(StableID, out var ent))
+       // {
+       // }
     }
 
 

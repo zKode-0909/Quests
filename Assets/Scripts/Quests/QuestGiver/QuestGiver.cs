@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DefaultExecutionOrder(-9999)]
-public class QuestGiver : MonoBehaviour,IInteractable
+public class QuestGiver : MonoBehaviour,IInteractable,ICharacter
 {
     //[SerializeField] QuestHandoutView view;
+    
     [SerializeField] QuestBootstrapper bootstrapper;
     QuestGiverService service;
     [SerializeField] List<QuestSettings> quests = new();
@@ -17,9 +18,10 @@ public class QuestGiver : MonoBehaviour,IInteractable
 
 
     public int EntityLevel => 5;
-    
 
-    public string StableID = "TESTQUESTGIVER";
+    string stableID;
+
+    public string StableID => stableID;
   
     public int entityRuntimeId;
 
@@ -43,9 +45,10 @@ public class QuestGiver : MonoBehaviour,IInteractable
     }
     private void Awake()
     {
-        
+        stableID = "<TESTERGUNNARSON>";
         entityRuntimeId = RuntimeIDGenerator.GetNext();
         Debug.Log($"I {gameObject.name} am registering with id {entityRuntimeId}");
+        bootstrapper.characterRegistry.Register(this);
         //entityRuntimeId = GetComponentInParent<IEntity>().EntityRuntimeID;//GetEntityId();
         //Debug.Log(bootstrapper.questGiverRegistry);
         bootstrapper.questGiverRegistry.TryRegister(this);//.questGiverRegistry//.TryRegister(this); 
@@ -58,6 +61,10 @@ public class QuestGiver : MonoBehaviour,IInteractable
         questGiverID = new StringID("questGiver", "testName", "testZone", ".001").id;
         
         //currentQuest = quests[0].CreateQuest(this);
+    }
+
+    public void Say(string words) {
+        Debug.Log(words);
     }
 
    

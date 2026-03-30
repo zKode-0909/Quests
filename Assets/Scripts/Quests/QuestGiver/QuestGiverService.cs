@@ -60,7 +60,7 @@ public class QuestGiverService
         if (giverRegistry.TryGet(evt.QuestGiverEntityStableID,out var giver)) {
            
             var questGiver = giver;
-            var questLog = logRegistry.GetOrCreate(evt.QuesterEntityStableID);
+            var questLog = logRegistry.GetOrCreate(evt.QuesterEntityStableID,true);
             Debug.Log($"checking for icon, questlog is: {questLog} and questgiver is {giver}");
             if (questGiver != null && questLog != null)
             {
@@ -87,7 +87,7 @@ public class QuestGiverService
     void OnOpenRequested(RequestOpenQuestGiverUI evt) {
 
         if (giverRegistry.TryGet(evt.QuestGiverEntityId, out var giver)) {
-            var questLog = logRegistry.GetOrCreate(evt.QuesterEntityId);
+            var questLog = logRegistry.GetOrCreate(evt.QuesterEntityId,true);
             var questItems = BuildQuestItems(giver, questLog, evt.QuesterLevel);
    
             EventBus<OpenQuestGiverUI>.Raise(new OpenQuestGiverUI(questItems, "TestGiverName", "TestQuesterName", giver.StableID, evt.QuesterEntityId,evt.QuesterLevel));
@@ -99,13 +99,13 @@ public class QuestGiverService
 
 
 
-    List<QuestUIItem> BuildQuestItems(QuestGiver questGiver,QuestLog questLog, int level) {
+    List<QuestGiverQuestUIItem> BuildQuestItems(QuestGiver questGiver,QuestLog questLog, int level) {
 
-        var items = new List<QuestUIItem>();    
+        var items = new List<QuestGiverQuestUIItem>();    
         foreach (var quest in questGiver.Quests) {
             var status = QuestUtils.DetermineQuestStatus(quest, questLog,level);
             if (status != QuestStatus.None) {
-                items.Add(new QuestUIItem(quest.QuestName, quest.QuestDescription, questGiver.EntityRuntimeID, quest.ID, $"{status}"));
+                items.Add(new QuestGiverQuestUIItem(quest.QuestName, quest.QuestDescription, questGiver.EntityRuntimeID, quest.ID, $"{status}"));
             }
         }
 

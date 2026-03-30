@@ -28,12 +28,13 @@
 	height: 80%;
 	width: 90%;
 	justify-content: flex-start;
+	align-items: center;
 }
 
 .quest{
 	margin-top: 2%;
 	height: 7.5%;
-	width: 100%;
+	width: 95%;
 	background-color:yellow;
 	display: flex;	
 	align-items: flex-start;
@@ -53,7 +54,45 @@
 .questLabel{
 	flex-grow: 1;
 	display: flex;
+	width: 90%;
+	
+	color: black;
+}
+
+.detailedQuestView{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: brown;
+	position: absolute;
+	height: 100%;
 	width: 100%;
+	
+}
+
+.detailedQuestTitle,.detailedQuestDescription,.detailedProgressDisplay,.detailedQuestRewards{
+	align-items: center;
+	justify-content: center;
+}
+
+.detailedQuestTitle{
+	height: 5%;
+	width: 90%;
+}
+
+.detailedQuestDescription{
+	height: 60%;
+	width: 90%;
+}
+
+.detailedProgressDisplay{
+	height: 15%;
+	width: 90%;
+}
+
+.detailedQuestRewards{
+	height: 10%;
+	width:90%;
 }
 
 

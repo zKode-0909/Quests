@@ -16,9 +16,12 @@ public class QuestStageDetailsSettings : ScriptableObject
     [SerializeField] List<QuestAction> FinishedRequirementActions;
     [SerializeField] List<QuestAction> StageEndActions;
     [SerializeField] List<QuestAction> StageStartActions;
+    [SerializeField] string stageID;
+
+    public string StageID => stageID;
 
 
-    public QuestStageDetails BuildRuntimeStageDetails(QuestBuildContext ctx)
+    public QuestStageDetails BuildRuntimeStageDetails(QuestBuildContext ctx,List<QuestStageDetails> stages)
     {
         // already built? return same runtime instance
         if (ctx.StageCache.TryGetValue(this, out var existing))
@@ -36,17 +39,19 @@ public class QuestStageDetailsSettings : ScriptableObject
             IncrementRequirementActions,
             FinishedRequirementActions,
             StageEndActions,
-            StageStartActions
+            StageStartActions,
+            stageID
         );
 
         ctx.StageCache[this] = runtime;
+        stages.Add(runtime);
 
         // now link next stages
         var next = new List<QuestStageDetails>(PossibleNextStages?.Count ?? 0);
         if (PossibleNextStages != null)
         {
             foreach (var nextSettings in PossibleNextStages)
-                next.Add(nextSettings.BuildRuntimeStageDetails(ctx));
+                next.Add(nextSettings.BuildRuntimeStageDetails(ctx, stages));
         }
         runtime.SetNextStages(next); // or pass in ctor, whichever you prefer
 

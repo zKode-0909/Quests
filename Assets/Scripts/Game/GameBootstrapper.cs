@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 public class GameBootstrapper : MonoBehaviour
 {
     [SerializeField] QuestBootstrapper questBootstrapper;
-    [SerializeField] NPCBootStrapper NPCBootstrapper;
+    [SerializeField] EntityBootstrapper entityBootstrapper;
     [SerializeField] PlayersBootstrapper PlayersBootstrapper;
     [SerializeField] InventoryBootstrapper InventoryBootstrapper;
     [SerializeField] ItemBootstrapper ItemBootstrapper;
@@ -18,6 +18,8 @@ public class GameBootstrapper : MonoBehaviour
     ItemFactory itemFactory;
     InventoryFactory inventoryFactory;
     PlayerRegistry playerRegistry;
+    CharacterRegistry characterRegistry;
+
 
     GameSaveLoadController gameSaveLoadController;
     GameSaveData gameSaveData;
@@ -33,6 +35,12 @@ public class GameBootstrapper : MonoBehaviour
         inventoryRegistry = new InventoryRegistry();
         inventoryRegistry.InitializeRegistry();
 
+        characterRegistry = new CharacterRegistry();
+     
+
+        logRegistry = new QuestLogRegistry();
+        logRegistry.InitializeRegistry();
+
         gameSaveData = new GameSaveData();
         gameSaveData.Initialize();
 
@@ -47,7 +55,7 @@ public class GameBootstrapper : MonoBehaviour
 
 
 
-        gameSaveLoadController = new GameSaveLoadController(playerRegistry,inventoryRegistry,gameSaveData);
+        gameSaveLoadController = new GameSaveLoadController(playerRegistry,inventoryRegistry,logRegistry,gameSaveData);
         gameSaveLoadController.Initialize();
 
         if (!GameSession.NewGame) {
@@ -72,11 +80,11 @@ public class GameBootstrapper : MonoBehaviour
         
 
         
-        logRegistry = new QuestLogRegistry();
-        logRegistry.InitializeRegistry();
+        
        // PreWarmLogRegistry();
-        questBootstrapper.BootStrap(logRegistry);
-        NPCBootstrapper.BootStrap();
+        questBootstrapper.BootStrap(logRegistry,inventoryRegistry,characterRegistry);
+        //NPCBootstrapper.BootStrap();
+        entityBootstrapper.BootStrap(characterRegistry);
         PlayersBootstrapper.Bootstrap(playerRegistry,gameSaveData.playerSaveDatas,GameSession.NewGame);
         InventoryBootstrapper.Bootstrap(inventoryRegistry,itemFactory,inventoryFactory,gameSaveData.inventorySaveDatas);
         ItemBootstrapper.Bootstrap(itemDatabase,itemFactory);
