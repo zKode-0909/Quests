@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class HumanPlayerMotor : PlayerMotor
+public class HumanPlayerMotor : IMotor
 {
     public Vector2 movementDir = Vector2.zero;
     Rigidbody rb;
@@ -31,7 +31,7 @@ public class HumanPlayerMotor : PlayerMotor
         return speed;
     }
 
-    public override void Move()
+    public void Move()
     {
 
         if (movementDir == Vector2.zero)
@@ -65,7 +65,7 @@ public class HumanPlayerMotor : PlayerMotor
     }
 
 
-    public override void SetMovementDir(Vector2 dir) { 
+    public void SetMovementDir(Vector2 dir) { 
         movementDir = dir;
     }
 

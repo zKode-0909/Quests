@@ -15,8 +15,8 @@ public class HoverManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rayOrigin = new Vector3(target.position.x, target.position.y + 1.5f, target.position.z);
-        CheckForHoverable();
+       // rayOrigin = new Vector3(target.position.x, target.position.y + 1.5f, target.position.z);
+       // CheckForHoverable();
     }
 
     void CheckForHoverable() {

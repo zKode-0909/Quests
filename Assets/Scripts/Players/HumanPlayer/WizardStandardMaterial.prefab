@@ -1106,11 +1106,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3574185319994526765}
   - component: {fileID: 2401982305439656984}
-  - component: {fileID: 6417114323290428818}
-  - component: {fileID: 5144735972746187523}
   - component: {fileID: 6829818051437960602}
   - component: {fileID: 2107341643568590176}
-  - component: {fileID: 7612027682674456782}
+  - component: {fileID: 5747821081998751708}
   m_Layer: 0
   m_Name: WizardStandardMaterial
   m_TagString: Untagged
@@ -1157,32 +1155,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6417114323290428818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4741995423619011447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0ac0d128dc18c4448f0307cef8c7024, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
---- !u!114 &5144735972746187523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4741995423619011447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18aae2bf96c6cf14285d7ebd38f5e35a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  holdingHand: {fileID: 8666590441311958476}
-  selectionManager: {fileID: 7612027682674456782}
 --- !u!54 &6829818051437960602
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1233,7 +1205,7 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.43, z: 0}
---- !u!114 &7612027682674456782
+--- !u!114 &5747821081998751708
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1242,9 +1214,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4741995423619011447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3e8c7804e61f8d4aa4a488fa4afd899, type: 3}
+  m_Script: {fileID: 11500000, guid: 594680deea06ddb4b88cf70e6b0f95f0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game.Players::SelectionManager
+  m_EditorClassIdentifier: Game.Players::HumanPlayerView
+  animator: {fileID: 2401982305439656984}
+  rb: {fileID: 6829818051437960602}
+  Animator: {fileID: 0}
+  Rb: {fileID: 0}
 --- !u!1 &4991359197289445584
 GameObject:
   m_ObjectHideFlags: 0

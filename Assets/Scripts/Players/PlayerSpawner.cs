@@ -8,8 +8,8 @@ public class PlayerSpawner
     public PlayerSpawner(List<Transform> spawnPoints) { 
         this.playerSpawnPoints = spawnPoints;
     }
-
-    public void SpawnPlayer(Player player) {
+    
+    public void SpawnPlayer(HumanPlayerView player) {
         if (playerSpawnPoints != null) {
             int index = Random.Range(0, playerSpawnPoints.Count);
             player.transform.position = playerSpawnPoints[index].position;
@@ -19,7 +19,7 @@ public class PlayerSpawner
         
     }
 
-    public void SpawnPlayer(Player player, Vector3 position) { 
+    public void SpawnPlayer(HumanPlayerView player, Vector3 position) { 
         player.transform.position = position;
         player.gameObject.SetActive(true);
     }

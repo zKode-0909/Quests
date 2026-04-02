@@ -1993,7 +1993,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Players::HumanPlayerBootStrapper
   rb: {fileID: 6829818051437960602, guid: 8384d8ff437454348bcf211e0e4a662f, type: 3}
-  player: {fileID: 5144735972746187523, guid: 8384d8ff437454348bcf211e0e4a662f, type: 3}
   cam: {fileID: 330585545}
   interactionManager: {fileID: 389349522}
   hoverManager: {fileID: 1214872139}
@@ -2066,11 +2065,9 @@ MonoBehaviour:
   - {fileID: 445156196}
   - {fileID: 1584945672}
   - {fileID: 1638410142}
-  simPrefab: {fileID: 2417806512223707541, guid: fdedc452cc3baf94f8db07ee456206fc, type: 3}
   playerTemplateDB: {fileID: 11400000, guid: 7ff1da6d759cf5546a572ea8fd2e3159, type: 2}
-  simPlayerPrefab: {fileID: 0}
   registration: {fileID: 1055209979}
-  humanPlayerPrefab: {fileID: 5144735972746187523, guid: 8384d8ff437454348bcf211e0e4a662f, type: 3}
+  humanPlayerView: {fileID: 5747821081998751708, guid: 8384d8ff437454348bcf211e0e4a662f, type: 3}
   interactionManager: {fileID: 389349522}
   hoverManager: {fileID: 1214872139}
   orbitCamera: {fileID: 330585548}

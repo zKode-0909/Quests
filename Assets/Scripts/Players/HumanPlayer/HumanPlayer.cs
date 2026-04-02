@@ -57,13 +57,13 @@ public class HumanPlayer : Player
         
     }
 
-    protected override void Update()
+    /*protected override void Update()
     {
         base.Update();
         questScanTimer.Tick(Time.deltaTime);
 
         
-    }
+    }*/
 
     public void HandleToggleMenu() { 
         menuToggle.ToggleMenu();

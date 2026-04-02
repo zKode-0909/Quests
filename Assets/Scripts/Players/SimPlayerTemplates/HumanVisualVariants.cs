@@ -18,7 +18,7 @@ public class HumanVisualVariants : BaseVisualVariants
         int index = Random.Range(0, colors.Count);
         var material = colors[index];
 
-        var renderer = player.GetComponent<Renderer>();
-        renderer.sharedMaterial = material;
+      //  var renderer = player.GetComponent<Renderer>();
+       // renderer.sharedMaterial = material;
     }
 }

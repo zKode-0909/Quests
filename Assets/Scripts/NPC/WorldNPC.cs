@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WorldNPC : MonoBehaviour,IDamageable,IEntity
+public class WorldNPC : MonoBehaviour,IDamageable//,IEntity
 {
     EntityHealth health;
     [SerializeField] NPCSettings settings;
@@ -12,13 +12,13 @@ public class WorldNPC : MonoBehaviour,IDamageable,IEntity
 
     public int EntityLevel => level;
 
-    GameObject IEntity.GameObject => throw new System.NotImplementedException();
+    //GameObject IEntity.GameObject => throw new System.NotImplementedException();
 
-    int IEntity.EntityRuntimeID => throw new System.NotImplementedException();
+  //  int IEntity.EntityRuntimeID => throw new System.NotImplementedException();
+//
+  //  EntityHealth IEntity.Health => throw new System.NotImplementedException();
 
-    EntityHealth IEntity.Health => throw new System.NotImplementedException();
-
-    int IEntity.EntityLevel => throw new System.NotImplementedException();
+ //   int IEntity.EntityLevel => throw new System.NotImplementedException();
 
     int runtimeID;
     int level;

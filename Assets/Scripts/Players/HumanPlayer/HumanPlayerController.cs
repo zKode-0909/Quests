@@ -1,39 +1,56 @@
 using UnityEngine;
 
-public class HumanPlayerController : MonoBehaviour
+public class HumanPlayerController : IController
 {
     PlayerInputReader input;
-    HumanPlayer player;
+    Player player;
 
+    HumanPlayerView view;
 
     Rigidbody rb;
+
+    public IMotor Motor => motor;
+
+    IMotor motor;
 
 
     EventBinding<EntityWorldQuestStateChangedEvent> worldQuestStateChangeBinding;
 
+    public string StableID => player.StableID;
 
 
-    public void Initialize(Rigidbody rb,PlayerInputReader input,HumanPlayer player)
+
+    public void Initialize(Rigidbody rb,PlayerInputReader input,Player player,HumanPlayerView view,HumanPlayerMotor motor)
     {
-        this.rb = rb;
+        this.motor = motor;
+        this.view = view;
+        this.rb = view.Rb;
         this.input = input;
         this.player = player;
         rb.freezeRotation = true;
         input.MoveEvent += HandleMove;
         input.AttackEvent += HandleAttack;
-        input.OpenQuestLogEvent += HandleOpenQuestLog;
-        input.SelectionEvent += HandleSelection;
+        
+       // input.OpenQuestLogEvent += HandleOpenQuestLog;
+        //input.SelectionEvent += HandleSelection;
 
-        input.OpenMenuEvent += HandleShowMenu;
+        //input.OpenMenuEvent += HandleShowMenu;
 
 
-        input.OpenInventoryEvent += HandleOpenInventory;
+        //input.OpenInventoryEvent += HandleOpenInventory;
 
-        worldQuestStateChangeBinding = new EventBinding<EntityWorldQuestStateChangedEvent>(HandlePlayerQuestAccept);
-        EventBus<EntityWorldQuestStateChangedEvent>.Register(worldQuestStateChangeBinding);
+      //  worldQuestStateChangeBinding = new EventBinding<EntityWorldQuestStateChangedEvent>(HandlePlayerQuestAccept);*/
+      //  EventBus<EntityWorldQuestStateChangedEvent>.Register(worldQuestStateChangeBinding);
     }
 
+    public void Dispose() {
+        input.MoveEvent -= HandleMove;
+        input.AttackEvent -= HandleAttack;
 
+      //  EventBus<EntityWorldQuestStateChangedEvent>.Deregister(worldQuestStateChangeBinding);
+    }
+
+    /*
     private void OnDisable()
     {
         input.MoveEvent -= HandleMove;
@@ -43,40 +60,44 @@ public class HumanPlayerController : MonoBehaviour
 
         input.OpenInventoryEvent -= HandleOpenInventory;
         EventBus<EntityWorldQuestStateChangedEvent>.Deregister(worldQuestStateChangeBinding);
-    }
+    }*/
 
+    /*
     void HandleOpenInventory() {
         Debug.Log("received open inventory input");
         player.humanInventoryToggle.ToggleInventory(player.StableID);
-    }
+    }*/
 
+
+    /*
     void HandleSelection(Vector2 pos) {
         player.HandleSelect(pos);
         
-    }
+    }*/
 
+    /*
     void HandleShowMenu() {
         player.HandleToggleMenu();
-    }
+    }*/
 
     void HandleMove(Vector2 dir)
     {
-        player.playerMotor.SetMovementDir(dir);
+        motor.SetMovementDir(dir);
     }
 
     void HandleAttack()
     {
         player.RequestAttack();
     }
-
+    /*
     void HandleOpenQuestLog() { 
         player.playerQuests.ToggleQuestLog();
-    }
+    }*/
 
-
+    /*
     void HandlePlayerQuestAccept(EntityWorldQuestStateChangedEvent evt) {
         player.playerQuests.ForceRescanNearby();
-    }
+    }*/
 
     
 

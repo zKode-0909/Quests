@@ -13,7 +13,7 @@ public class HumanPlayerSpawner
     }
 
     public void Spawn(HumanPlayer player) { 
-        player.gameObject.SetActive(true);
-        player.transform.position = playerSpawnPosition.position;
+       // player.gameObject.SetActive(true);
+       // player.transform.position = playerSpawnPosition.position;
     }
 }

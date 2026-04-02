@@ -202,12 +202,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Select"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""31a55cf9-ebaa-4459-bf1f-460a10240743"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""ShowInGameMenu"",

@@ -42,7 +42,8 @@ public class GameSaveLoadController
 
     public void CaptureData() {
         foreach (var player in playerRegistry.Players) { 
-            var saveData = new PlayerSaveData(player.Value.GameObject.transform.position,
+
+            var saveData = new PlayerSaveData(new Vector3(0,0,0),
                                                 player.Value.StableID,
                                                 player.Value.PlayerName,
                                                 player.Value.Health.GetCurrentHealth(),

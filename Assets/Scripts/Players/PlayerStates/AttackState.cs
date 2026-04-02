@@ -20,7 +20,7 @@ public class AttackState : BasePlayerState
     public override void FixedUpdate()
     {
        
-        player.playerMotor.Move();
+        //player.playerMotor.Move();
     }
 
     public override void OnExit()

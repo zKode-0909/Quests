@@ -99,9 +99,9 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        Vector2 input = context.ReadValue<Vector2>();
+        //Vector2 input = context.ReadValue<Vector2>();
         // noop
-        LookEvent?.Invoke(input);
+        //LookEvent?.Invoke(input);
     }
 
     public void OnMiddleClick(InputAction.CallbackContext context)
@@ -203,6 +203,11 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
             var mousePos = Mouse.current.position.ReadValue();
             SelectionEvent?.Invoke(mousePos);
         }
+
+
+        var lookPos = context.ReadValue<Vector2>();
+        LookEvent?.Invoke(lookPos);
+
     }
 
     public void OnShowInGameMenu(InputAction.CallbackContext context)

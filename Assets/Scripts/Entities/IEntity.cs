@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IEntity
 {
-    GameObject GameObject { get; }
+    string StableID { get; }
     int EntityRuntimeID { get; }
 
     EntityHealth Health { get; }

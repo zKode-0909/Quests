@@ -4,9 +4,9 @@ using System.Security.Principal;
 using UnityEngine;
 
 
-public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor, IInteractable,ISelectable
+public class Player : IEntity, IDamageable, IInteractor, IInteractable,ISelectable
 {
-    public GameObject GameObject => gameObject;
+    //public GameObject GameObject => gameObject;
 
     public int EntityRuntimeID => entityRuntimeID;
 
@@ -17,14 +17,16 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
     protected Weapon runtimeWeapon;
 
     protected PlayerState playerState;
-    protected Animator animator;
+
 
     public event Action<int> healthChangedEvent;
 
-    [SerializeField] protected Transform holdingHand;
+    public IController controller;
+
+   // [SerializeField] protected Transform holdingHand;
 
     protected EntityHealth health;
-    public PlayerMotor playerMotor;
+   // public PlayerMotor playerMotor;
 
     protected int level;
 
@@ -47,16 +49,17 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
 
 
-    public void Initialize(Animator animator,EntityHealth health,int runtimeID,PlayerState playerState,PlayerMotor motor,string name,string stable,PlayerType type)
+    public void Initialize(EntityHealth health,int runtimeID,string name,string stable,PlayerType type,IController controller)
     {
         this.health = health;
         this.entityRuntimeID = runtimeID;
-        this.animator = animator;
-        this.playerState = playerState;
-        this.playerMotor = motor;
+
+       // this.playerState = playerState;
+        //this.playerMotor = motor;
         this.playerName = name;
         this.stableID = stable;
         this.playerType = type;
+        this.controller = controller;
 
         damageTimer = new CountdownTimer(1);
 
@@ -105,7 +108,7 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
 
 
 
-
+    /*
     protected virtual void Update()
     {
         HandleTimers();
@@ -119,12 +122,14 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
         // UpdateAnimator();
 
     }
+    */
 
+    /*
     protected virtual void FixedUpdate()
     {
         playerState.stateMachine.FixedUpdate();
     }
-
+    */
 
 
     public Weapon GetPlayerRuntimeWeapon()
@@ -137,10 +142,7 @@ public abstract class Player : MonoBehaviour, IEntity, IDamageable, IInteractor,
         return new SelectableData(health.GetMaxHealth(),health.GetCurrentHealth(),false,true,true,false,playerName,inParty);
     }
 
-    public Animator GetPlayerAnimator()
-    {
-        return animator;
-    }
+
 
     private void ResetDamageTimer()
     {

@@ -5,7 +5,7 @@ using System.Linq;
 public class HumanPlayerQuests
 {
 
-    HumanPlayer player;
+    HumanPlayerView player;
 
 
     float questGiverDetectionRadius = 500f;
@@ -20,15 +20,15 @@ public class HumanPlayerQuests
         if (isOpen)
         {
             Debug.Log($"Displaying Quest Log");
-            EventBus<RequestDisplayQuestLogEvent>.Raise(new RequestDisplayQuestLogEvent(player.StableID));
+            //EventBus<RequestDisplayQuestLogEvent>.Raise(new RequestDisplayQuestLogEvent(player.StableID));
         }
 
         else {
-            EventBus<RequestCloseQuestLogEvent>.Raise(new RequestCloseQuestLogEvent());
+            //EventBus<RequestCloseQuestLogEvent>.Raise(new RequestCloseQuestLogEvent());
         }
     }
 
-    public void Initialize(HumanPlayer player,LayerMask layerMask) { 
+    public void Initialize(HumanPlayerView player,LayerMask layerMask) { 
         this.player = player;
         this.layerMask = layerMask;
     }
@@ -37,10 +37,11 @@ public class HumanPlayerQuests
     public void ForceRescanNearby()
     {
         Debug.Log("Scanning for questgivers");
+        /*
         var hits = Physics.OverlapSphere(
-            player.gameObject.transform.position,
-            questGiverDetectionRadius,
-            layerMask
+            //this.gameObject.transform.position,
+           // questGiverDetectionRadius,
+            //layerMask
         );
 
         foreach (var col in hits)
@@ -51,7 +52,7 @@ public class HumanPlayerQuests
                 EventBus<RequestQuestGiverIconDisplay>.Raise(new RequestQuestGiverIconDisplay(giver.StableID, player.StableID,player.EntityLevel));  
             }
                 
-        }
+        }*/
     }
 
 

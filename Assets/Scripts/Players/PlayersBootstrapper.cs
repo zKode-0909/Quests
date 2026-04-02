@@ -19,6 +19,8 @@ public class PlayersBootstrapper : MonoBehaviour
 
     [SerializeField] HumanPlayer humanPlayerPrefab;
 
+    [SerializeField] HumanPlayerView humanPlayerView;
+
     [SerializeField] InteractionManager interactionManager;
     [SerializeField] HoverManager hoverManager;
     [SerializeField] OrbitCamera orbitCamera;
@@ -54,7 +56,7 @@ public class PlayersBootstrapper : MonoBehaviour
         foreach (var data in saveData) {
             Player player = data.Type switch
             {
-                PlayerType.Human =>  playerFactory.BuildHumanPlayerFromData(data,humanPlayerPrefab,inputReader,hoverManager,interactionManager,orbitCamera,questGiverLayerMask),
+                PlayerType.Human =>  playerFactory.BuildHumanPlayerFromData(data,humanPlayerView,inputReader,hoverManager,interactionManager,orbitCamera,questGiverLayerMask),
                 PlayerType.Sim => playerFactory.BuildSimPlayerFromData(data,simPlayerPrefab),
                 _ => throw new System.ArgumentOutOfRangeException()
 

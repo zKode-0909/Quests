@@ -41,7 +41,7 @@ public class LocomotionState : BasePlayerState
         Debug.Log($"setting speed to {speed}");
         player.motor.Move();*/
 
-        player.playerMotor.Move(); // apply velocity first
+        player.controller.Motor.Move(); // apply velocity first
         /*
         float v = player.motor.GetVelocityMagnitude();   // or rb.velocity.magnitude
         float max = player.motor.GetBaseSpeed();         // 7f
