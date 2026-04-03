@@ -1,3 +1,4 @@
+using log4net.Core;
 using UnityEngine;
 
 public class HumanPlayerController : IController
@@ -30,8 +31,10 @@ public class HumanPlayerController : IController
         rb.freezeRotation = true;
         input.MoveEvent += HandleMove;
         input.AttackEvent += HandleAttack;
-        
-       // input.OpenQuestLogEvent += HandleOpenQuestLog;
+
+        //
+
+        // input.OpenQuestLogEvent += HandleOpenQuestLog;
         //input.SelectionEvent += HandleSelection;
 
         //input.OpenMenuEvent += HandleShowMenu;
@@ -39,8 +42,8 @@ public class HumanPlayerController : IController
 
         //input.OpenInventoryEvent += HandleOpenInventory;
 
-      //  worldQuestStateChangeBinding = new EventBinding<EntityWorldQuestStateChangedEvent>(HandlePlayerQuestAccept);*/
-      //  EventBus<EntityWorldQuestStateChangedEvent>.Register(worldQuestStateChangeBinding);
+        //  worldQuestStateChangeBinding = new EventBinding<EntityWorldQuestStateChangedEvent>(HandlePlayerQuestAccept);*/
+        //  EventBus<EntityWorldQuestStateChangedEvent>.Register(worldQuestStateChangeBinding);
     }
 
     public void Dispose() {

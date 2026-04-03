@@ -49,7 +49,8 @@ public class HumanPlayerOverlayViewController : VisualElement
         
     }
 
-    public void Initialize() { 
+    public void Initialize() {
+        Debug.Log("INITIALIZING OVERLAY");
         portraits = new PortraitManager();
         root.Clear();
         root.styleSheets.Add(styleSheet);
@@ -122,6 +123,7 @@ public class HumanPlayerOverlayViewController : VisualElement
             CreateContextBox();
             root.pickingMode = PickingMode.Position;
             root.RegisterCallback<MouseDownEvent>(HandleMouseDown);
+            root.RegisterCallback<MouseMoveEvent>(HandleMouseMove);
 
             layoutBuilt = true;
         }
@@ -364,6 +366,14 @@ public class HumanPlayerOverlayViewController : VisualElement
 
 
         BuildSelectedPortrait(Select(Mouse.current.position.ReadValue()), uiPos);
+    }
+
+    void HandleMouseMove(MouseMoveEvent evt) {
+        var objectHovered = Select(Mouse.current.position.ReadValue());
+        Debug.Log("Handling mouse move event");
+        if (objectHovered != null) {
+            Debug.Log($"Hovering selectable named: {objectHovered.SendSelectionData().selectedName}");
+        }
     }
 
    

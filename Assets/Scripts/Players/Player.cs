@@ -65,6 +65,12 @@ public class Player : IEntity, IDamageable, IInteractor, IInteractable,ISelectab
 
         damageTimer.OnTimerStart += TestDamage;
         damageTimer.OnTimerStop += ResetDamageTimer;
+        if (type == PlayerType.Human) {
+            Debug.Log("FIRING OFF OVERLAY");
+            EventBus<PlayerLoadedEvent>.Raise(new PlayerLoadedEvent(new PlayerDTO(EntityRuntimeID, EntityLevel, PlayerName, Health.GetMaxHealth()
+            , Health.GetCurrentHealth(), this)));
+        }
+        
 
     }
 

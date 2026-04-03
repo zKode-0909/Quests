@@ -18,6 +18,7 @@ public class HumanPlayerView : MonoBehaviour
     {
         this.player = player;
         this.controller = controller;
+
     }
 
     private void Update()
