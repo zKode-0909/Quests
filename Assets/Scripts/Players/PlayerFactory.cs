@@ -115,49 +115,37 @@ public class PlayerFactory
         return null;
     }
 
-    public HumanPlayer BuildNewHumanPlayer(HumanPlayer prefab, PlayerInputReader inputReader, HoverManager hoverManager, InteractionManager interactionManager,
+    public Player BuildNewHumanPlayer(HumanPlayerView humanPlayerPrefab, PlayerInputReader inputReader, HoverManager hoverManager, InteractionManager interactionManager,
         OrbitCamera orbitCamera, LayerMask questGiverLayerMask) {
-        /*
-        var runtimePlayer = UnityEngine.Object.Instantiate(prefab);
+
+        var runtimePlayer = UnityEngine.Object.Instantiate(humanPlayerPrefab);
         runtimePlayer.gameObject.SetActive(false);
 
         var runtimeRb = runtimePlayer.GetComponent<Rigidbody>();
         var runtimeAnimator = runtimePlayer.GetComponent<Animator>();
 
-        var controller = runtimePlayer.GetComponent<HumanPlayerController>();
+        var controller = new HumanPlayerController();
+
+        var player = new Player();
 
         var health = new EntityHealth(100, 100);
 
-        var playerState = new PlayerState(runtimePlayer, runtimeAnimator);
-        var playerLevelling = new PlayerLevelling();
-        var playerInventoryToggle = new HumanPlayerInventoryToggle();
-
         var playerRuntimeId = RuntimeIDGenerator.GetNext();
 
-        var playerQuests = new HumanPlayerQuests();
-        playerQuests.Initialize(runtimePlayer, questGiverLayerMask);
+        // var playerState = new PlayerState(runtimePlayer, runtimeAnimator);
+        var playerLevelling = new PlayerLevelling();
+        var playerInventoryToggle = new HumanPlayerInventoryToggle();
 
         var motor = new HumanPlayerMotor();
         motor.InitializeHumanPlayerMotor(runtimeRb, runtimePlayer.transform, Camera.main, 7f);
 
-        controller.Initialize(runtimeRb, inputReader, runtimePlayer);
+        controller.Initialize(runtimeRb, inputReader, player, humanPlayerPrefab, motor);
 
-        var menuToggle = new HumanMenuToggle();
+        player.Initialize(health, playerRuntimeId, "ButtholeSurfersVidIsOn", "testHumanStableID", PlayerType.Human, controller);
 
-        runtimePlayer.Initialize(
-            runtimeAnimator,
-            health,
-            playerRuntimeId,
-            playerState,
-            motor,
-            "TestHumanPlayer",
-            "TestHumanPlayerStableID",
-            PlayerType.Human
-        );
+        runtimePlayer.Initialize(player, controller);
 
-        runtimePlayer.InitializeHumanPlayer(playerQuests, playerInventoryToggle, menuToggle);
-
-        if (playerRegistry.TryRegisterPlayer(runtimePlayer, "TestHumanPlayerStableID"))
+        if (playerRegistry.TryRegisterPlayer(player, "TestHumanPlayerStableID"))
         {
             playerRegistration.Register("TestHumanPlayerStableID",true);
             playerSpawner.SpawnPlayer(runtimePlayer);
@@ -168,15 +156,15 @@ public class PlayerFactory
 
 
 
-            return runtimePlayer;
+            return player;
 
         }
         else
         {
             return null;
-        }*/
+        }
 
-        return null;
+     
 
     }
 

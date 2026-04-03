@@ -20,6 +20,7 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
     public event Action PressTEvent;
     public event Action OpenInventoryEvent;
     public event Action<Vector2> SelectionEvent;
+    public event Action<bool> CameraLookEvent;
     public event Action OpenMenuEvent;
 
 
@@ -99,9 +100,9 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        //Vector2 input = context.ReadValue<Vector2>();
+        Vector2 input = context.ReadValue<Vector2>();
         // noop
-        //LookEvent?.Invoke(input);
+        LookEvent?.Invoke(input);
     }
 
     public void OnMiddleClick(InputAction.CallbackContext context)
@@ -200,13 +201,19 @@ public class PlayerInputReader : ScriptableObject, IPlayerActions, IUIActions,II
     {
         if (context.phase == InputActionPhase.Started)
         {
+            Debug.Log("started look");
             var mousePos = Mouse.current.position.ReadValue();
             SelectionEvent?.Invoke(mousePos);
+            CameraLookEvent?.Invoke(true);
         }
 
 
-        var lookPos = context.ReadValue<Vector2>();
-        LookEvent?.Invoke(lookPos);
+        if (context.phase == InputActionPhase.Canceled) {
+            Debug.Log("cancelled look");
+            CameraLookEvent?.Invoke(false);
+        }
+
+       
 
     }
 

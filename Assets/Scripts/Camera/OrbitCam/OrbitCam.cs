@@ -14,8 +14,8 @@ public class OrbitCamera : MonoBehaviour
     [SerializeField] float verticalOffset = 1f;
     [SerializeField] float rotationSpeed = 0.001f;
 
-    
 
+    bool looking;
 
     private bool UICam = false;
 
@@ -37,6 +37,7 @@ public class OrbitCamera : MonoBehaviour
 
         focusPoint = focus.position;
         input.LookEvent += HandleLook;
+        input.CameraLookEvent += SetLook;
         input.ScrollCameraEvent += HandleScroll;
         //input.OpenQuestLogEvent += HandleOpenQuestLog;
         //input.ShowInvEvent += HandleShowInv;
@@ -91,12 +92,19 @@ public class OrbitCamera : MonoBehaviour
         UICam = stateOfInv;
     }
 
+    void SetLook(bool lookInput) { 
+        looking = lookInput;
+    }
+
     void HandleLook(Vector2 input)
     {
-        lookAngles.y += input.x * rotationSpeed;
-        lookAngles.x += input.y * rotationSpeed;
+        if (looking) {
+            lookAngles.y += input.x * rotationSpeed;
+            lookAngles.x += input.y * rotationSpeed;
 
-        lookAngles.x = Mathf.Clamp(lookAngles.x, -90f, 90f);
+            lookAngles.x = Mathf.Clamp(lookAngles.x, -90f, 90f);
+        }
+        
     }
 
     void HandleScroll(float scrollMagnitude)

@@ -67,6 +67,6 @@ public class PlayersBootstrapper : MonoBehaviour
     }
 
     void BuildStartupPlayers() { 
-        playerFactory.BuildNewHumanPlayer(humanPlayerPrefab, inputReader, hoverManager, interactionManager, orbitCamera, questGiverLayerMask);
+        playerFactory.BuildNewHumanPlayer(humanPlayerView, inputReader, hoverManager, interactionManager, orbitCamera, questGiverLayerMask);
     }
 }
