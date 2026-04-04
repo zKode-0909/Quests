@@ -6,6 +6,7 @@ public class HumanPlayerQuests
 {
 
     HumanPlayerView player;
+   
 
 
     float questGiverDetectionRadius = 500f;
@@ -13,18 +14,18 @@ public class HumanPlayerQuests
 
     
     private bool isOpen;
-    public void ToggleQuestLog()
+    public void ToggleQuestLog(string id)
     {
         isOpen = !isOpen;
 
         if (isOpen)
         {
             Debug.Log($"Displaying Quest Log");
-            //EventBus<RequestDisplayQuestLogEvent>.Raise(new RequestDisplayQuestLogEvent(player.StableID));
+            EventBus<RequestDisplayQuestLogEvent>.Raise(new RequestDisplayQuestLogEvent(id));
         }
 
         else {
-            //EventBus<RequestCloseQuestLogEvent>.Raise(new RequestCloseQuestLogEvent());
+            EventBus<RequestCloseQuestLogEvent>.Raise(new RequestCloseQuestLogEvent());
         }
     }
 

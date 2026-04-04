@@ -12,6 +12,7 @@ public class GameBootstrapper : MonoBehaviour
     [SerializeField] ItemDB itemDatabase;
     [SerializeField] PartyBootstrapper PartyBootstrapper;
     [SerializeField] SimulationBootstrapper SimulationBootstrapper;
+   
   
     QuestLogRegistry logRegistry;
     InventoryRegistry inventoryRegistry;

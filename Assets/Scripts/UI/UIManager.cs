@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] Sprite inventoryPlaceholderSprite;
 
+    [SerializeField] Sprite defaultCursorSprite;
+
     HumanPlayerOverlayViewController overlayController;
     QuestHandoutView questGiverHandoutView;
     QuestLogView questLogView;
@@ -40,7 +42,7 @@ public class UIManager : MonoBehaviour
     private VisualElement inventoryRoot;
     private VisualElement menuRoot;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void OnEnable()
+    void Awake()
     {
         
         var root = GetComponent<UIDocument>().rootVisualElement;
@@ -62,7 +64,7 @@ public class UIManager : MonoBehaviour
         root.Add(inventoryRoot);
         root.Add(menuRoot);
 
-        overlayController = new HumanPlayerOverlayViewController(overlayRoot, overlayStyle);
+        overlayController = new HumanPlayerOverlayViewController(overlayRoot, overlayStyle,defaultCursorSprite);
         overlayController.Initialize();
 
         questGiverHandoutView = new QuestHandoutView(questGiverRoot, questhandoutStyle);
@@ -125,6 +127,8 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (overlayController != null) {
+            overlayController.HandleMouseMove();
+        }
     }
 }

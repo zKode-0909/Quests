@@ -7,6 +7,9 @@ public class HumanPlayerController : IController
     Player player;
 
     HumanPlayerView view;
+    HumanPlayerQuests playerQuests;
+    HumanPlayerInventoryToggle inventoryToggle;
+    HumanMenuToggle menuToggle;
 
     Rigidbody rb;
 
@@ -32,25 +35,32 @@ public class HumanPlayerController : IController
         input.MoveEvent += HandleMove;
         input.AttackEvent += HandleAttack;
 
+        playerQuests = new HumanPlayerQuests();
+        inventoryToggle = new HumanPlayerInventoryToggle();
+        menuToggle = new HumanMenuToggle();
+
         //
 
-        // input.OpenQuestLogEvent += HandleOpenQuestLog;
+        input.OpenQuestLogEvent += HandleOpenQuestLog;
         //input.SelectionEvent += HandleSelection;
 
-        //input.OpenMenuEvent += HandleShowMenu;
+        input.OpenMenuEvent += HandleShowMenu;
 
 
-        //input.OpenInventoryEvent += HandleOpenInventory;
+        input.OpenInventoryEvent += HandleOpenInventory;
 
-        //  worldQuestStateChangeBinding = new EventBinding<EntityWorldQuestStateChangedEvent>(HandlePlayerQuestAccept);*/
-        //  EventBus<EntityWorldQuestStateChangedEvent>.Register(worldQuestStateChangeBinding);
+        worldQuestStateChangeBinding = new EventBinding<EntityWorldQuestStateChangedEvent>(HandlePlayerQuestAccept);
+        EventBus<EntityWorldQuestStateChangedEvent>.Register(worldQuestStateChangeBinding);
     }
 
     public void Dispose() {
         input.MoveEvent -= HandleMove;
         input.AttackEvent -= HandleAttack;
+        input.OpenQuestLogEvent -= HandleOpenQuestLog;
+        input.OpenInventoryEvent -= HandleOpenInventory;
+        input.OpenMenuEvent -= HandleShowMenu;
 
-      //  EventBus<EntityWorldQuestStateChangedEvent>.Deregister(worldQuestStateChangeBinding);
+        EventBus<EntityWorldQuestStateChangedEvent>.Deregister(worldQuestStateChangeBinding);
     }
 
     /*
@@ -65,11 +75,11 @@ public class HumanPlayerController : IController
         EventBus<EntityWorldQuestStateChangedEvent>.Deregister(worldQuestStateChangeBinding);
     }*/
 
-    /*
+    
     void HandleOpenInventory() {
         Debug.Log("received open inventory input");
-        player.humanInventoryToggle.ToggleInventory(player.StableID);
-    }*/
+        inventoryToggle.ToggleInventory(player.StableID);
+    }
 
 
     /*
@@ -78,10 +88,10 @@ public class HumanPlayerController : IController
         
     }*/
 
-    /*
+    
     void HandleShowMenu() {
-        player.HandleToggleMenu();
-    }*/
+        menuToggle.ToggleMenu();
+    }
 
     void HandleMove(Vector2 dir)
     {
@@ -92,15 +102,15 @@ public class HumanPlayerController : IController
     {
         player.RequestAttack();
     }
-    /*
+    
     void HandleOpenQuestLog() { 
-        player.playerQuests.ToggleQuestLog();
-    }*/
+        playerQuests.ToggleQuestLog(player.StableID);
+    }
 
-    /*
+    
     void HandlePlayerQuestAccept(EntityWorldQuestStateChangedEvent evt) {
-        player.playerQuests.ForceRescanNearby();
-    }*/
+        playerQuests.ForceRescanNearby();
+    }
 
     
 

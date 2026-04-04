@@ -47,6 +47,10 @@ public class Player : IEntity, IDamageable, IInteractor, IInteractable,ISelectab
     public string StableID => stableID;
     string stableID;
 
+    SelectableType selectableType = SelectableType.Player;
+
+    public SelectableType SelectableType => selectableType;
+
 
 
     public void Initialize(EntityHealth health,int runtimeID,string name,string stable,PlayerType type,IController controller)
@@ -65,14 +69,12 @@ public class Player : IEntity, IDamageable, IInteractor, IInteractable,ISelectab
 
         damageTimer.OnTimerStart += TestDamage;
         damageTimer.OnTimerStop += ResetDamageTimer;
-        if (type == PlayerType.Human) {
-            Debug.Log("FIRING OFF OVERLAY");
-            EventBus<PlayerLoadedEvent>.Raise(new PlayerLoadedEvent(new PlayerDTO(EntityRuntimeID, EntityLevel, PlayerName, Health.GetMaxHealth()
-            , Health.GetCurrentHealth(), this)));
-        }
+        
         
 
     }
+
+    
 
     public virtual void HandleInteract(IInteractor interactor)
     {

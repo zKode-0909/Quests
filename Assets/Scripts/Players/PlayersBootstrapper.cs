@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.LowLevelPhysics2D.PhysicsLayers;
 
 public class PlayersBootstrapper : MonoBehaviour
 {
@@ -51,6 +52,16 @@ public class PlayersBootstrapper : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        foreach (var player in registry.Players) {
+            if (player.Value.playerType == PlayerType.Human) {
+                LateInit(player.Value);
+            }
+        }
+       
+    }
+
     void BuildPlayersFromData(List<PlayerSaveData> saveData)
     {
         foreach (var data in saveData) {
@@ -68,6 +79,14 @@ public class PlayersBootstrapper : MonoBehaviour
 
     void BuildStartupPlayers() { 
         playerFactory.BuildNewHumanPlayer(humanPlayerView, inputReader, hoverManager, interactionManager, orbitCamera, questGiverLayerMask);
+    }
+
+    void LateInit(Player player) {
+      
+            Debug.Log("FIRING OFF OVERLAY");
+            EventBus<PlayerLoadedEvent>.Raise(new PlayerLoadedEvent(new PlayerDTO(player.EntityRuntimeID, player.EntityLevel, player.PlayerName, player.Health.GetMaxHealth()
+            , player.Health.GetCurrentHealth(), player)));
+        
     }
 
    

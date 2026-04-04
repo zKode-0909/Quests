@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 
-public class HumanPlayerOverlayViewController : VisualElement 
+public class HumanPlayerOverlayViewController : VisualElement
 {
 
     StyleSheet styleSheet;
@@ -17,6 +17,8 @@ public class HumanPlayerOverlayViewController : VisualElement
     VisualElement partyPortraitHolder2;
     VisualElement partyPortraitHolder3;
     VisualElement partyPortraitHolder4;
+
+    VisualElement cursorHolder;
 
     
 
@@ -34,6 +36,8 @@ public class HumanPlayerOverlayViewController : VisualElement
     PortraitManager portraits;
     PortraitContextMenu contextMenu;
 
+    Sprite defaultCursor;
+
   //  EventBinding<SelectionChangedEvent> selectionChangedEventBinding;
     EventBinding<PlayerLoadedEvent> playerLoadedEventBinding;
     EventBinding<PartyJoinedEvent> partyJoinedEventBinding;
@@ -43,10 +47,12 @@ public class HumanPlayerOverlayViewController : VisualElement
 
     bool layoutBuilt = false;
 
-    public HumanPlayerOverlayViewController(VisualElement root,StyleSheet styleSheet) {
+    public HumanPlayerOverlayViewController(VisualElement root,StyleSheet styleSheet,Sprite defaultCursor) {
         this.root = root;
         this.styleSheet = styleSheet;
         
+        this.defaultCursor = defaultCursor;
+
     }
 
     public void Initialize() {
@@ -123,7 +129,7 @@ public class HumanPlayerOverlayViewController : VisualElement
             CreateContextBox();
             root.pickingMode = PickingMode.Position;
             root.RegisterCallback<MouseDownEvent>(HandleMouseDown);
-            root.RegisterCallback<MouseMoveEvent>(HandleMouseMove);
+       
 
             layoutBuilt = true;
         }
@@ -133,6 +139,8 @@ public class HumanPlayerOverlayViewController : VisualElement
 
     void BuildUIPanel()
     {
+        cursorHolder = new VisualElement();
+        cursorHolder.AddToClassList("gameCursor");
         humanPlayerOverlayHolder = new VisualElement();
         humanPlayerOverlayHolder.name = "overlayHolder";
         BuildPortraits();
@@ -207,12 +215,8 @@ public class HumanPlayerOverlayViewController : VisualElement
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.collider.TryGetComponent<ISelectable>(out var selectable))
-            {
-                
-                //Debug.Log($"I have hit the selectable {selected}");
-                return selectable;
-            }
+            var hitObject = hit.collider.GetComponentInParent<ISelectable>();
+            return hitObject;
         }
 
         
@@ -368,13 +372,23 @@ public class HumanPlayerOverlayViewController : VisualElement
         BuildSelectedPortrait(Select(Mouse.current.position.ReadValue()), uiPos);
     }
 
-    void HandleMouseMove(MouseMoveEvent evt) {
+    public void HandleMouseMove() {
         var objectHovered = Select(Mouse.current.position.ReadValue());
         Debug.Log("Handling mouse move event");
         if (objectHovered != null) {
             Debug.Log($"Hovering selectable named: {objectHovered.SendSelectionData().selectedName}");
         }
     }
+
+    /*
+    void Update() {
+        var objectHovered = Select(Mouse.current.position.ReadValue());
+        Debug.Log("Handling mouse move event");
+        if (objectHovered != null)
+        {
+            Debug.Log($"Hovering selectable named: {objectHovered.SendSelectionData().selectedName}");
+        }
+    }*/
 
    
 

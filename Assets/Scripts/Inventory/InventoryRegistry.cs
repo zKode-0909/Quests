@@ -25,6 +25,7 @@ public sealed class InventoryRegistry
     }
 
     public bool RegisterInventory(string ownerID,Inventory inventory) {
+        Debug.Log($"trying to register inventory for {ownerID} with inventory {inventory}");
         return _inventories.TryAdd(ownerID, inventory);
     }
 

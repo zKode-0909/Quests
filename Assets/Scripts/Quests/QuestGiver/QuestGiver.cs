@@ -1,9 +1,10 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [DefaultExecutionOrder(-9999)]
-public class QuestGiver : MonoBehaviour,IInteractable,ICharacter
+public class QuestGiver : MonoBehaviour,IInteractable,ICharacter,ISelectable
 {
     //[SerializeField] QuestHandoutView view;
     
@@ -21,6 +22,9 @@ public class QuestGiver : MonoBehaviour,IInteractable,ICharacter
 
     string stableID;
 
+    SelectableType selectableType = SelectableType.NPC;
+
+    public SelectableType SelectableType => selectableType;
     public string StableID => stableID;
   
     public int entityRuntimeId;
@@ -30,6 +34,8 @@ public class QuestGiver : MonoBehaviour,IInteractable,ICharacter
    // Quest currentQuest;
     public string questGiverID;
     public string questGiverText;
+
+    public event Action<int> healthChangedEvent;
 
     public void HandleInteract(IInteractor interactor)
     {
@@ -67,7 +73,13 @@ public class QuestGiver : MonoBehaviour,IInteractable,ICharacter
         Debug.Log(words);
     }
 
-   
+    public SelectableData SendSelectionData()
+    {
+        return new SelectableData();
+    }
 
-
+    public void UpdatePartyStatus(bool status)
+    {
+        Debug.Log("Fuck this");
+    }
 }

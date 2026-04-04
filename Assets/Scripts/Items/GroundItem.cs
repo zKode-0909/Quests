@@ -1,8 +1,18 @@
+using System;
 using UnityEngine;
 
-public class GroundItem : MonoBehaviour, IInteractable
+public class GroundItem : MonoBehaviour, IInteractable,ISelectable
 {
     [SerializeField] private ItemSettings settings;
+
+    public int EntityRuntimeID => RuntimeIDGenerator.GetNext();
+
+    public string StableID => "TestRock";
+
+    public SelectableType SelectableType => throw new NotImplementedException();
+
+    public event Action<int> healthChangedEvent;
+
     //IRuntimeItem item;
 
     void IInteractable.HandleInteract(IInteractor interactor)
@@ -21,4 +31,13 @@ public class GroundItem : MonoBehaviour, IInteractable
         
     }
 
+    public SelectableData SendSelectionData()
+    {
+        return new SelectableData(0, 0, false, false, false, false, "Rock", false);
+    }
+
+    public void UpdatePartyStatus(bool status)
+    {
+        throw new NotImplementedException();
+    }
 }
